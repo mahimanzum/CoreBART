@@ -1,0 +1,5 @@
+- `repetition` folder contains MSR datasets WITH <buggy code, fixed code> duplicate pairs
+- `unique` folder contains MSR datasets WITHOUT <buggy code, fixed code> duplicate pairs
+- `sstubs(Large|Small).json` files contain dataset in JSON format
+- `sstubs(Large|Small)-(train|test|val).json` files contain dataset split in JSON format
+- `split/(large|small)` folders contain dataset in text format (what the CodeBERT works with)

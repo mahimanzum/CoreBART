@@ -329,3 +329,9 @@ Source: source Target: target
 2021-10-29 22:48:03 | INFO | fairseq_cli.train | begin validation on "valid" subset
 2021-10-29 22:51:18 | INFO | valid | {"epoch": 2, "valid_loss": "2.861", "valid_nll_loss": "0.812", "valid_ppl": "1.76", "valid_bleu": "64.3", "valid_wps": "233.6", "valid_wpb": "73.8", "valid_bsz": "4", "valid_num_updates": "2450", "valid_best_bleu": "64.3"}
 2021-10-29 22:51:18 | INFO | fairseq_cli.train | begin save checkpoint
+2021-10-29 22:51:47 | INFO | fairseq.checkpoint_utils | saved checkpoint ../models/plbart/unique/large/checkpoint_best.pt (epoch 2 @ 2450 updates, score 64.3) (writing took 28.18218548502773 seconds)
+2021-10-29 22:51:47 | INFO | fairseq_cli.train | end of epoch 2 (average epoch stats below)
+2021-10-29 22:51:47 | INFO | train | {"epoch": 2, "train_loss": "2.731", "train_nll_loss": "0.826", "train_ppl": "1.77", "train_wps": "589.3", "train_ups": "1.9", "train_wpb": "310.3", "train_bsz": "16", "train_num_updates": "2450", "train_lr": "4.99025e-05", "train_gnorm": "3.126", "train_train_wall": "416", "train_wall": "1274"}
+2021-10-29 22:51:47 | INFO | fairseq_cli.train | begin training epoch 2
+2021-10-29 22:52:08 | INFO | train_inner | {"epoch": 3, "update": 2.041, "loss": "2.618", "nll_loss": "0.705", "ppl": "1.63", "wps": "126", "ups": "0.38", "wpb": "329.1", "bsz": "15.9", "num_updates": "2500", "lr": "4.98999e-05", "gnorm": "3.529", "train_wall": "35", "wall": "1295"}
+2021-10-29 22:52:42 | INFO | train_inner | {"epoch": 3, "update": 2.122, "loss": "2.587", "nll_loss": "0.665", "ppl": "1.59", "wps": "932.8", "ups": "2.92", "wpb": "319.5", "bsz": "16", "num_updates": "2600", "lr": "4.98949e-05", "gnorm": "3.082", "train_wall": "34", "wall": "1329"}
