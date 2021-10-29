@@ -1,0 +1,827 @@
+expectedValue.equals(oldObject)
+obj.setContentType(Mimetypes.MIMETYPE_BINARY_OCTET_STREAM)
+server.getState()
+outputDirectory="."
+factory.getEmbeddedServletContainer(exampleServletRegistration(),new FilterRegistrationBean(new ExampleFilter()))
+"false".equals(showRelationships) || result.hasErrors()
+reg.bind("localhost:" + port,env)
+AsyncHttpClientConfig.class
+/** * This is the primary connection pool class that provides the basic pooling behavior for HikariCP. * @author Brett Wooldridge */ public abstract class BaseHikariPool implements HikariPoolMXBean, IBagStateListener { protected final Logger LOGGER=LoggerFactory.getLogger(getClass()); private static final long ALIVE_BYPASS_WINDOW=Long.getLong("com.zaxxer.hikari.aliveBypassWindow",1000L); protected static final int POOL_RUNNING=0; protected static final int POOL_SUSPENDED=1; protected static final int POOL_SHUTDOWN=2; public final String catalog; public final boolean isReadOnly; public final boolean isAutoCommit; public int transactionIsolation; protected final PoolUtilities poolUtils; protected final HikariConfig configuration; protected final AtomicInteger totalConnections; protected final ConcurrentBag<PoolBagEntry> connectionBag; protected final ThreadPoolExecutor addConnectionExecutor; protected final ThreadPoolExecutor closeConnectionExecutor; protected
+new S3DataSegmentMover(mockS3Client,new S3DataSegmentPusherConfig())
+globalExecutionStats.getStartedSplits()
+cached.get(group)
+test(externs,js,(String)null,ConstCheck.CONST_REASSIGNED_VALUE_ERROR)
+op.get("address").add("host",host)
+mSizeOnTier.containsKey(tierAlias) ? mSizeOnTier.get(tierAlias) : 0L
+new StringTypeHandler()
+LOG.trace("Finding components in url: {}",url)
+-1L
+assertEquals(id1,new Twitter(id3,pass3).verifyCredentials().getName())
+LOGGER.log(Level.SEVERE,LocalizationMessages.ERROR_COMMITTING_OUTPUT_STREAM(),e)
+monochrome=true
+return loadBefore;
+constructor.getParameterTypes()
+assertThat(converter.getSupportedMediaTypes()).contains(MediaTypes.HAL_JSON)
+new ClientBuilderImpl().serviceUrl(getPulsarBrokerUrl()).ioThreads(5)
+LinkedHashMap<String,ASTNode>
+LOG.warn("Storage directory " + rootPath + " does not exist")
+waitForJobExecutorToProcessAllJobsAndExecutableTimerJobs(20000,200)
+configuration.addViewInterceptor(method,factory,InterceptorOrder.View.COMPONENT_DISPATCHER)
+IOConverter.toInputStream(s,null)
+patientState.getState().getUuid()
+analysis.getTypeWithCoercions(expression)
+ssl.hasDefined(CommonAttributes.CA_CERTIFICATE_FILE)
+Thread.sleep(100)
+level < RF_STATUS_HIGH_SIGNAL
+return true;
+"Stream " + streamId
+camelContext.getComponent(component)
+Thread.currentThread().isInterrupted() || Thread.currentThread().isInterrupted()
+return false;
+eventListeners != null
+new Date(1)
+LOG.error("Failed to transit standby cluster to " + SyncReplicationState.DOWNGRADE_ACTIVE,e)
+ConversionException iae
+new BadRequestException("Field " + field + " is not of a numeric type and the cardinality could not be calculated either.",e1)
+assertEquals(conf,(Configuration)serializeDeserialize(conf))
+new RuntimeException("Could not create TypeInformation for type " + data[0].getClass().getName() + "; please specify the TypeInformation manually via "+ "StreamExecutionEnvironment#fromElements(Collection, TypeInformation)",e)
+request.getContentType().startsWith("application/x-www-form-urlencoded")
+suiteMethod.invoke(null)
+new FlinkRuntimeException("Unexpected list element deserialization failure",e)
+view.getClusteredLayerInDegree(absNode)
+setNetworkTimeout(connection,originalTimeout)
+database.FindProduct(node.getManufacturer(),node.getDeviceType(),node.getDeviceId(),node.getApplicationVersion())
+id=20
+mime == null || mime.value().length == 0
+DynamicAttributeRanking.refreshMinMax(this,graph)
+mock.expectedMinimumMessageCount(1)
+jarName.endsWith(".jar") || jarName.endsWith(".war")
+RawTCPInput.class
+findDelegate(name,true)
+endFunction("write_column_statistics: ",ret != false,null)
+RetryHandlingBlockMasterClient.class
+new TelnetServerPipelineFactory()
+EnterpriseMapPublisherCreateWithValueCodec.decodeResponse(response).response
+GL20.glGetUniformfv(program,location,params)
+p.getFileSystem(conf).delete(p,true)
+JavaConversions.asJavaIterable(logManager.allLogs())
+findDelegate(name,true)
+RT.count(s)
+assertEquals800d,fStopwatch.runtime(MILLISECONDS))
+http2.setInitialStreamRecvWindow(initialStreamSendWindow)
+mListView.getChildAt(index)
+Status.createStatuseList(get(getBaseURL() + "statuses/public_timeline.json",null,new Paging((long)sinceID).asPostParameterList(Paging.S),false))
+element.getLocalName()
+websocketComponent.setMaxThreads(20)
+this.thrown.expectMessage("File must exist")
+contentType != null && charset == null
+Thread.sleep(3000)
+HiveRexUtil.simplify(rexBuilder,node)
+LOG.warn("OpenTracing: Failed to capture tracing data",t)
+Arrays.asList(CoreAnnotations.TextAnnotation.class,CoreAnnotations.TokensAnnotation.class,CoreAnnotations.CharacterOffsetBeginAnnotation.class,CoreAnnotations.CharacterOffsetEndAnnotation.class,CoreAnnotations.IsNewlineAnnotation.class,CoreAnnotations.TokenBeginAnnotation.class)
+nlDataOutNodes != null && nlDataOutNodes.getLength() > 0
+!fields.contains(name)
+Throwable exception
+this.comparatorIgnoringType
+view.getMode()
+getCurrRetainedCapacity()
+LOG.isDebugEnabled()
+new JobConf(config_,StreamJob.class)
+edge.setType(type)
+factory.terminateAll()
+mock.expectedBodiesReceivedInAnyOrder("Hello World 2")
+GL20.glUniformMatrix3fv(location,transpose,value)
+assertFalse(exitStatuses.contains(status.getExitStatus()))
+bindings.or(ImmutableList.of())
+testSame("asdf;","var asdf;",VarCheck.NAME_REFERENCE_IN_EXTERNS_ERROR)
+expiresOn.getTime()
+Throwable t
+chain.filter(exchange).transformDeferred((call) -> filter(exchange,call))
+DEFAULT_ALLOW_SPILLING=true
+IllegalStateException ex
+c.write("[you] " + msg + '\n')
+ps.saveRelationship(rel)
+exchange.setRequestHeader(HttpHeaders.AUTHORIZATION,"OAuth " + currentToken)
+addListenerMethod2.addScopedInterceptor(NettyConstants.INTERCEPTOR_CHANNEL_PROMISE_ADD_LISTENER,NettyConstants.SCOPE,ExecutionPolicy.BOUNDARY)
+CHECK_TEXT.computeIfAbsent("Properties",unused -> "")
+new StormClientErrorHandler(client.name())
+exchange.getIn()
+LOG.warn("Async Kafka commit failed.",cause)
+Math.max(1000L,connectionTimeout)
+Arrays.asList("spring-boot-starter-tomcat-","tomcat-embed-core-","tomcat-embed-el-","tomcat-embed-logging-juli-")
+LOG.debug("Exception while fetching metrics.",e)
+createMessageConsumer(session,destinationName,messageSelector,topic,durableSubscriptionId)
+StringBuilder pattern=new StringBuilder(this.prefix);
+ImmutableBiMap<Integer,String>
+mLineageStore.reportLostFile(fileId)
+Thread.sleep(500)
+assertClusterSizeEventually(2,h2)
+TimeUtils.nanoTime()
+new StringBuilder(246)
+connection.setFollowRedirects(httpRequest.getFollowRedirects())
+Integer.parseInt(p.getProperty("numberid.id"))
+OpenmrsProfileWithoutMissingModule bean=applicationContext.getBean(OpenmrsProfileWithoutMissingModule.class);
+server.getSegment(segment.getIdentifier()) != null || peon.getSegmentsToLoad().contains(segment)
+(outputFolder + File.separator + modelFolder).replace("/",File.separator)
+CsvReporter.forRegistry(registry).convertDurationsTo(getDurationUnit()).convertRatesTo(getRateUnit())
+grammar.getTokenDisplayNames()
+ReferenceCountUtil.release(holder)
+ServiceAnnouncingChatHandlerProvider.class
+Assert.assertEquals(1145,details.get(1).getAbsolutePosition())
+returnValue
+body.endsWith("6") || body.endsWith("10")
+i >= 0
+runningTasks.remove(assignedTask)
+ImmutableList<String>
+getRequestMethod != null
+id=10863
+finishChannel(channel.getPipeline().getContext(NettyAsyncHttpProvider.class))
+Exception t
+GL.glBindTexture(target,texture)
+interceptors.addLast(newAInterceptor(a))
+Configuration.getMs(PropertyKey.USER_NETWORK_NETTY_TIMEOUT_MS)
+Arrays.asList("cmd","ls","pwd")
+mTfs.delete(mTfs.open(path),true)
+type == TokenTypes.CLASS_DEF || type == TokenTypes.ENUM_DEF || type == TokenTypes.INTERFACE_DEF
+routeList == null || routeList.isEmpty()
+UriBuilder.fromResource(StreamAlertConditionResource.class).path("{conditionId}").build(stream.getId(),alertCondition.getId())
+context.revertReloadRequired()
+typeName != null
+new IllegalStateException(msg.getMessage())
+this(type,1);
+synchronized (references) { if (transformed == null) { transformed=initializer.initializeBroadcastVariable(data); data=null; } return transformed; }
+statistics.addGetTimeNanos(System.nanoTime() - start)
+lookup="java:/ConnectionFactory"
+Bytes.toBytes(tableNameOrRegionName)
+String... pathParams
+Throwable exception
+Arrays.asList("abstract","continue","for","new","switch","assert","default","if","package","synchronized","boolean","do","goto","private","this","break","double","implements","protected","throw","byte","else","import","public","throws","case","enum","instanceof","return","transient","catch","extends","int","short","try","char","final","interface","static","void","class","finally","long","strictfp","volatile","const","float","native","super","while","type")
+lockForRescale()
+new StringBuilder(560)
+!isNodeHealing(node.getNodeId())
+Arrays.asList("Java","CSharp","Cpp")
+getOrCreateContainer().unlock(dataKey,caller,threadId)
+spanEvent.getNextSpanId() != -1
+id=48
+"unable to parse " + optionStr
+minZ != 0f || maxZ != 0f
+getConnectTimeout()
+10 * 1024 * 1024
+clearFromMember.start()
+refreshableViewWrapper.addView(newEmptyView)
+(DetailAST)child
+new PoolBagEntry(null,0,pool)
+new SimpleAttributeDefinition("ha",new ModelNode().set(HornetQClient.DEFAULT_HA),ModelType.BOOLEAN,true)
+factory.get(fResultWildcard,NO_ANNOTATIONS,retrofit)
+sendTo("direct:foo")
+dstPath.toString()
+start.expectedMessageCount(7)
+CONCURRENT_THREAD_COUNT=30
+User.createUsersList(http.get("http://yusuke.homeip.net/twitter4j/en/testcases/statuses/friends/T4J_hudson.json"))
+tempBlock.getPath()
+getOrCreateContainer().unlock(dataKey,caller,threadId)
+ChannelBuffers.buffer(2)
+Status.createStatuseList(get(getBaseURL() + "statuses/user_timeline/" + id+ ".json",null,paging.asPostParameterList(),http.isAuthenticationEnabled()))
+status != null
+from("jms:queue2:parallelLoanRequestQueue").process(new CreditAgency()).multicast(new BankResponseAggregationStrategy().setAggregatingOutMessage(true)).parallelProcessing(true)
+logger.trace("Trying to map {} to {}",t,path)
+ArrayList<>
+out.writeBytes(mask)
+size * 2.75f
+view.getMode()
+LinkedHashMap<String,HashMap<String,ASTNode>>
+invocation.logger.finest("Asking if operation execution has been started: " + invocation)
+Configuration.getMs(PropertyKey.USER_NETWORK_NETTY_TIMEOUT_MS)
+new DefaultPropertyNamePatternsMatcher(delimeters,"aaa","bbbb","ccccc")
+factory.get(fResponseWildcard,NO_ANNOTATIONS,retrofit)
+Exception e
+!this.transactional && this.referenceId == referenceId
+getOrCreateConnectionManager()
+new DynamicAwareEntry("https://localhost/test",null,null,null)
+julianDateFloor(range,(int)date + EPOCH_JULIAN,false)
+mesh.getNumVertices() / 4
+beansXml.getOrCreateAlternatives()
+mTestStream.getFlushedBytes()
+Math.min(retryIntervalMillis,timeout.timeLeft().toMillis())
+isTestOnReturn()
+mPersistedFiles.removeAll(persistedFiles)
+lastFailureException instanceof SocketTimeoutException
+count < 0
+new ScheduledJob(job,jobName,delay,period)
+assertPlanEquals(expectedPlan,actualPlan)
+Arrays.asList(CoreAnnotations.TextAnnotation.class,CoreAnnotations.TokensAnnotation.class,CoreAnnotations.CharacterOffsetBeginAnnotation.class,CoreAnnotations.CharacterOffsetEndAnnotation.class,CoreAnnotations.BeforeAnnotation.class,CoreAnnotations.AfterAnnotation.class,CoreAnnotations.TokenBeginAnnotation.class,CoreAnnotations.TokenEndAnnotation.class,CoreAnnotations.PositionAnnotation.class,CoreAnnotations.IndexAnnotation.class,CoreAnnotations.OriginalTextAnnotation.class,CoreAnnotations.ValueAnnotation.class,CoreAnnotations.IsNewlineAnnotation.class)
+!fadeScrollBars && scrollbars && scrollX
+streamTokenizer.ttype == StreamTokenizer.TT_WORD || streamTokenizer.ttype == '"'
+cursor.shouldRetry()
+lexer.token == Token.HINT && !lexer.isEnabled(SQLParserFeature.StrictForWall)
+name == null || name == null
+pieces.length <= tagColumn
+AstUtils.hasAtLeastOneAnnotation(classNode,"MessageEndpoint","EnableIntegrationPatterns")
+WeakReference strongReference
+camelContext.getExecutorServiceManager().shutdown(timeoutCheckerExecutorService)
+new VersionMismatchLogRequest()
+out.writeData(entry.getValue())
+assertEquals(3,data.size())
+logger.error("NODE {}: DeleteReturnRoute command failed.",nodeId)
+DEFAULT_LABEL_MIPMAP=false
+HELSINKI{ @Override public ServiceNowProducer get( ServiceNowEndpoint endpoint) throws Exception { return new HelsinkiServiceNowProducer(endpoint); } }
+path.getPath()
+uri.toString().equals(future.getURI().toString())
+boundary.endsWith("\"")
+options.checkProvides.isOn() || options.enables(DiagnosticGroups.MISSING_PROVIDE)
+Glue optionalGlue
+c * c
+out.writeData(function)
+System.nanoTime()
+!template.contains(PATH_AUTO_NODE_INDEX) && !template.contains(PATH_AUTO_RELATIONSHIP_INDEX) && !template.contains("_auto_")
+lookup="java:/TransactionManager"
+ALIASES.addResourceAttributeDescription(resources,keyPrefix,container)
+client.getVertx().setTimer(1000,id -> checkExpired())
+cacheConfig.isUseCache()
+configList == null || configList.size() == 0
+new DefaultMemoryManager(totalMemory,numSlots,pageSize)
+elementClass != null && !elementClass.isEmpty()
+this.supervisors == null
+assertPlanEquals(expectedPlan,actualPlan)
+entries.remove(timeKey)
+dir.isDirectory() && !"target".equals(dir.getName())
+ctx.sendUpstream(e)
+HttpRequest.post("http://localhost:8080/ejbws-example/SingletonEndpoint",message,10,SECONDS)
+new CacheCreateConfigOperation(cacheConfig,create,true)
+hashFunction.newHasher().putBytes(bigEndian)
+TIMEOUT=20000L
+group.id()
+UndertowWebServer.class
+items[29]
+serialVersionUID=19752693726457916L
+Gdx.input.getX(i)
+StatBuckets.prettyUptime(secs)
+public abstract class AbstractHikariConfig implements HikariConfigMXBean { private static final Logger LOGGER=LoggerFactory.getLogger(HikariConfig.class); private static final long CONNECTION_TIMEOUT=TimeUnit.SECONDS.toMillis(30); private static final long VALIDATION_TIMEOUT=TimeUnit.SECONDS.toMillis(5); private static final long IDLE_TIMEOUT=TimeUnit.MINUTES.toMillis(10); private static final long MAX_LIFETIME=TimeUnit.MINUTES.toMillis(30); private static int poolNumber; private static boolean unitTest; private volatile long connectionTimeout; private volatile long validationTimeout; private volatile long idleTimeout; private volatile long leakDetectionThreshold; private volatile long maxLifetime; private volatile int maxPoolSize; private volatile int minIdle; private String catalog; private String connectionCustomizerClassName; private String connectionInitSql; private String connectionTestQuery; private String dataSourceClassName; private String dataSourceJndiName; private String driverClassName; private
+return true;
+this.getDefaultReadOnly()
+SLEEP_TIME=1500
+eventListeners != null
+this.registry.getValue().removeXAResourceRecovery(recovery)
+error.expectedMinimumMessageCount(2)
+target.directory("zk" + id + "data",true)
+readUnlock()
+new JedisClusterCommand<Set<String>>(connectionHandler,maxRedirections){ @Override public Set<String> execute( Jedis connection){ return connection.spop(key,count); } }
+logger.fine("Normalizing")
+lookupService.lookupPrincipalByName(user)
+getFirstByType(type)
+assertTrueEventually(new AssertTask(){ @Override public void run() throws Exception { assertFalse(lock.isLocked()); } } ,20)
+times + BASE_FILE_NUMBER
+Exception t2
+implementationMethodDescriptors.build()
+S3DataSegmentMover.class
+m_data.getFixString((int)m_length,charsetName)
+id=10873
+mListView.getChildAt(index)
+Mockito.verify(mRMClient).start()
+id=21
+@DELETE
+LOG.debug("Processing changes for pool " + poolName + ": "+ pools.get(poolName))
+id=40
+(this.getExecContext().getLocalWork() != null && this.getExecContext().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork() != null && this.getExecContext().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getLocalWork().getWork().
+assertFalse(jmsTemplate.isPubSubDomain())
+GL20.glGetUniformfv(program,location,params)
+id=10872
+children == null
+new java.util.Date(timeIsGivenInThisTimeZone)
+new StringBuilder(729)
+deploymentInfo.setDefaultEncoding(servletContainer.getDefaultEncoding())
+@Override public ExtendedCell deepClone(){ byte[] copy=Bytes.copy(this.bytes,this.offset,this.length); KeyValue kv=new KeyValue(copy,0,copy.length); kv.setSequenceId(this.getSequenceId()); return kv; }
+doInvoke(args.first(),(args=args.rest()).first(),(args=args.rest()).first(),(args=args.rest()).first(),(args=args.rest()).first(),(args=args.rest()).first(),(args=args.rest()).first(),(args=args.rest()).first(),(args=args.rest()).first(),(args=args.rest()).first(),args.rest())
+lookup="java:/ConnectionFactory"
+reg.getMeters(transformFilter(filter))
+cache.set(style.fontColor == null ? color : Color.tmp.set(color).mul(style.fontColor))
+result.expectedBodiesReceivedInAnyOrder("A+C+E+G+I","B+D+F+H+J")
+propEditor != null && !propEditor.isEmpty()
+60 * 1000
+IllegalStateException ise
+assertEquals(4,AccessControlLists.getTablePermissions(conf,TEST_TABLE).size())
+assertPlanEquals(expectedPlan,actualPlan)
+stopwatch.elapsed(MILLISECONDS)
+request.getContextPath()
+removeBlock(sessionId,blockId,BlockStoreLocation.anyTier())
+Gauge<Integer>
+new IntRangeValidator(1,true,true,true)
+traceIds.isEmpty()
+assertFalse(found)
+inner.innerSetException(new TimeoutException())
+new SSL((short)MIN_SSL_OPTIONS,(short)0,(short)sslPort)
+assertEquals(orig.getResponse(),expectedResponse)
+bigEndian.order()
+getBoolean(ASYNC_CLIENT + "acceptAnyCertificate",false)
+T1
+getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST,"")
+Character.toUpperCase(ch)
+TestSuiteEnvironment.getServerAddressNode1()
+oldOverride.addParameter("enabled","enabled")
+ImmutableSet<Renderer>
+ObjectHelper.isNotEmpty(configuration.getClusterService())
+rj.reduceProgress()
+@Deprecated
+buf.discardReadBytes()
+context.add("exceptionalMethod",123.0f)
+logger.error("{} is already cancelled",impl.uuid())
+Thread.sleep(500L)
+configureWebDotXmlAtmosphereHandler(scFacade)
+engine.execute(query).dumpToString()
+assertOpenEventually("responseLatch",responseLatch)
+new ASMClassLoader(loader)
+Mockito.any(ProducerRecord.class)
+new ModelNode().set(15000L)
+expiresOn.getTime()
+new UnderFileStatus("dummy",0L,isDirectory,0L,"owner","group",(short)077)
+DEFAULT_MAX=1024
+c.getPath() == null && getPath() != null
+LOGGER.debug("no property for " + type + ", "+ format)
+logger.debug("gave up waiting for query reply from device {}",m_address)
+stopwatch.elapsed(MILLISECONDS)
+E edge
+analysis.getTypeWithCoercions(aggregate)
+assertTrue(user.isGeoEnabled())
+field.set(instance,value)
+assertClusterSizeEventually(2,nodes[0])
+reg.getMeters(transformFilter(filter))
+SectionStartToken.word()
+public Long getOlderThan(){ return olderThan; }
+in.readLong()
+id=20
+triggerManager.getRules(CHANGE,item,newState,oldState)
+getLsResultStr("/testRoot/testDir",files[1].getCreationTimeMs(),1,LsCommand.STATE_FOLDER,testUser,testUser,files[1].getPermission(),files[1].isFolder())
+acquiredChannelCount < maxConnections
+test("var foo = function (a) {}; foo.call(this, 1);","var foo = function () {var a$jscomp$1 = 1;}; foo.call(this);")
+result.expectedMinimumMessageCount(3)
+id=17
+0 - originX
+@ConditionalOnEnabledHealthIndicator("mongo")
+JavaConversions.asJavaIterable(kafkaLog.logSegments(committedOffset,Long.MAX_VALUE))
+@InputIntMethodAnnotation(value=-45)
+first
+case REPLACE_IF_SAME:
+GatherGetterAndSetterProperties.gather(compiler,mainRoot)
+log.debug("Checking bounds key:[{}, {}) & col:[{}, {}) (expect {} keys)",new Object[]{keyStart,keyEnd,startCol,endCol,expected.size()})
+className.indexOf("org.openmrs.")
+request.getPathInfo()
+visitor.visit(this)
+includedGroup == null
+Gdx.files.internal(fileName).pathWithoutExtension()
+logger.info("{} exists but cannot be executed even when execute permissions set; " + "check volume for \"noexec\" flag; use -Dio.netty.native.workdir=[path] " + "to set native working directory separately.",tmpFile.getPath())
+new RMNodeImpl(nodeId,rmContext,null,0,0,null,null)
+mavenBundle("info.cukes","cucumber-jvm-deps")
+booleanSessionProperty(LEGACY_ORDER_BY,"Use legacy rules for column resolution in ORDER BY clause",true,featuresConfig.isLegacyOrderBy())
+conf.getRestBaseURL()
+logger.fine("Renamed " + instancesRenamed + " instances of "+ propsRenamed+ " properties.")
+mapper.getFactory()
+container.getTimeFormat().equals(TimeFormat.DATE) || container.getTimeFormat().equals(TimeFormat.DATETIME)
+this.originY
+group != null && !"0")
+new JSONParseSpec(timestampSpec,new DimensionsSpec(dimensions,dimensionExclusions,spatialDimensions))
+value()
+config.getBroadcasterFactory().lookup(a.broadcaster(),path,true)
+assertEquals(9,tokens.size())
+IllegalStateException nsee
+new CompilerException(sourceName,e.line,e.getCause())
+result.expectedMinimumMessageCount(2)
+new GenerationException("Couldn't parse type: " + typeDefinition,e)
+QuotaCache.this.tableQuotaCache.containsKey(table)
+LOG.debug("Getting synchronous method stub from channel")
+activeCount >= maxActive
+buffer.readableBytes() < 8
+logger.fine("Strip code")
+instance2.getLifecycleService().shutdown()
+node.getLifecycleService().shutdown()
+version == null || version.equals("")
+websocketComponent.setMaxThreads(20)
+id=10806
+!StringUtils.startsWithIgnoreCase(StringUtils.trim(ddl),"flush") && !StringUtils.trim(ddl),"grant") && !StringUtils.trim(ddl))
+doInvoke(args.first(),(args=args.rest()).first(),(args=args.rest()).first(),(args=args.rest()).first(),(args=args.rest()).first(),(args=args.rest()).first(),(args=args.rest()).first(),args.rest())
+maxSize < (used / total)
+public String getRequestRequiredAcks(){ return requestRequiredAcks; }
+LOGGER.warn("Unable to process JSON",exception)
+stats.getLastUpdateTime() >= lastUpdateTime
+id=10802
+new UnsupportedOperationException("'level' cannot be null")
+new HashMap<>(queryMemoryRevocableReservations)
+E extends Model
+undertowHost.getServer().getListeners().get(0).getBinding().getValue().getPort()
+putBytes(v)
+{14,3.5f}
+node1.isEquivalentToTyped(node2)
+waitForJobExecutorToProcessAllJobsAndExecutableTimerJobs(20000,200)
+user.getSystemId() == null &&SystemId.equals("")
+public final TFAgentStatMapper tFAgentStatMapper=new TFAgentStatMapper();
+websocketComponent.setMaxThreads(20)
+DEFAULT_USER_AS_DEFAULT_QUEUE=true
+QuotaCache.this.tableQuotaCache.containsKey(table)
+e.toString()
+@Override public Response description(String description){ throw new RuntimeException("Not implemented"); }
+entry.getValue().getManagementInterfaceMicroVersion()
+assertEquals(3,historyService.createHistoricActivityInstanceQuery().processDefinitionId(processInstance.getProcessDefinitionId()).list().size())
+Foundation.log("[info] " + tag + ": "+ message)
+SocketTimeoutException.class
+idGenerator.generateUuid()
+registered.remove(objectName)
+E edge
+value()
+logger.trace("Removing: {}",r)
+mCurrentBlockLeftByte >= tLen
+new S_Command("00FE30",1,20.0)
+abandonSegment(entry.getKey(),entry.getValue())
+AbstractEndpointBean.class
+zkWorker2.getWorker()
+@Override public Response header(String name,Property property){ addHeader(name,property); return this; }
+result.expectedMinimumMessageCount(3)
+PropertyValuesAnimationAdapter<T>
+routes.ExtractorsResource().list(input.getId())
+createMessageConsumer(session,destinationName,messageSelector,true,null)
+maxPendingPersists <= 0
+new GeneralDataCoding(false,true,MessageClass.CLASS1,Alphabet.ALPHA_DEFAULT)
+assertEquals(3,historyService.createHistoricActivityInstanceQuery().finished().list().size())
+rowsRet < 0
+entry.getName().equals(BOOT_INF_CLASSES)
+@RunWith(HazelcastParallelClassRunner.class) @Category({QuickTest.class,ParallelTest.class}) public class IdGeneratorBasicDistributedTest extends IdGeneratorAbstractTest { @Override protected HazelcastInstance[] newInstances(){ return createHazelcastInstanceFactory(2).newInstances(); } }
+assertPlanEquals(expectedPlan,actualPlan)
+assertEquals(6,config.getMapConfigs().size())
+getHandledPredicate()
+System.nanoTime()
+Assert.assertTrue(Boolean.valueOf(response.getFirstHeader("serialized").getValue()))
+node.getLocalName()
+future.isCancelled() || future. isCancelled()
+stackTrace.length <= depth
+Preconditions.checkNotNull(blockIds,"blockIds")
+GatherGetterAndSetterProperties.update(compiler,externs,root)
+Integer.parseInt(tokens[3])
+Integer.MIN_VALUE + 9
+timeout=30000
+CompletableFuture<Void>
+ast != null && ast.getNextSibling() != null
+Preconditions.checkNotNull(mBlockIdsOnTiers,"mBlockIdsOnTiers")
+RestartStrategies.fixedDelayRestart(1,0)
+LOG.warn("Cannot resolve the host name for " + regionAddress + " because of "+ e)
+DynamicState.changingBlobs.isEmpty()
+this.getDefaultReadOnly()
+assertPlanEquals(expectedPlan,actualPlan)
+logger.debug("MyQ binding received command '{}' for item '{}'",command,itemName)
+id=38
+return false;
+logger.trace("AtmosphereResource {} is resuming",uuid())
+NbPreferences.forModule(DataTableTopComponent.class).getBoolean(DATA_LABORATORY_ONLY_VISIBLE,true)
+executor.scheduleAtFixedRate(this,period,period,unit)
+allGroupingColumns == null || allGroupingColumns.isEmpty()
+DataStreamSink<OUT>
+GL20.glUniformMatrix2fv(location,transpose,toFloatBuffer(value,offset,count << 2))
+Exception t
+GatherGetterAndSetterProperties.update(compiler,externs,root)
+-1L
+expectQueryToFail("UserWith:Colon",ldapUserPassword,MALFORMED_CREDENTIALS_ERROR)
+removeQuote(timestring.trim())
+RT.count(s)
+DiagnosticGroups.registerGroup("functionParams",FunctionTypeBuilder.OPTIONAL_ARG_AT_END,null)
+messageHandler.serverResponder()
+ServiceAnnouncingSegmentPublisher.class
+mapContainer.getMapConfig().getTimeToLiveSeconds() * 1000L
+services=4
+TestSuiteEnvironment.getServerAddressNode1()
+new NotSupportedException("'level' cannot be null")
+callTimeoutMs=10000
+GL11.glGetFloatv(pname,params)
+lines("Function.prototype.inherits = function(parentCtor) {"," function tempCtor() {};"," tempCtor.prototype = parentCtor.prototype;"," this.superClass_ = parentCtor.prototype;"," this.prototype = new tempCtor();"," this.prototype.constructor = this;","};")
+DiagnosticType.error("JSC_GOOG_MODULE_IN_NON_MODULE","goog.module() call must be the first statement in a module.")
+type == VertexDataType.VertexBufferObject || Mesh.forceVBO
+300 * Constants.SECOND_MS
+StringUtil.in(name,"base","basefont","bgsound","command","link","meta","noframes","script","title")
+javaChannel().isOpen() && config().getSoLinger() > 0
+new Notification(notification,nodeService)
+Context.getEncounterService().canViewAllEncounterTypes(Context.getAuthenticatedUser())
+return maxPagePartitioningBufferSize;
+doInvoke(args.first(),(args=args.rest()).first(),(args=args.rest()).first(),(args=args.rest()).first(),(args=args.rest()).first(),(args=args.rest()).first(),(args=args.rest()).first(),(args=args.rest()).first(),args.rest())
+Foundation.log("[error] " + tag + ": "+ message)
+0xffL << shift
+Status.createStatuseList(get(getBaseURL() + "statuses/friends_timeline.json",true))
+detailNode != null && detailNode.getNodeType().equals(JsonNodeType.OBJECT)
+dis.readFully(serializedData,0,length)
+p == null || t < -1
+connection.zrevrangeByLex(key,max,min)
+getRequestParameters()
+logger.trace("Removing: {}",r)
+annotatorImplementation.custom(inputProps,property)
+args.length != 3
+new Entry[2048]
+defaults.jackson2Encoder(new Jackson2JsonEncoder(objectMapper,EMPTY_MIME_TYPES))
+segments.add(segment)
+Configuration.getMs(PropertyKey.USER_NETWORK_NETTY_TIMEOUT_MS)
+new StringBuilder(253)
+Foundation.log("[debug] " + tag + ": "+ message)
+"LEVEL".equalsIgnoreCase(ident) || "LEVEL".equalsIgnoreCase(ident)
+closeCode < 1003
+@InputIntMethodAnnotation(-44)
+toEventData(key)
+future1.get(2,TimeUnit.SECONDS)
+connectPromise.tryFailure(t)
+new IOException("should execute connector.connect() first")
+(Relationship)container
+IDAUTHORITY_RETRY_COUNT_DEFAULT=20
+Assert.assertTrue(Boolean.valueOf(response.getFirstHeader("serialized").getValue()))
+simple.getToSentDate()
+id=10848
+IRON_SWORD(267,1,250)
+idAnnotation != null && !method.isBridge()
+mTestStream.getFlushedBytes()
+result.expectedMinimumMessageCount(2)
+id=10842
+Metric<Long>
+GL20.glUniform2iv(location,toIntBuffer(v,offset,count << 1))
+lineageInfo.getChildren()
+type != EventType.QUERY && type != EventType.INSERT && type != EventType.UPDATE && type != EventType.DELETE
+Calendar.getInstance(JSON.defaultLocale)
+Preconditions.checkNotNull(jobName,"Streaming Job name should not be null.")
+id=10801
+zController.sendData(doRequestStop(),true)
+obj.getRequiredTokens()
+!resource.getAtmosphereResourceEvent().isClosedByClient() && !resource.getAtmosphereResourceEvent().isClosedByApplication() && !resource.getAtmosphereResourceEvent().isClosedByApplication() && !resource.isCancelled()
+ufsPath.toString()
+/** * Frequency in milliseconds that the consumer offsets are auto-committed to Kafka if 'enable.auto.commit' true. */ private Integer autoCommitInterval;
+hazelcastFactory.newHazelcastClient(newClientConfig())
+ProcedureTestingUtility.waitAllProcedures(master.getMasterProcedureExecutor())
+grammar.getTokenDisplayNames()
+@UriParam(label="producer",defaultValue="true")
+sizeNeeded > items.length
+new StringBuilder(238)
+isFieldKept(input,uniqueField)
+Integer.parseInt(tokens[3])
+(outputFolder + File.separator + apiFolder).replace("/",File.separator)
+ImmutableSet.of("testStringRepresentation","null")
+group.shutdownGracefully(0,10,TimeUnit.SECONDS)
+address.getHostAddress()
+clearFromMember.start()
+this.getDefaultReadOnly()
+SecurityAutoConfiguration.class
+assertRemoveSubsystemResources(servicesA)
+processInstanceArray == null || processInstanceArray.size() == 0
+getResponse("GET","/books/" + bookId,null)
+len % (1024 * 1024) / 10000
+NodeTraversal.traverseEs6(compiler,scriptRoot,this)
+LOG.warn(rootPath + "is not a directory")
+/** * {@inheritDoc} */ @Override public Broadcaster addAtmosphereResource(AtmosphereResource r){ try { if (destroyed.get()) { logger.debug(DESTROYED,getID(),"addAtmosphereResource(AtmosphereResource<?, ?> r"); return r; } start(); if (scope == SCOPE.REQUEST && requestScoped.getAndSet(true)) { throw new IllegalStateException("Broadcaster " + this + " cannot be used as its scope is set to REQUEST"); } if (maxSuspendResource.get() > 0 && resources.size() >= maxSuspendResource.get()) { if (policy == POLICY.FIFO) { AtmosphereResource resource=resources.poll(); try { logger.warn("Too many resource. Forcing resume of {} ",resource); resource.resume(); } catch ( Throwable t) { logger.warn("failed to resume resource {} ",resource,t); } }
+location.equals(BlockStoreLocation.anyDirInTier(tierAlias))
+subProperties.putIfAbsent(subName,value)
+new StringBuilder(28)
+v.executeBlocking(fut -> { try { v.simulateKill(); fut.complete(); } catch ( Exception e) { fut.fail(e); } } ,ar -> { if (!ar.succeeded()) { fail(ar.cause()); } } )
+endsWith("/home/source")
+lock.unlock()
+logger.info("Installing Filter {}",filter)
+LOG.debug("Creating short circuit output stream for block {} @ {}",blockId,address)
+attribute.getDefinition().getMarshaller()
+coreThreads.asStringWithoutResolving()
+sizeNeeded > items.length
+completionLatch.await(2500,TimeUnit.MILLISECONDS)
+Class.forName(mUfsClz).getConstructor()
+assertTrue(runtimeOptions.isMonochrome())
+endpointB.expectedBodiesReceived("A blue car!","A blue car, again!")
+from(Constants.PARALLEL_LOANBROKER_URI).process(new CreditScoreProcessor(Constants.CREDITAGENCY_ADDRESS)).multicast(new BankResponseAggregationStrategy()).parallelProcessing(true)
+Status.createStatuseList(get(getBaseURL() + "statuses/retweets_of_me.json",null,true))
+ImmutableSortedSet.of("br","li","dt","dd","hr","img","p","td","tr","th")
+lockMode == InodeTree.LockMode.READ
+IR.thisNode()
+version == null || version.equals("")
+new StringBuilder(245)
+new GZIPOutputStream(outputStream)
+LogUtils.initializeDefaultConsoleLogger(true)
+FSImageFormatPBINode.class
+assertClusterSizeEventually(2,h2)
+conn.getResponseCode() == HttpURLConnection.HTTP_OK || conn.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST
+toEventData(key)
+Assert.assertEquals(select.size(),0)
+setPin(file,true)
+Bukkit.getOperators()
+quoteMatcher.group(1)
+endFunction("get_column_statistics_by_partition: ",statsObj != null,null)
+TestSuiteEnvironment.getServerAddressNode1()
+NettyConnectionsPool.class
+time.put(current)
+conf.getRestBaseURL()
+environmentVariableMode=2
+getPath("checks/javadoc/Input_01.java")
+shift > 0 && newroot.length == 1
+ImmutableSet.copyOf(modules)
+-1L
+responseCode < OK || MULTIPLE_CHOICES <= responseCode
+executionStats.getStartedSplits()
+DiagnosticType.warning("JSC_NAME_REFERENCE_IN_EXTERNS","accessing name {0} in externs has no effect")
+getSslStoreProvider().getTrustStore()
+new JmxEndpointProperties()
+LOG.debug("Retrieving location for state={} of job={} from the cache.",queryableStateName,jobId)
+ctx.alloc().buffer()
+authentication.has(USERS)
+Byte.parseByte(value.toString())
+hz1.getLifecycleService().shutdown()
+config.getInputShipStrategy(1)
+stat.st_size.longValue()
+!WebSocketProtocolStream.class.isAssignableFrom(webSocketProtocol.getClass())
+toEventData(key)
+distinctValues.put(slice,distinct)
+/** * Gets the key of service port. * @return key of service port */ public PropertyKey getPortKey(){ return mPortKey; }
+serializer.serializeServerFailure(ctx.alloc(),new RuntimeException(msg))
+assertEquals(1,conceptStopWords.size())
+Assert.notNull(jarScanner,"Patterns must not be null")
+row == null || row.size() == 0
+binder.bindConstant().annotatedWith(Names.named("servicePort")).to(8089)
+ImmutableSet<ImplementationMethodDescriptor>
+LOG.warn("OpenTracing: Failed to capture tracing data",t)
+return true;
+mock.expectedMinimumMessageCount(2)
+getSsl(ClientAuth.NEED,"password","src/test/resources/test.jks")
+patientExitObs != null && patientExitObs != null
+compare(leftValue,rightValue) <= 0
+twitter4j.List.createListList(get(getApiBaseURL() + V1 + user+ "/lists/memberships.json?cursor="+ cursor,true))
+new StringBuilder(560)
+writeDelaySeconds=1
+VARBINARY.createBlockBuilder(new BlockBuilderStatus(),1)
+new Date(1)
+CamelContextHelper.parseInteger(getCamelContext(),maxQueueSize)
+war.setWebXML(ClusteredWebTestCase.class.getPackage(),"web.xml")
+factory.getEmbeddedServletContainer(exampleServletRegistration(),new FilterRegistrationBean(new ExampleFilter()))
+public Builder setRealmPassword(String password){ realm().setPassword(password); return this; }
+new HashSet<RecordReplicationInfo>(recordStore.size())
+drawable != null
+return 16;
+assertTrue(dr.isFailure())
+NONCONFORMING_LR_RULE(169,"rule <arg> is left recursive but doesn't conform to a pattern ANTLR can handle",ErrorSeverity.ERROR)
+endpoint.getBus().getInInterceptors().size() >= 1
+other.getLimit()
+!key.equals(OAuthConstants.SCOPE)
+currentStage != NodeStage.DONE && sendMessage() == false
+Assert.assertEquals(new InetSocketAddress("RemoteMaster1",10000),masterAddress)
+pushExecutor.execute(new NamedRunnable("OkHttp %s Push Data[%s]",hostName,streamId){ @Override public void execute(){ try { boolean cancel=pushObserver.onData(streamId,buffer,byteCount,inFinished); if (cancel) frameWriter.rstStream(streamId,ErrorCode.CANCEL); if (cancel || inFinished) { synchronized (SpdyConnection.this) { currentPushRequests.remove(streamId); } } } catch ( IOException ignored) { } } } )
+TIMEOUT=30000
+rsWrap.getMobFileCacheMissCount()
+mock.expectedBodiesReceivedInAnyOrder("c","b","a")
+{11,6.5f}
+@Deprecated
+new StringBuilder(560)
+assertEquals(10,set.size())
+connection.zrevrangeByLex(key,max,min)
+getNonCompilablePath("InputPackageDeclarationDiffDirectoryAtSubpackage.java")
+client.getStatusCodeReply()
+@SuppressWarnings("unused") private final WeakSafeReadWriteLock strongReference;
+n <= k && i > 0
+this.thrown.expectMessage("File must not be null")
+checkpointPath.toString()
+Math.max(clientCount,1)
+"Using bind address: " + bindAddress
+ShrinkWrap.create(JavaArchive.class).addAsManifestResource("beans.xml")
+Utils.javaDeserialize(_boltSer,IBatchBolt.class)
+deletionRetentionStrategy == null || deletionRetentionStrategy == null
+log.warn("Unexpected exception on closing transaction. Cause: " + e)
+document.tokens().get(9)
+WebAppUtils.getResolvedRMWebAppURLWithScheme(conf)
+builder(SingleSignOnDefinition.INSTANCE).addAttributes(SingleSignOnDefinition.DOMAIN,SingleSignOnDefinition.PATH,SingleSignOnDefinition.HTTP_ONLY,SingleSignOnDefinition.SECURE,SingleSignOnDefinition.COOKIE_NAME)
+toBeRemovedKeys.removeAll(keysToDelete)
+line.toString(charset)
+addGroupedInterceptor(filter,interceptorClassName,null,group,executionPolicy)
+log.error("Error while closing command context",exception)
+put.writeToWAL(true)
+meta.setContentType(Mimetypes.MIMETYPE_OCTET_STREAM)
+sname.getParent().getSimpleName().substring(8)
+id=10844
+page.getLogicalSizeInBytes()
+z / vz
+testError("class Foo extends BaseFoo { method() { Foo.base(this, 'method'); } }",BASE_CLASS_ERROR)
+registry.bind("kinesisClient",amazonKinesisClient)
+addKeys(externalClasses,DATE_TIME,"org.joda.time.DateTime","org.joda.time.ReadableDateTime","javax.xml.datatype.XMLGregorianCalendar","java.time.LocalDateTime")
+tableLayoutHandle.getPartitions().isPresent()
+waitForJobExecutorToProcessAllJobsAndExecutableTimerJobs(20000,200)
+connection.psubscribe(jedisPubSub,patterns)
+cluster.getTypeFactory().createSqlType(SqlTypeName.DECIMAL,unscaled.toString().length(),bd.scale())
+ReferenceCountUtil.release(holder)
+val.get(k)
+postAgg.getName().equalsIgnoreCase(metricName)
+newId >= max
+Status.createStatuseList(get(getBaseURL() + "statuses/mentions.json",null,true))
+bits2[1] == true
+assertThat(page1reverse.pagination().getGlobalTotal()).isEqualTo(5)
+/** * Make sure we don't attempt to recover inline; if the parser successfully recovers, it won't throw an exception. */ @Override public Symbol recoverInline(BaseRecognizer<Symbol> recognizer) throws RecognitionException { throw new RuntimeException(new InputMismatchException(recognizer)); }
+new DynamicAwareEntry("http://localhost:8080/test",null,null,null)
+message.getFilteredFields()
+LOG.warn("Promotion of block " + blockId + " failed.",ioe)
+addKeys(externalClasses,DATE,"org.joda.time.LocalDate","java.time.LocalDate")
+config.getBroadcasterFactory().lookup(m.broadcaster(),path,true)
+autoCommit != null && autoCommit != conn.getAutoCommit()
+getter.getType()
+assertEquals("string",model.getProperties().get(NAME).getType())
+enabled=true
+ExprEval.of(null)
+queue.size() > 100000
+endsWith("/home/source")
+logger.debug("Receive queue TAKE: Length={}",recvQueue.size())
+!this.fs.delete(filePath,false)
+xtw.writeCData(customProperty.getSimpleValue())
+new CamelExchangeException("JettyClient failed with state " + exchangeState,exchange,exchange.getException())
+segments.add(segment)
+waitUntil(() -> clusterManager.getNodes().size() == 2,60_000)
+new ModelNode().set(17500L)
+bar.setResultWaitTime(4000)
+new IllegalArgumentException("'level' cannot be null")
+Color.fromRGB(0xABABAB)
+xAmount != 0
+Assert.notNull(groupId,"ArtifactId must not be null")
+ConversionException e
+LOG.trace("Terminating channel to the remote gRPC server",e)
+getNonCompilablePath("InputPackageDeclarationDiffDirectoryAtParent.java")
+testClass.getMethod(SUITE_METHODNAME)
+Wt.getSlice(slice).plus(Wt.getSlice(slice).transpose())
+Integer id=Integer.parseInt(reader.getAttributeValue(null,"id"));
+return 1;
+ImmutableList.copyOf(interceptors)
+grammar.getTokenDisplayNames()
+new PutBackupOperation(name,dataKey,dataValue,replicationInfo)
+@DELETE
+Assert.assertTrue(mFileSystem.getStatus(uri).getInMemoryPercentage() == 100)
+start.set(Calendar.DAY_OF_MONTH,startDay)
+CsvReporter.forRegistry(registry).convertDurationsTo(getDurationUnit()).convertRatesTo(getRateUnit())
+Mono.just(entry.getKey()).zipWith(entry.getValue().health().compose(this.timeoutCompose))
+{11,6.5f}
+minZ != 0f || maxZ != 0f
+i > 0
+dstPath.toString()
+STANDALONE
+id=10841
+Character.toUpperCase(ch)
+visitStatement(node,context)
+getMockEndpoint("mock:test.after.1").expectedMessageCount(10)
+Color.rgba8888ToColor(color,colorInt)
+-1L
+GL.glTexSubImage2D(target,level,xoffset,yoffset,width,height,format,type,pixels,Memory.getPosition(pixels))
+engine.execute(cypher).dumpToString()
+status().isMovedTemporarily() || status().isCancelled()
+final StringBuilder result=new StringBuilder(20);
+private CsvFilter filter;
+twitter1.getRetweets(1021608606934822912L)
+size=100
+executionJobVertex.getMaxParallelism()
+typeSerializer.getDeserializedType()
+prePassivates != null
+warnings.append(LocalizationMessages.HINT_MSG(error.getMessage()))
+ctx.alloc().buffer()
+member.getType()
+Nd4j.getAffinityManager().getDeviceForCurrentThread()
+DefaultChannelFuture.setUseDeadLockChecker(true)
+times + BASE_FILE_NUMBER
+GL.glCopyTexSubImage2D(target,level,xoffset,yoffset,x,y,width,height)
+ImmutableSet.Builder<ImplementationMethodDescriptor>
+LOG.warn("Promotion of block " + blockId + " failed.",ioe)
+id=10804
+new byte[11]
+LOG.debug("Failed to get mount information: {}",e.getMessage())
+left.getQualifierLengthWithoutLength()
+clusterProperties.getMaxRedirects()
+log.error("Error while closing command context",exception)
+new StringInputRowParser(new JSONParseSpec(new TimestampSpec("timestamp","auto"),new DimensionsSpec(Arrays.asList("dim1","dim2"),null,null)),null,null,null,null)
+32 << 10
+ExprEval.of(null)
+Status.createStatuseList(get(getBaseURL() + "statuses/user_timeline/" + id+ ".json",http.isAuthenticationEnabled()))
+Status.createStatuseList(get(getBaseURL() + "statuses/retweeted_to_me.json",null,paging.asPostParameterList(),true))
+registerConsumer(owner,newUUIDString(),newUUIDString(),attributes)
+eventJournalConfig.getCacheName()
+context.var("double",2)
+Flux.create(camelSink::set,true)
+lookup="java:jboss/mail"
+routes.ExtractorsResource().list(input.getId())
+dbSqlSessionFactory.getDatabaseCatalog() != null && dbSqlSessionFactory.getDatabaseCatalog().length() > 0
+workerCount--
+ModuleFactory.stopModule(mod,true)
+getTablename().getName()
+logger.trace("Trying to map {} to {}",t,path)
+endFunction("write_partition_column_statistics: ",ret != false,null)
+pushExecutor.execute(new NamedRunnable("OkHttp %s Push Reset[%s]",hostName,streamId){ @Override public void execute(){ pushObserver.onReset(streamId,errorCode); synchronized (SpdyConnection.this) { currentPushRequests.remove(streamId); } } } )
+active == null
+Status.createStatuseList(get(getBaseURL() + "favorites/" + id+ ".json","page",String.valueOf(page),true))
+getTaskWriterCount(session) > 1 && !node.getPartitioningScheme().isPresent()
+event.getChangeColumns()
+total=20000
+AsyncIOWriterAdapter.class
+next.getField(1)
+log.warn("Unable to provision more workers. Current workerCount[%d] maximum workerCount[%d].",currValidWorkers,maxWorkerCount)
+terms.facetFilter(standardFilters(range,filter))
+configuredScriptEngineNames == null || configuredScriptEngineNames.isEmpty()
+logger.error("Invalid Atmosphere Version {}",javascriptVersion)
+response.get(ROLLED_BACK)
+DataStreamSink<OUT>
+StringUtils.hasLength(secretQuestion) && StringUtils.hasLength(secretAnswer)
+ConfigUtils.absoluteStormLocalDir(stormConf)
+details.put(CONFIG_HASH_KEY,currentConfigHash)
+expectedMinimumCount == -1 && expectedCount <= 0
+Assert.assertEquals(3,json.size())
+Color.fromRGB(0x6689D3)
+assertTrue(runtimeOptions.isMonochrome())
+sExecutorService.shutdownNow()
+assertTrue("reuse-address",networkConfig.isReuseAddress())
+remoteAddressAliases != null && returnValue
+result.expectedMinimumMessageCount(3)
+executor.scheduleAtFixedRate(this,period,period,unit)
+standardSearchRequest(query,IndexHelper.determineAffectedIndices(indexRangeService,deflector,range),range)
+scanFeatures(getCamelKarafFeatureUrl(),"xml-specs-api","camel-core","camel-spring","camel-test")
+connections.get(target)

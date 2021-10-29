@@ -1,0 +1,319 @@
+Source: source Target: target
+2021-10-29 22:30:24 | INFO | fairseq_cli.train | Namespace(activation_fn='gelu', adam_betas='(0.9, 0.98)', adam_eps=1e-06, adaptive_softmax_cutoff=None, adaptive_softmax_dropout=0, all_gather_list_size=16384, arch='mbart_base', attention_dropout=0.1, best_checkpoint_metric='bleu', bf16=False, bpe=None, broadcast_buffers=False, bucket_cap_mb=25, checkpoint_suffix='', clip_norm=0.0, cpu=False, criterion='label_smoothed_cross_entropy', cross_self_attention=False, curriculum=0, data='../processed_data/large/data-bin', data_buffer_size=10, dataset_impl=None, ddp_backend='no_c10d', decoder_attention_heads=12, decoder_embed_dim=768, decoder_embed_path=None, decoder_ffn_embed_dim=3072, decoder_input_dim=768, decoder_layerdrop=0, decoder_layers=6, decoder_layers_to_keep=None, decoder_learned_pos=True, decoder_normalize_before=False, decoder_output_dim=768, device_id=0, disable_validation=False, distributed_backend='nccl', distributed_init_method=None, distributed_no_spawn=False, distributed_port=-1, distributed_rank=0, distributed_world_size=1, distributed_wrapper='DDP', dropout=0.1, empty_cache_freq=0, encoder_attention_heads=12, encoder_embed_dim=768, encoder_embed_path=None, encoder_ffn_embed_dim=3072, encoder_layerdrop=0, encoder_layers=6, encoder_layers_to_keep=None, encoder_learned_pos=True, encoder_normalize_before=False, end_learning_rate=0.0, eval_bleu=True, eval_bleu_args='{"beam": 5}', eval_bleu_detok='space', eval_bleu_detok_args=None, eval_bleu_print_samples=False, eval_bleu_remove_bpe='sentencepiece', eval_tokenized_bleu=True, fast_stat_sync=False, find_unused_parameters=False, fix_batches_to_gpus=False, fixed_validation_seed=None, force_anneal=None, fp16=False, fp16_init_scale=128, fp16_no_flatten_grads=False, fp16_scale_tolerance=0.0, fp16_scale_window=None, keep_best_checkpoints=-1, keep_interval_updates=-1, keep_last_epochs=-1, label_smoothing=0.1, langs='java,python,en_XX', layernorm_embedding=True, left_pad_source='True', left_pad_target='False', load_alignments=False, localsgd_frequency=3, log_format='json', log_interval=100, lr=[5e-05], lr_scheduler='polynomial_decay', max_epoch=3000, max_sentences=4, max_sentences_valid=4, max_source_positions=1024, max_target_positions=1024, max_tokens=None, max_tokens_valid=None, max_update=200000, maximize_best_checkpoint_metric=True, memory_efficient_bf16=False, memory_efficient_fp16=False, min_loss_scale=0.0001, min_lr=-1.0, model_parallel_size=1, no_cross_attention=False, no_epoch_checkpoints=True, no_last_checkpoints=False, no_progress_bar=False, no_save=False, no_save_optimizer_state=False, no_scale_embedding=False, no_seed_provided=False, no_token_positional_embeddings=False, nprocs_per_node=1, num_batch_buckets=0, num_workers=64, optimizer='adam', optimizer_overrides='{}', patience=100, pooler_activation_fn='tanh', pooler_dropout=0.0, power=1.0, profile=False, quant_noise_pq=0, quant_noise_pq_block_size=8, quant_noise_scalar=0, quantization_config_path=None, relu_dropout=0.0, required_batch_size_multiple=8, reset_dataloader=True, reset_lr_scheduler=True, reset_meters=True, reset_optimizer=True, restore_file='../plbart/checkpoint_11_100000.pt', save_dir='../models/plbart/unique/large', save_interval=1, save_interval_updates=0, seed=1234, sentence_avg=False, share_all_embeddings=True, share_decoder_input_output_embed=True, skip_invalid_size_inputs_valid_test=False, slowmo_algorithm='LocalSGD', slowmo_momentum=None, source_lang='source', stop_time_hours=0, target_lang='target', task='translation_without_lang_token', tensorboard_logdir='', threshold_loss_scale=None, tokenizer=None, total_num_update=1000000, tpu=False, train_subset='train', truncate_source=True, update_freq=[4], upsample_primary=1, use_bmuf=False, use_old_adam=False, user_dir='../user_dir', valid_subset='valid', validate_interval=1, warmup_updates=500, weight_decay=0.0)
+2021-10-29 22:30:24 | INFO | fairseq.tasks.translation | [source] dictionary: 50001 types
+2021-10-29 22:30:24 | INFO | fairseq.tasks.translation | [target] dictionary: 50001 types
+2021-10-29 22:30:24 | INFO | fairseq.data.data_utils | loaded 2449 examples from: ../processed_data/large/data-bin/valid.source-target.source
+2021-10-29 22:30:24 | INFO | fairseq.data.data_utils | loaded 2449 examples from: ../processed_data/large/data-bin/valid.source-target.target
+2021-10-29 22:30:24 | INFO | fairseq.tasks.translation | ../processed_data/large/data-bin valid source-target 2449 examples
+2021-10-29 22:30:29 | INFO | fairseq_cli.train | BARTModel(
+  (encoder): TransformerEncoder(
+    (dropout_module): FairseqDropout()
+    (embed_tokens): Embedding(50005, 768, padding_idx=1)
+    (embed_positions): LearnedPositionalEmbedding(1026, 768, padding_idx=1)
+    (layernorm_embedding): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+    (layers): ModuleList(
+      (0): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (1): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (2): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (3): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (4): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (5): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+    )
+  )
+  (decoder): TransformerDecoder(
+    (dropout_module): FairseqDropout()
+    (embed_tokens): Embedding(50005, 768, padding_idx=1)
+    (embed_positions): LearnedPositionalEmbedding(1026, 768, padding_idx=1)
+    (layernorm_embedding): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+    (layers): ModuleList(
+      (0): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (1): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (2): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (3): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (4): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (5): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+    )
+    (output_projection): Linear(in_features=768, out_features=50005, bias=False)
+  )
+  (classification_heads): ModuleDict()
+)
+2021-10-29 22:30:29 | INFO | fairseq_cli.train | model mbart_base, criterion LabelSmoothedCrossEntropyCriterion
+2021-10-29 22:30:29 | INFO | fairseq_cli.train | num. model params: 139220736 (num. trained: 139220736)
+2021-10-29 22:30:33 | INFO | fairseq.trainer | detected shared parameter: encoder.embed_tokens.weight <- decoder.embed_tokens.weight
+2021-10-29 22:30:33 | INFO | fairseq.trainer | detected shared parameter: encoder.embed_tokens.weight <- decoder.output_projection.weight
+2021-10-29 22:30:33 | INFO | fairseq.utils | ***********************CUDA enviroments for all 1 workers***********************
+2021-10-29 22:30:33 | INFO | fairseq.utils | rank   0: capabilities =  6.1  ; total memory = 12.000 GB ; name = GRID P40-12Q                            
+2021-10-29 22:30:33 | INFO | fairseq.utils | ***********************CUDA enviroments for all 1 workers***********************
+2021-10-29 22:30:33 | INFO | fairseq_cli.train | training on 1 devices (GPUs/TPUs)
+2021-10-29 22:30:33 | INFO | fairseq_cli.train | max tokens per GPU = None and max sentences per GPU = 4
+2021-10-29 22:30:41 | INFO | fairseq.trainer | loaded checkpoint ../plbart/checkpoint_11_100000.pt (epoch 11 @ 0 updates)
+2021-10-29 22:30:41 | INFO | fairseq.optim.adam | using FusedAdam
+2021-10-29 22:30:41 | INFO | fairseq.trainer | loading train data for epoch 1
+2021-10-29 22:30:41 | INFO | fairseq.data.data_utils | loaded 19590 examples from: ../processed_data/large/data-bin/train.source-target.source
+2021-10-29 22:30:41 | INFO | fairseq.data.data_utils | loaded 19590 examples from: ../processed_data/large/data-bin/train.source-target.target
+2021-10-29 22:30:41 | INFO | fairseq.tasks.translation | ../processed_data/large/data-bin train source-target 19590 examples
+2021-10-29 22:30:41 | INFO | fairseq_cli.train | begin training epoch 1
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+2021-10-29 22:31:16 | INFO | train_inner | {"epoch": 1, "update": 0.082, "loss": "6.535", "nll_loss": "4.489", "ppl": "22.45", "wps": "1054.1", "ups": "3.09", "wpb": "341.4", "bsz": "16", "num_updates": "100", "lr": "1e-05", "gnorm": "51.41", "train_wall": "33", "wall": "43"}
+2021-10-29 22:31:47 | INFO | train_inner | {"epoch": 1, "update": 0.163, "loss": "4.02", "nll_loss": "2.034", "ppl": "4.1", "wps": "903.1", "ups": "3.18", "wpb": "284.3", "bsz": "16", "num_updates": "200", "lr": "2e-05", "gnorm": "11.076", "train_wall": "31", "wall": "74"}
+2021-10-29 22:32:22 | INFO | train_inner | {"epoch": 1, "update": 0.245, "loss": "3.27", "nll_loss": "1.267", "ppl": "2.41", "wps": "953.2", "ups": "2.91", "wpb": "327.5", "bsz": "16", "num_updates": "300", "lr": "3e-05", "gnorm": "5.834", "train_wall": "34", "wall": "109"}
+2021-10-29 22:32:58 | INFO | train_inner | {"epoch": 1, "update": 0.327, "loss": "3.277", "nll_loss": "1.353", "ppl": "2.55", "wps": "721.7", "ups": "2.78", "wpb": "259.9", "bsz": "16", "num_updates": "400", "lr": "4e-05", "gnorm": "4.423", "train_wall": "36", "wall": "145"}
+2021-10-29 22:33:31 | INFO | train_inner | {"epoch": 1, "update": 0.408, "loss": "2.977", "nll_loss": "1.034", "ppl": "2.05", "wps": "1033.1", "ups": "2.99", "wpb": "345.6", "bsz": "16", "num_updates": "500", "lr": "5e-05", "gnorm": "3.813", "train_wall": "33", "wall": "178"}
+2021-10-29 22:34:05 | INFO | train_inner | {"epoch": 1, "update": 0.49, "loss": "3.035", "nll_loss": "1.122", "ppl": "2.18", "wps": "863.2", "ups": "2.99", "wpb": "288.4", "bsz": "16", "num_updates": "600", "lr": "4.9995e-05", "gnorm": "3.737", "train_wall": "33", "wall": "212"}
+2021-10-29 22:34:40 | INFO | train_inner | {"epoch": 1, "update": 0.571, "loss": "2.824", "nll_loss": "0.891", "ppl": "1.85", "wps": "1020.6", "ups": "2.82", "wpb": "361.5", "bsz": "16", "num_updates": "700", "lr": "4.999e-05", "gnorm": "3.275", "train_wall": "35", "wall": "247"}
+2021-10-29 22:35:15 | INFO | train_inner | {"epoch": 1, "update": 0.653, "loss": "2.91", "nll_loss": "0.983", "ppl": "1.98", "wps": "965.7", "ups": "2.89", "wpb": "333.9", "bsz": "16", "num_updates": "800", "lr": "4.9985e-05", "gnorm": "3.473", "train_wall": "34", "wall": "282"}
+2021-10-29 22:35:48 | INFO | train_inner | {"epoch": 1, "update": 0.735, "loss": "2.892", "nll_loss": "0.98", "ppl": "1.97", "wps": "957.2", "ups": "2.97", "wpb": "322", "bsz": "16", "num_updates": "900", "lr": "4.998e-05", "gnorm": "3.463", "train_wall": "33", "wall": "315"}
+2021-10-29 22:36:20 | INFO | train_inner | {"epoch": 1, "update": 0.816, "loss": "3.034", "nll_loss": "1.149", "ppl": "2.22", "wps": "813.6", "ups": "3.15", "wpb": "258.5", "bsz": "16", "num_updates": "1000", "lr": "4.9975e-05", "gnorm": "3.497", "train_wall": "32", "wall": "347"}
+2021-10-29 22:36:55 | INFO | train_inner | {"epoch": 1, "update": 0.898, "loss": "2.891", "nll_loss": "0.989", "ppl": "1.98", "wps": "878.6", "ups": "2.85", "wpb": "308.7", "bsz": "16", "num_updates": "1100", "lr": "4.997e-05", "gnorm": "3.073", "train_wall": "35", "wall": "382"}
+2021-10-29 22:37:30 | INFO | train_inner | {"epoch": 1, "update": 0.98, "loss": "2.86", "nll_loss": "0.958", "ppl": "1.94", "wps": "900.2", "ups": "2.89", "wpb": "311.7", "bsz": "16", "num_updates": "1200", "lr": "4.9965e-05", "gnorm": "3.296", "train_wall": "34", "wall": "417"}
+2021-10-29 22:37:38 | INFO | fairseq.data.iterators | Data loading buffer is empty or nearly empty. This may indicate a data loading bottleneck, and increasing the number of workers (--num-workers) may help.
+2021-10-29 22:37:38 | INFO | fairseq_cli.train | begin validation on "valid" subset
+2021-10-29 22:40:51 | INFO | valid | {"epoch": 1, "valid_loss": "2.923", "valid_nll_loss": "0.866", "valid_ppl": "1.82", "valid_bleu": "63.34", "valid_wps": "237.4", "valid_wpb": "73.8", "valid_bsz": "4", "valid_num_updates": "1225"}
+2021-10-29 22:40:51 | INFO | fairseq_cli.train | begin save checkpoint
+2021-10-29 22:41:02 | INFO | fairseq.checkpoint_utils | saved checkpoint ../models/plbart/unique/large/checkpoint_best.pt (epoch 1 @ 1225 updates, score 63.34) (writing took 10.55415523587726 seconds)
+2021-10-29 22:41:02 | INFO | fairseq_cli.train | end of epoch 1 (average epoch stats below)
+2021-10-29 22:41:02 | INFO | train | {"epoch": 1, "train_loss": "3.384", "train_nll_loss": "1.443", "train_ppl": "2.72", "train_wps": "614.7", "train_ups": "1.98", "train_wpb": "310.3", "train_bsz": "16", "train_num_updates": "1225", "train_lr": "4.99637e-05", "train_gnorm": "8.265", "train_train_wall": "412", "train_wall": "629"}
+2021-10-29 22:41:02 | INFO | fairseq_cli.train | begin training epoch 1
+2021-10-29 22:41:28 | INFO | train_inner | {"epoch": 2, "update": 1.061, "loss": "2.834", "nll_loss": "0.927", "ppl": "1.9", "wps": "117.5", "ups": "0.42", "wpb": "280.2", "bsz": "15.9", "num_updates": "1300", "lr": "4.996e-05", "gnorm": "3.237", "train_wall": "32", "wall": "655"}
+2021-10-29 22:42:00 | INFO | train_inner | {"epoch": 2, "update": 1.143, "loss": "2.755", "nll_loss": "0.838", "ppl": "1.79", "wps": "975.7", "ups": "3.11", "wpb": "313.3", "bsz": "16", "num_updates": "1400", "lr": "4.9955e-05", "gnorm": "3.165", "train_wall": "32", "wall": "687"}
+2021-10-29 22:42:36 | INFO | train_inner | {"epoch": 2, "update": 1.224, "loss": "2.723", "nll_loss": "0.815", "ppl": "1.76", "wps": "871.4", "ups": "2.78", "wpb": "313.6", "bsz": "16", "num_updates": "1500", "lr": "4.995e-05", "gnorm": "3.044", "train_wall": "36", "wall": "723"}
+2021-10-29 22:43:12 | INFO | train_inner | {"epoch": 2, "update": 1.306, "loss": "2.75", "nll_loss": "0.843", "ppl": "1.79", "wps": "930.7", "ups": "2.82", "wpb": "329.5", "bsz": "16", "num_updates": "1600", "lr": "4.9945e-05", "gnorm": "3.12", "train_wall": "35", "wall": "759"}

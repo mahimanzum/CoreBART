@@ -1,0 +1,805 @@
+Source: source Target: target
+
+
+2021-10-24 15:30:17 | INFO | fairseq_cli.train | Namespace(activation_fn='gelu', adam_betas='(0.9, 0.98)', adam_eps=1e-06, adaptive_softmax_cutoff=None, adaptive_softmax_dropout=0, all_gather_list_size=16384, arch='mbart_base', attention_dropout=0.1, best_checkpoint_metric='bleu', bf16=False, bpe=None, broadcast_buffers=False, bucket_cap_mb=25, checkpoint_suffix='', clip_norm=0.0, cpu=False, criterion='label_smoothed_cross_entropy', cross_self_attention=False, curriculum=0, data='../processed_data/large/data-bin', data_buffer_size=10, dataset_impl=None, ddp_backend='no_c10d', decoder_attention_heads=12, decoder_embed_dim=768, decoder_embed_path=None, decoder_ffn_embed_dim=3072, decoder_input_dim=768, decoder_layerdrop=0, decoder_layers=6, decoder_layers_to_keep=None, decoder_learned_pos=True, decoder_normalize_before=False, decoder_output_dim=768, device_id=0, disable_validation=False, distributed_backend='nccl', distributed_init_method=None, distributed_no_spawn=False, distributed_port=-1, distributed_rank=0, distributed_world_size=1, distributed_wrapper='DDP', dropout=0.1, empty_cache_freq=0, encoder_attention_heads=12, encoder_embed_dim=768, encoder_embed_path=None, encoder_ffn_embed_dim=3072, encoder_layerdrop=0, encoder_layers=6, encoder_layers_to_keep=None, encoder_learned_pos=True, encoder_normalize_before=False, end_learning_rate=0.0, eval_bleu=True, eval_bleu_args='{"beam": 5}', eval_bleu_detok='space', eval_bleu_detok_args=None, eval_bleu_print_samples=False, eval_bleu_remove_bpe='sentencepiece', eval_tokenized_bleu=True, fast_stat_sync=False, find_unused_parameters=False, fix_batches_to_gpus=False, fixed_validation_seed=None, force_anneal=None, fp16=False, fp16_init_scale=128, fp16_no_flatten_grads=False, fp16_scale_tolerance=0.0, fp16_scale_window=None, keep_best_checkpoints=-1, keep_interval_updates=-1, keep_last_epochs=-1, label_smoothing=0.1, langs='java,python,en_XX', layernorm_embedding=True, left_pad_source='True', left_pad_target='False', load_alignments=False, localsgd_frequency=3, log_format='json', log_interval=100, lr=[5e-05], lr_scheduler='polynomial_decay', max_epoch=3000, max_sentences=8, max_sentences_valid=8, max_source_positions=1024, max_target_positions=1024, max_tokens=None, max_tokens_valid=None, max_update=200000, maximize_best_checkpoint_metric=True, memory_efficient_bf16=False, memory_efficient_fp16=False, min_loss_scale=0.0001, min_lr=-1.0, model_parallel_size=1, no_cross_attention=False, no_epoch_checkpoints=True, no_last_checkpoints=False, no_progress_bar=False, no_save=False, no_save_optimizer_state=False, no_scale_embedding=False, no_seed_provided=False, no_token_positional_embeddings=False, nprocs_per_node=1, num_batch_buckets=0, num_workers=1, optimizer='adam', optimizer_overrides='{}', patience=10, pooler_activation_fn='tanh', pooler_dropout=0.0, power=1.0, profile=False, quant_noise_pq=0, quant_noise_pq_block_size=8, quant_noise_scalar=0, quantization_config_path=None, relu_dropout=0.0, required_batch_size_multiple=8, reset_dataloader=True, reset_lr_scheduler=True, reset_meters=True, reset_optimizer=True, restore_file='../plbart/checkpoint_11_100000.pt', save_dir='../models/plbart/repetition/large', save_interval=1, save_interval_updates=0, seed=1234, sentence_avg=False, share_all_embeddings=True, share_decoder_input_output_embed=True, skip_invalid_size_inputs_valid_test=False, slowmo_algorithm='LocalSGD', slowmo_momentum=None, source_lang='source', stop_time_hours=0, target_lang='target', task='translation_without_lang_token', tensorboard_logdir='', threshold_loss_scale=None, tokenizer=None, total_num_update=1000000, tpu=False, train_subset='train', truncate_source=True, update_freq=[2], upsample_primary=1, use_bmuf=False, use_old_adam=False, user_dir='../user_dir', valid_subset='valid', validate_interval=1, warmup_updates=500, weight_decay=0.0)
+2021-10-24 15:30:17 | INFO | fairseq.tasks.translation | [source] dictionary: 50001 types
+2021-10-24 15:30:17 | INFO | fairseq.tasks.translation | [target] dictionary: 50001 types
+2021-10-24 15:30:17 | INFO | fairseq.data.data_utils | loaded 5820 examples from: ../processed_data/large/data-bin/valid.source-target.source
+2021-10-24 15:30:17 | INFO | fairseq.data.data_utils | loaded 5820 examples from: ../processed_data/large/data-bin/valid.source-target.target
+2021-10-24 15:30:17 | INFO | fairseq.tasks.translation | ../processed_data/large/data-bin valid source-target 5820 examples
+2021-10-24 15:30:22 | INFO | fairseq_cli.train | BARTModel(
+  (encoder): TransformerEncoder(
+    (dropout_module): FairseqDropout()
+    (embed_tokens): Embedding(50005, 768, padding_idx=1)
+    (embed_positions): LearnedPositionalEmbedding(1026, 768, padding_idx=1)
+    (layernorm_embedding): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+    (layers): ModuleList(
+      (0): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (1): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (2): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (3): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (4): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (5): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+    )
+  )
+  (decoder): TransformerDecoder(
+    (dropout_module): FairseqDropout()
+    (embed_tokens): Embedding(50005, 768, padding_idx=1)
+    (embed_positions): LearnedPositionalEmbedding(1026, 768, padding_idx=1)
+    (layernorm_embedding): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+    (layers): ModuleList(
+      (0): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (1): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (2): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (3): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (4): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+      (5): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=768, out_features=768, bias=True)
+          (v_proj): Linear(in_features=768, out_features=768, bias=True)
+          (q_proj): Linear(in_features=768, out_features=768, bias=True)
+          (out_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([768]), eps=1e-05, elementwise_affine=True)
+      )
+    )
+    (output_projection): Linear(in_features=768, out_features=50005, bias=False)
+  )
+  (classification_heads): ModuleDict()
+)
+2021-10-24 15:30:22 | INFO | fairseq_cli.train | model mbart_base, criterion LabelSmoothedCrossEntropyCriterion
+2021-10-24 15:30:22 | INFO | fairseq_cli.train | num. model params: 139220736 (num. trained: 139220736)
+2021-10-24 15:30:26 | INFO | fairseq.trainer | detected shared parameter: encoder.embed_tokens.weight <- decoder.embed_tokens.weight
+2021-10-24 15:30:26 | INFO | fairseq.trainer | detected shared parameter: encoder.embed_tokens.weight <- decoder.output_projection.weight
+2021-10-24 15:30:26 | INFO | fairseq.utils | ***********************CUDA enviroments for all 1 workers***********************
+2021-10-24 15:30:26 | INFO | fairseq.utils | rank   0: capabilities =  6.1  ; total memory = 12.000 GB ; name = GRID P40-12Q                            
+2021-10-24 15:30:26 | INFO | fairseq.utils | ***********************CUDA enviroments for all 1 workers***********************
+2021-10-24 15:30:26 | INFO | fairseq_cli.train | training on 1 devices (GPUs/TPUs)
+2021-10-24 15:30:26 | INFO | fairseq_cli.train | max tokens per GPU = None and max sentences per GPU = 8
+2021-10-24 15:30:30 | INFO | fairseq.trainer | loaded checkpoint ../plbart/checkpoint_11_100000.pt (epoch 11 @ 0 updates)
+2021-10-24 15:30:30 | INFO | fairseq.optim.adam | using FusedAdam
+2021-10-24 15:30:30 | INFO | fairseq.trainer | loading train data for epoch 1
+2021-10-24 15:30:30 | INFO | fairseq.data.data_utils | loaded 46558 examples from: ../processed_data/large/data-bin/train.source-target.source
+2021-10-24 15:30:30 | INFO | fairseq.data.data_utils | loaded 46558 examples from: ../processed_data/large/data-bin/train.source-target.target
+2021-10-24 15:30:30 | INFO | fairseq.tasks.translation | ../processed_data/large/data-bin train source-target 46558 examples
+2021-10-24 15:30:31 | INFO | fairseq_cli.train | begin training epoch 1
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+2021-10-24 15:30:48 | INFO | train_inner | {"epoch": 1, "update": 0.034, "loss": "7.446", "nll_loss": "5.486", "ppl": "44.83", "wps": "1561", "ups": "5.95", "wpb": "260.9", "bsz": "16", "num_updates": "100", "lr": "1e-05", "gnorm": "50.79", "train_wall": "17", "wall": "22"}
+2021-10-24 15:31:05 | INFO | train_inner | {"epoch": 1, "update": 0.069, "loss": "4.107", "nll_loss": "2.114", "ppl": "4.33", "wps": "1495.6", "ups": "6.04", "wpb": "247.7", "bsz": "16", "num_updates": "200", "lr": "2e-05", "gnorm": "12.304", "train_wall": "16", "wall": "39"}
+2021-10-24 15:31:21 | INFO | train_inner | {"epoch": 1, "update": 0.103, "loss": "3.593", "nll_loss": "1.625", "ppl": "3.08", "wps": "1566.3", "ups": "6.23", "wpb": "251.6", "bsz": "16", "num_updates": "300", "lr": "3e-05", "gnorm": "7.881", "train_wall": "16", "wall": "55"}
+2021-10-24 15:31:37 | INFO | train_inner | {"epoch": 1, "update": 0.137, "loss": "3.185", "nll_loss": "1.224", "ppl": "2.34", "wps": "1708.2", "ups": "6.01", "wpb": "284", "bsz": "16", "num_updates": "400", "lr": "4e-05", "gnorm": "5.291", "train_wall": "16", "wall": "72"}
+2021-10-24 15:31:53 | INFO | train_inner | {"epoch": 1, "update": 0.172, "loss": "3.155", "nll_loss": "1.224", "ppl": "2.34", "wps": "1591.1", "ups": "6.52", "wpb": "244", "bsz": "16", "num_updates": "500", "lr": "5e-05", "gnorm": "4.544", "train_wall": "15", "wall": "87"}
+2021-10-24 15:32:12 | INFO | train_inner | {"epoch": 1, "update": 0.206, "loss": "2.878", "nll_loss": "0.931", "ppl": "1.91", "wps": "1575.4", "ups": "5.18", "wpb": "304", "bsz": "16", "num_updates": "600", "lr": "4.9995e-05", "gnorm": "4.213", "train_wall": "19", "wall": "106"}
+2021-10-24 15:32:30 | INFO | train_inner | {"epoch": 1, "update": 0.241, "loss": "2.909", "nll_loss": "0.975", "ppl": "1.97", "wps": "1485.2", "ups": "5.64", "wpb": "263.5", "bsz": "16", "num_updates": "700", "lr": "4.999e-05", "gnorm": "4.072", "train_wall": "18", "wall": "124"}
+2021-10-24 15:32:47 | INFO | train_inner | {"epoch": 1, "update": 0.275, "loss": "2.936", "nll_loss": "1.019", "ppl": "2.03", "wps": "1549.6", "ups": "5.72", "wpb": "270.9", "bsz": "16", "num_updates": "800", "lr": "4.9985e-05", "gnorm": "3.696", "train_wall": "17", "wall": "142"}
+2021-10-24 15:33:04 | INFO | train_inner | {"epoch": 1, "update": 0.309, "loss": "2.932", "nll_loss": "1.019", "ppl": "2.03", "wps": "1587.8", "ups": "5.94", "wpb": "267.5", "bsz": "16", "num_updates": "900", "lr": "4.998e-05", "gnorm": "3.832", "train_wall": "17", "wall": "158"}
+2021-10-24 15:33:21 | INFO | train_inner | {"epoch": 1, "update": 0.344, "loss": "2.827", "nll_loss": "0.901", "ppl": "1.87", "wps": "1642.7", "ups": "6.04", "wpb": "272", "bsz": "16", "num_updates": "1000", "lr": "4.9975e-05", "gnorm": "3.679", "train_wall": "16", "wall": "175"}
+2021-10-24 15:33:37 | INFO | train_inner | {"epoch": 1, "update": 0.378, "loss": "2.896", "nll_loss": "0.991", "ppl": "1.99", "wps": "1469.9", "ups": "5.97", "wpb": "246.3", "bsz": "16", "num_updates": "1100", "lr": "4.997e-05", "gnorm": "3.758", "train_wall": "17", "wall": "192"}
+2021-10-24 15:33:55 | INFO | train_inner | {"epoch": 1, "update": 0.412, "loss": "2.869", "nll_loss": "0.963", "ppl": "1.95", "wps": "1397.6", "ups": "5.75", "wpb": "243", "bsz": "16", "num_updates": "1200", "lr": "4.9965e-05", "gnorm": "3.707", "train_wall": "17", "wall": "209"}
+2021-10-24 15:34:11 | INFO | train_inner | {"epoch": 1, "update": 0.447, "loss": "2.767", "nll_loss": "0.848", "ppl": "1.8", "wps": "1522.1", "ups": "6.24", "wpb": "244.1", "bsz": "16", "num_updates": "1300", "lr": "4.996e-05", "gnorm": "3.272", "train_wall": "16", "wall": "225"}
+2021-10-24 15:34:27 | INFO | train_inner | {"epoch": 1, "update": 0.481, "loss": "2.816", "nll_loss": "0.906", "ppl": "1.87", "wps": "1573.5", "ups": "6.22", "wpb": "253", "bsz": "16", "num_updates": "1400", "lr": "4.9955e-05", "gnorm": "3.597", "train_wall": "16", "wall": "241"}
+2021-10-24 15:34:41 | INFO | train_inner | {"epoch": 1, "update": 0.515, "loss": "2.921", "nll_loss": "1.03", "ppl": "2.04", "wps": "1554.6", "ups": "6.95", "wpb": "223.6", "bsz": "16", "num_updates": "1500", "lr": "4.995e-05", "gnorm": "3.79", "train_wall": "14", "wall": "256"}
+2021-10-24 15:34:59 | INFO | train_inner | {"epoch": 1, "update": 0.55, "loss": "2.906", "nll_loss": "1.014", "ppl": "2.02", "wps": "1272.3", "ups": "5.76", "wpb": "221.1", "bsz": "16", "num_updates": "1600", "lr": "4.9945e-05", "gnorm": "3.564", "train_wall": "17", "wall": "273"}
+2021-10-24 15:35:17 | INFO | train_inner | {"epoch": 1, "update": 0.584, "loss": "2.681", "nll_loss": "0.762", "ppl": "1.7", "wps": "1681.5", "ups": "5.46", "wpb": "308.1", "bsz": "16", "num_updates": "1700", "lr": "4.994e-05", "gnorm": "3.269", "train_wall": "18", "wall": "291"}
+2021-10-24 15:35:35 | INFO | train_inner | {"epoch": 1, "update": 0.619, "loss": "2.642", "nll_loss": "0.72", "ppl": "1.65", "wps": "1574.3", "ups": "5.44", "wpb": "289.1", "bsz": "16", "num_updates": "1800", "lr": "4.9935e-05", "gnorm": "3.157", "train_wall": "18", "wall": "310"}
+2021-10-24 15:35:54 | INFO | train_inner | {"epoch": 1, "update": 0.653, "loss": "2.717", "nll_loss": "0.804", "ppl": "1.75", "wps": "1506.6", "ups": "5.39", "wpb": "279.6", "bsz": "16", "num_updates": "1900", "lr": "4.993e-05", "gnorm": "3.196", "train_wall": "18", "wall": "328"}
+2021-10-24 15:36:11 | INFO | train_inner | {"epoch": 1, "update": 0.687, "loss": "2.716", "nll_loss": "0.808", "ppl": "1.75", "wps": "1442.7", "ups": "5.74", "wpb": "251.3", "bsz": "16", "num_updates": "2000", "lr": "4.9925e-05", "gnorm": "3.073", "train_wall": "17", "wall": "346"}
+2021-10-24 15:36:25 | INFO | train_inner | {"epoch": 1, "update": 0.722, "loss": "2.699", "nll_loss": "0.792", "ppl": "1.73", "wps": "1536.8", "ups": "7.18", "wpb": "214.2", "bsz": "16", "num_updates": "2100", "lr": "4.992e-05", "gnorm": "3.143", "train_wall": "14", "wall": "360"}
+2021-10-24 15:36:42 | INFO | train_inner | {"epoch": 1, "update": 0.756, "loss": "2.81", "nll_loss": "0.916", "ppl": "1.89", "wps": "1447", "ups": "5.85", "wpb": "247.3", "bsz": "16", "num_updates": "2200", "lr": "4.9915e-05", "gnorm": "3.53", "train_wall": "17", "wall": "377"}
+2021-10-24 15:36:59 | INFO | train_inner | {"epoch": 1, "update": 0.79, "loss": "2.715", "nll_loss": "0.813", "ppl": "1.76", "wps": "1607.4", "ups": "5.83", "wpb": "275.5", "bsz": "16", "num_updates": "2300", "lr": "4.991e-05", "gnorm": "3.451", "train_wall": "17", "wall": "394"}
+2021-10-24 15:37:19 | INFO | train_inner | {"epoch": 1, "update": 0.825, "loss": "2.786", "nll_loss": "0.893", "ppl": "1.86", "wps": "1099.6", "ups": "5.09", "wpb": "215.9", "bsz": "16", "num_updates": "2400", "lr": "4.9905e-05", "gnorm": "3.532", "train_wall": "19", "wall": "413"}
+2021-10-24 15:37:38 | INFO | train_inner | {"epoch": 1, "update": 0.859, "loss": "2.672", "nll_loss": "0.764", "ppl": "1.7", "wps": "1305.1", "ups": "5.42", "wpb": "240.9", "bsz": "16", "num_updates": "2500", "lr": "4.98999e-05", "gnorm": "3.318", "train_wall": "18", "wall": "432"}
+2021-10-24 15:37:54 | INFO | train_inner | {"epoch": 1, "update": 0.893, "loss": "2.687", "nll_loss": "0.787", "ppl": "1.73", "wps": "1414.3", "ups": "6.01", "wpb": "235.3", "bsz": "16", "num_updates": "2600", "lr": "4.98949e-05", "gnorm": "3.253", "train_wall": "16", "wall": "449"}
+2021-10-24 15:38:13 | INFO | train_inner | {"epoch": 1, "update": 0.928, "loss": "2.646", "nll_loss": "0.741", "ppl": "1.67", "wps": "1241.7", "ups": "5.28", "wpb": "235.3", "bsz": "16", "num_updates": "2700", "lr": "4.98899e-05", "gnorm": "3.103", "train_wall": "19", "wall": "468"}
+2021-10-24 15:38:32 | INFO | train_inner | {"epoch": 1, "update": 0.962, "loss": "2.634", "nll_loss": "0.725", "ppl": "1.65", "wps": "1364.6", "ups": "5.41", "wpb": "252.1", "bsz": "16", "num_updates": "2800", "lr": "4.98849e-05", "gnorm": "3.099", "train_wall": "18", "wall": "486"}
+2021-10-24 15:38:52 | INFO | train_inner | {"epoch": 1, "update": 0.997, "loss": "2.656", "nll_loss": "0.751", "ppl": "1.68", "wps": "1279", "ups": "4.88", "wpb": "262", "bsz": "16", "num_updates": "2900", "lr": "4.98799e-05", "gnorm": "3.042", "train_wall": "20", "wall": "506"}
+2021-10-24 15:38:54 | INFO | fairseq_cli.train | begin validation on "valid" subset
+2021-10-24 15:42:46 | INFO | valid | {"epoch": 1, "valid_loss": "2.633", "valid_nll_loss": "0.568", "valid_ppl": "1.48", "valid_bleu": "75.57", "valid_wps": "407.3", "valid_wpb": "129.4", "valid_bsz": "8", "valid_num_updates": "2910"}
+2021-10-24 15:42:46 | INFO | fairseq_cli.train | begin save checkpoint
+2021-10-24 15:42:54 | INFO | fairseq.checkpoint_utils | saved checkpoint ../models/plbart/repetition/large/checkpoint_best.pt (epoch 1 @ 2910 updates, score 75.57) (writing took 7.942944844020531 seconds)
+2021-10-24 15:42:54 | INFO | fairseq.data.iterators | Data loading buffer is empty or nearly empty. This may indicate a data loading bottleneck, and increasing the number of workers (--num-workers) may help.
+2021-10-24 15:42:54 | INFO | fairseq_cli.train | end of epoch 1 (average epoch stats below)
+2021-10-24 15:42:54 | INFO | train | {"epoch": 1, "train_loss": "3.043", "train_nll_loss": "1.123", "train_ppl": "2.18", "train_wps": "999.1", "train_ups": "3.92", "train_wpb": "255", "train_bsz": "16", "train_num_updates": "2910", "train_lr": "4.98794e-05", "train_gnorm": "5.652", "train_train_wall": "497", "train_wall": "748"}
+2021-10-24 15:42:54 | INFO | fairseq_cli.train | begin training epoch 1
+2021-10-24 15:43:09 | INFO | train_inner | {"epoch": 2, "update": 1.031, "loss": "2.61", "nll_loss": "0.696", "ppl": "1.62", "wps": "83", "ups": "0.39", "wpb": "213.2", "bsz": "16", "num_updates": "3000", "lr": "4.98749e-05", "gnorm": "3.176", "train_wall": "16", "wall": "764"}
+2021-10-24 15:43:27 | INFO | train_inner | {"epoch": 2, "update": 1.065, "loss": "2.468", "nll_loss": "0.539", "ppl": "1.45", "wps": "1824.5", "ups": "5.46", "wpb": "334.1", "bsz": "16", "num_updates": "3100", "lr": "4.98699e-05", "gnorm": "2.68", "train_wall": "18", "wall": "782"}
+2021-10-24 15:43:45 | INFO | train_inner | {"epoch": 2, "update": 1.1, "loss": "2.589", "nll_loss": "0.678", "ppl": "1.6", "wps": "1340.1", "ups": "5.6", "wpb": "239.5", "bsz": "16", "num_updates": "3200", "lr": "4.98649e-05", "gnorm": "2.909", "train_wall": "18", "wall": "800"}
+2021-10-24 15:44:02 | INFO | train_inner | {"epoch": 2, "update": 1.134, "loss": "2.507", "nll_loss": "0.585", "ppl": "1.5", "wps": "1549.9", "ups": "6.11", "wpb": "253.6", "bsz": "16", "num_updates": "3300", "lr": "4.98599e-05", "gnorm": "2.913", "train_wall": "16", "wall": "816"}
+2021-10-24 15:44:19 | INFO | train_inner | {"epoch": 2, "update": 1.168, "loss": "2.542", "nll_loss": "0.624", "ppl": "1.54", "wps": "1482.6", "ups": "5.69", "wpb": "260.6", "bsz": "16", "num_updates": "3400", "lr": "4.98549e-05", "gnorm": "3.26", "train_wall": "17", "wall": "834"}
+2021-10-24 15:44:38 | INFO | train_inner | {"epoch": 2, "update": 1.203, "loss": "2.603", "nll_loss": "0.697", "ppl": "1.62", "wps": "1242.4", "ups": "5.33", "wpb": "233", "bsz": "16", "num_updates": "3500", "lr": "4.98499e-05", "gnorm": "3.012", "train_wall": "19", "wall": "852"}
+2021-10-24 15:44:56 | INFO | train_inner | {"epoch": 2, "update": 1.237, "loss": "2.468", "nll_loss": "0.548", "ppl": "1.46", "wps": "1573.9", "ups": "5.53", "wpb": "284.8", "bsz": "16", "num_updates": "3600", "lr": "4.98449e-05", "gnorm": "2.862", "train_wall": "18", "wall": "871"}
+2021-10-24 15:45:13 | INFO | train_inner | {"epoch": 2, "update": 1.271, "loss": "2.524", "nll_loss": "0.609", "ppl": "1.53", "wps": "1493.2", "ups": "6.03", "wpb": "247.6", "bsz": "16", "num_updates": "3700", "lr": "4.98399e-05", "gnorm": "3.02", "train_wall": "16", "wall": "887"}
+2021-10-24 15:45:30 | INFO | train_inner | {"epoch": 2, "update": 1.306, "loss": "2.503", "nll_loss": "0.583", "ppl": "1.5", "wps": "1795.5", "ups": "5.81", "wpb": "309.1", "bsz": "16", "num_updates": "3800", "lr": "4.98349e-05", "gnorm": "3.034", "train_wall": "17", "wall": "904"}
+2021-10-24 15:45:47 | INFO | train_inner | {"epoch": 2, "update": 1.34, "loss": "2.495", "nll_loss": "0.579", "ppl": "1.49", "wps": "1693.8", "ups": "5.9", "wpb": "287.1", "bsz": "16", "num_updates": "3900", "lr": "4.98299e-05", "gnorm": "2.685", "train_wall": "17", "wall": "921"}
+2021-10-24 15:46:05 | INFO | train_inner | {"epoch": 2, "update": 1.375, "loss": "2.582", "nll_loss": "0.677", "ppl": "1.6", "wps": "1433.6", "ups": "5.47", "wpb": "262.2", "bsz": "16", "num_updates": "4000", "lr": "4.98249e-05", "gnorm": "3.158", "train_wall": "18", "wall": "940"}
+2021-10-24 15:46:23 | INFO | train_inner | {"epoch": 2, "update": 1.409, "loss": "2.544", "nll_loss": "0.636", "ppl": "1.55", "wps": "1238.2", "ups": "5.74", "wpb": "215.9", "bsz": "16", "num_updates": "4100", "lr": "4.98199e-05", "gnorm": "2.917", "train_wall": "17", "wall": "957"}
+2021-10-24 15:46:41 | INFO | train_inner | {"epoch": 2, "update": 1.443, "loss": "2.517", "nll_loss": "0.602", "ppl": "1.52", "wps": "1427.6", "ups": "5.56", "wpb": "256.8", "bsz": "16", "num_updates": "4200", "lr": "4.98149e-05", "gnorm": "2.967", "train_wall": "18", "wall": "975"}
+2021-10-24 15:46:59 | INFO | train_inner | {"epoch": 2, "update": 1.478, "loss": "2.517", "nll_loss": "0.604", "ppl": "1.52", "wps": "1553.7", "ups": "5.36", "wpb": "289.6", "bsz": "16", "num_updates": "4300", "lr": "4.98099e-05", "gnorm": "2.662", "train_wall": "18", "wall": "994"}
+2021-10-24 15:47:15 | INFO | train_inner | {"epoch": 2, "update": 1.512, "loss": "2.533", "nll_loss": "0.625", "ppl": "1.54", "wps": "1465", "ups": "6.15", "wpb": "238.2", "bsz": "16", "num_updates": "4400", "lr": "4.98049e-05", "gnorm": "2.844", "train_wall": "16", "wall": "1010"}
+2021-10-24 15:47:32 | INFO | train_inner | {"epoch": 2, "update": 1.546, "loss": "2.542", "nll_loss": "0.636", "ppl": "1.55", "wps": "1277.5", "ups": "5.98", "wpb": "213.8", "bsz": "16", "num_updates": "4500", "lr": "4.97999e-05", "gnorm": "3.188", "train_wall": "17", "wall": "1027"}
+2021-10-24 15:47:51 | INFO | train_inner | {"epoch": 2, "update": 1.581, "loss": "2.453", "nll_loss": "0.536", "ppl": "1.45", "wps": "1512.1", "ups": "5.36", "wpb": "282.2", "bsz": "16", "num_updates": "4600", "lr": "4.97949e-05", "gnorm": "3", "train_wall": "18", "wall": "1045"}
+2021-10-24 15:48:09 | INFO | train_inner | {"epoch": 2, "update": 1.615, "loss": "2.563", "nll_loss": "0.662", "ppl": "1.58", "wps": "1446", "ups": "5.59", "wpb": "258.6", "bsz": "16", "num_updates": "4700", "lr": "4.97899e-05", "gnorm": "2.864", "train_wall": "18", "wall": "1063"}
+2021-10-24 15:48:27 | INFO | train_inner | {"epoch": 2, "update": 1.649, "loss": "2.465", "nll_loss": "0.55", "ppl": "1.46", "wps": "1531", "ups": "5.55", "wpb": "275.9", "bsz": "16", "num_updates": "4800", "lr": "4.97849e-05", "gnorm": "3.035", "train_wall": "18", "wall": "1081"}
+2021-10-24 15:48:45 | INFO | train_inner | {"epoch": 2, "update": 1.684, "loss": "2.544", "nll_loss": "0.639", "ppl": "1.56", "wps": "1202.1", "ups": "5.62", "wpb": "213.9", "bsz": "16", "num_updates": "4900", "lr": "4.97799e-05", "gnorm": "3.274", "train_wall": "18", "wall": "1099"}
+2021-10-24 15:49:02 | INFO | train_inner | {"epoch": 2, "update": 1.718, "loss": "2.474", "nll_loss": "0.562", "ppl": "1.48", "wps": "1427.3", "ups": "5.87", "wpb": "243.3", "bsz": "16", "num_updates": "5000", "lr": "4.97749e-05", "gnorm": "2.861", "train_wall": "17", "wall": "1116"}
+2021-10-24 15:49:19 | INFO | train_inner | {"epoch": 2, "update": 1.753, "loss": "2.536", "nll_loss": "0.632", "ppl": "1.55", "wps": "1381.8", "ups": "5.65", "wpb": "244.4", "bsz": "16", "num_updates": "5100", "lr": "4.97699e-05", "gnorm": "3.032", "train_wall": "17", "wall": "1134"}
+2021-10-24 15:49:38 | INFO | train_inner | {"epoch": 2, "update": 1.787, "loss": "2.515", "nll_loss": "0.607", "ppl": "1.52", "wps": "1249.2", "ups": "5.5", "wpb": "227.1", "bsz": "16", "num_updates": "5200", "lr": "4.97649e-05", "gnorm": "3", "train_wall": "18", "wall": "1152"}
+2021-10-24 15:49:57 | INFO | train_inner | {"epoch": 2, "update": 1.821, "loss": "2.43", "nll_loss": "0.511", "ppl": "1.42", "wps": "1335.9", "ups": "5.1", "wpb": "261.8", "bsz": "16", "num_updates": "5300", "lr": "4.97599e-05", "gnorm": "2.778", "train_wall": "19", "wall": "1172"}
+2021-10-24 15:50:16 | INFO | train_inner | {"epoch": 2, "update": 1.856, "loss": "2.523", "nll_loss": "0.616", "ppl": "1.53", "wps": "1364.5", "ups": "5.19", "wpb": "263", "bsz": "16", "num_updates": "5400", "lr": "4.97549e-05", "gnorm": "3.095", "train_wall": "19", "wall": "1191"}
+2021-10-24 15:50:35 | INFO | train_inner | {"epoch": 2, "update": 1.89, "loss": "2.563", "nll_loss": "0.663", "ppl": "1.58", "wps": "1179.5", "ups": "5.51", "wpb": "214", "bsz": "16", "num_updates": "5500", "lr": "4.97499e-05", "gnorm": "3.066", "train_wall": "18", "wall": "1209"}
+2021-10-24 15:50:51 | INFO | train_inner | {"epoch": 2, "update": 1.924, "loss": "2.462", "nll_loss": "0.55", "ppl": "1.46", "wps": "1605.9", "ups": "5.95", "wpb": "270", "bsz": "16", "num_updates": "5600", "lr": "4.97449e-05", "gnorm": "2.998", "train_wall": "17", "wall": "1226"}
+2021-10-24 15:51:07 | INFO | train_inner | {"epoch": 2, "update": 1.959, "loss": "2.512", "nll_loss": "0.602", "ppl": "1.52", "wps": "1571.5", "ups": "6.38", "wpb": "246.4", "bsz": "16", "num_updates": "5700", "lr": "4.97399e-05", "gnorm": "3.162", "train_wall": "15", "wall": "1241"}
+2021-10-24 15:51:23 | INFO | train_inner | {"epoch": 2, "update": 1.993, "loss": "2.53", "nll_loss": "0.631", "ppl": "1.55", "wps": "1312.8", "ups": "6.08", "wpb": "216", "bsz": "16", "num_updates": "5800", "lr": "4.97349e-05", "gnorm": "3.184", "train_wall": "16", "wall": "1258"}
+2021-10-24 15:51:27 | INFO | fairseq_cli.train | begin validation on "valid" subset
+2021-10-24 15:55:21 | INFO | valid | {"epoch": 2, "valid_loss": "2.548", "valid_nll_loss": "0.476", "valid_ppl": "1.39", "valid_bleu": "78.69", "valid_wps": "404.2", "valid_wpb": "129.4", "valid_bsz": "8", "valid_num_updates": "5820", "valid_best_bleu": "78.69"}
+2021-10-24 15:55:21 | INFO | fairseq_cli.train | begin save checkpoint
+2021-10-24 15:55:45 | INFO | fairseq.checkpoint_utils | saved checkpoint ../models/plbart/repetition/large/checkpoint_best.pt (epoch 2 @ 5820 updates, score 78.69) (writing took 24.149962385068648 seconds)
+2021-10-24 15:55:45 | INFO | fairseq.data.iterators | Data loading buffer is empty or nearly empty. This may indicate a data loading bottleneck, and increasing the number of workers (--num-workers) may help.
+2021-10-24 15:55:45 | INFO | fairseq_cli.train | end of epoch 2 (average epoch stats below)
+2021-10-24 15:55:45 | INFO | train | {"epoch": 2, "train_loss": "2.516", "train_nll_loss": "0.603", "train_ppl": "1.52", "train_wps": "962.7", "train_ups": "3.77", "train_wpb": "255", "train_bsz": "16", "train_num_updates": "5820", "train_lr": "4.97339e-05", "train_gnorm": "2.984", "train_train_wall": "507", "train_wall": "1519"}
+2021-10-24 15:55:45 | INFO | fairseq_cli.train | begin training epoch 2
+2021-10-24 15:56:00 | INFO | train_inner | {"epoch": 3, "update": 2.027, "loss": "2.374", "nll_loss": "0.448", "ppl": "1.36", "wps": "96.8", "ups": "0.36", "wpb": "267.5", "bsz": "16", "num_updates": "5900", "lr": "4.97299e-05", "gnorm": "2.784", "train_wall": "18", "wall": "1534"}
+2021-10-24 15:56:18 | INFO | train_inner | {"epoch": 3, "update": 2.062, "loss": "2.361", "nll_loss": "0.432", "ppl": "1.35", "wps": "1236.6", "ups": "5.45", "wpb": "226.9", "bsz": "16", "num_updates": "6000", "lr": "4.97249e-05", "gnorm": "2.598", "train_wall": "18", "wall": "1553"}
+2021-10-24 15:56:38 | INFO | train_inner | {"epoch": 3, "update": 2.096, "loss": "2.385", "nll_loss": "0.452", "ppl": "1.37", "wps": "1289.2", "ups": "5.1", "wpb": "252.7", "bsz": "16", "num_updates": "6100", "lr": "4.97199e-05", "gnorm": "3.588", "train_wall": "19", "wall": "1572"}
+2021-10-24 15:56:58 | INFO | train_inner | {"epoch": 3, "update": 2.131, "loss": "2.396", "nll_loss": "0.478", "ppl": "1.39", "wps": "1205.7", "ups": "4.94", "wpb": "243.9", "bsz": "16", "num_updates": "6200", "lr": "4.97149e-05", "gnorm": "2.769", "train_wall": "20", "wall": "1592"}
+2021-10-24 15:57:17 | INFO | train_inner | {"epoch": 3, "update": 2.165, "loss": "2.342", "nll_loss": "0.415", "ppl": "1.33", "wps": "1734.3", "ups": "5.4", "wpb": "321.4", "bsz": "16", "num_updates": "6300", "lr": "4.97099e-05", "gnorm": "2.612", "train_wall": "18", "wall": "1611"}
+2021-10-24 15:57:36 | INFO | train_inner | {"epoch": 3, "update": 2.199, "loss": "2.347", "nll_loss": "0.426", "ppl": "1.34", "wps": "1368.3", "ups": "5.12", "wpb": "267.1", "bsz": "16", "num_updates": "6400", "lr": "4.97049e-05", "gnorm": "2.931", "train_wall": "19", "wall": "1631"}
+2021-10-24 15:57:55 | INFO | train_inner | {"epoch": 3, "update": 2.234, "loss": "2.424", "nll_loss": "0.509", "ppl": "1.42", "wps": "1250.6", "ups": "5.38", "wpb": "232.5", "bsz": "16", "num_updates": "6500", "lr": "4.96998e-05", "gnorm": "2.765", "train_wall": "18", "wall": "1649"}
+2021-10-24 15:58:12 | INFO | train_inner | {"epoch": 3, "update": 2.268, "loss": "2.382", "nll_loss": "0.463", "ppl": "1.38", "wps": "1477.7", "ups": "5.88", "wpb": "251.3", "bsz": "16", "num_updates": "6600", "lr": "4.96948e-05", "gnorm": "2.843", "train_wall": "17", "wall": "1666"}
+2021-10-24 15:58:30 | INFO | train_inner | {"epoch": 3, "update": 2.302, "loss": "2.39", "nll_loss": "0.468", "ppl": "1.38", "wps": "1350.9", "ups": "5.38", "wpb": "251", "bsz": "16", "num_updates": "6700", "lr": "4.96898e-05", "gnorm": "2.765", "train_wall": "18", "wall": "1685"}
+2021-10-24 15:58:49 | INFO | train_inner | {"epoch": 3, "update": 2.337, "loss": "2.411", "nll_loss": "0.488", "ppl": "1.4", "wps": "1261.5", "ups": "5.49", "wpb": "229.8", "bsz": "16", "num_updates": "6800", "lr": "4.96848e-05", "gnorm": "3.224", "train_wall": "18", "wall": "1703"}
+2021-10-24 15:59:08 | INFO | train_inner | {"epoch": 3, "update": 2.371, "loss": "2.416", "nll_loss": "0.498", "ppl": "1.41", "wps": "1158.1", "ups": "5.22", "wpb": "221.7", "bsz": "16", "num_updates": "6900", "lr": "4.96798e-05", "gnorm": "3.06", "train_wall": "19", "wall": "1722"}
+2021-10-24 15:59:26 | INFO | train_inner | {"epoch": 3, "update": 2.405, "loss": "2.412", "nll_loss": "0.497", "ppl": "1.41", "wps": "1320.7", "ups": "5.47", "wpb": "241.4", "bsz": "16", "num_updates": "7000", "lr": "4.96748e-05", "gnorm": "2.715", "train_wall": "18", "wall": "1740"}
+2021-10-24 15:59:44 | INFO | train_inner | {"epoch": 3, "update": 2.44, "loss": "2.407", "nll_loss": "0.488", "ppl": "1.4", "wps": "1564", "ups": "5.52", "wpb": "283.4", "bsz": "16", "num_updates": "7100", "lr": "4.96698e-05", "gnorm": "3.166", "train_wall": "18", "wall": "1758"}
+2021-10-24 16:00:01 | INFO | train_inner | {"epoch": 3, "update": 2.474, "loss": "2.389", "nll_loss": "0.47", "ppl": "1.39", "wps": "1425", "ups": "5.84", "wpb": "244.2", "bsz": "16", "num_updates": "7200", "lr": "4.96648e-05", "gnorm": "3.129", "train_wall": "17", "wall": "1776"}
+2021-10-24 16:00:21 | INFO | train_inner | {"epoch": 3, "update": 2.509, "loss": "2.398", "nll_loss": "0.482", "ppl": "1.4", "wps": "1286", "ups": "5.13", "wpb": "250.9", "bsz": "16", "num_updates": "7300", "lr": "4.96598e-05", "gnorm": "2.927", "train_wall": "19", "wall": "1795"}
+2021-10-24 16:00:38 | INFO | train_inner | {"epoch": 3, "update": 2.543, "loss": "2.377", "nll_loss": "0.456", "ppl": "1.37", "wps": "1480.2", "ups": "5.82", "wpb": "254.5", "bsz": "16", "num_updates": "7400", "lr": "4.96548e-05", "gnorm": "2.987", "train_wall": "17", "wall": "1812"}
+2021-10-24 16:00:54 | INFO | train_inner | {"epoch": 3, "update": 2.577, "loss": "2.373", "nll_loss": "0.456", "ppl": "1.37", "wps": "1621.7", "ups": "6.37", "wpb": "254.7", "bsz": "16", "num_updates": "7500", "lr": "4.96498e-05", "gnorm": "2.876", "train_wall": "16", "wall": "1828"}
+2021-10-24 16:01:11 | INFO | train_inner | {"epoch": 3, "update": 2.612, "loss": "2.361", "nll_loss": "0.439", "ppl": "1.36", "wps": "1622.4", "ups": "5.91", "wpb": "274.5", "bsz": "16", "num_updates": "7600", "lr": "4.96448e-05", "gnorm": "2.642", "train_wall": "17", "wall": "1845"}
+2021-10-24 16:01:28 | INFO | train_inner | {"epoch": 3, "update": 2.646, "loss": "2.393", "nll_loss": "0.476", "ppl": "1.39", "wps": "1366.4", "ups": "5.64", "wpb": "242.1", "bsz": "16", "num_updates": "7700", "lr": "4.96398e-05", "gnorm": "3.088", "train_wall": "17", "wall": "1863"}
+2021-10-24 16:01:47 | INFO | train_inner | {"epoch": 3, "update": 2.68, "loss": "2.392", "nll_loss": "0.474", "ppl": "1.39", "wps": "1448.2", "ups": "5.41", "wpb": "267.5", "bsz": "16", "num_updates": "7800", "lr": "4.96348e-05", "gnorm": "3.142", "train_wall": "18", "wall": "1881"}
+2021-10-24 16:02:05 | INFO | train_inner | {"epoch": 3, "update": 2.715, "loss": "2.349", "nll_loss": "0.428", "ppl": "1.35", "wps": "1319", "ups": "5.49", "wpb": "240.4", "bsz": "16", "num_updates": "7900", "lr": "4.96298e-05", "gnorm": "2.734", "train_wall": "18", "wall": "1899"}
+2021-10-24 16:02:23 | INFO | train_inner | {"epoch": 3, "update": 2.749, "loss": "2.388", "nll_loss": "0.473", "ppl": "1.39", "wps": "1534.9", "ups": "5.52", "wpb": "278.3", "bsz": "16", "num_updates": "8000", "lr": "4.96248e-05", "gnorm": "3.172", "train_wall": "18", "wall": "1917"}
+2021-10-24 16:02:42 | INFO | train_inner | {"epoch": 3, "update": 2.784, "loss": "2.395", "nll_loss": "0.482", "ppl": "1.4", "wps": "1481.7", "ups": "5.42", "wpb": "273.2", "bsz": "16", "num_updates": "8100", "lr": "4.96198e-05", "gnorm": "2.808", "train_wall": "18", "wall": "1936"}
+2021-10-24 16:03:01 | INFO | train_inner | {"epoch": 3, "update": 2.818, "loss": "2.377", "nll_loss": "0.458", "ppl": "1.37", "wps": "1295.7", "ups": "5.23", "wpb": "247.8", "bsz": "16", "num_updates": "8200", "lr": "4.96148e-05", "gnorm": "2.785", "train_wall": "19", "wall": "1955"}
+2021-10-24 16:03:18 | INFO | train_inner | {"epoch": 3, "update": 2.852, "loss": "2.39", "nll_loss": "0.475", "ppl": "1.39", "wps": "1379.9", "ups": "5.68", "wpb": "242.8", "bsz": "16", "num_updates": "8300", "lr": "4.96098e-05", "gnorm": "2.771", "train_wall": "17", "wall": "1973"}
+2021-10-24 16:03:36 | INFO | train_inner | {"epoch": 3, "update": 2.887, "loss": "2.364", "nll_loss": "0.449", "ppl": "1.36", "wps": "1535.5", "ups": "5.69", "wpb": "269.7", "bsz": "16", "num_updates": "8400", "lr": "4.96048e-05", "gnorm": "2.761", "train_wall": "17", "wall": "1990"}
+2021-10-24 16:03:52 | INFO | train_inner | {"epoch": 3, "update": 2.921, "loss": "2.391", "nll_loss": "0.481", "ppl": "1.4", "wps": "1793.4", "ups": "6", "wpb": "298.8", "bsz": "16", "num_updates": "8500", "lr": "4.95998e-05", "gnorm": "2.846", "train_wall": "16", "wall": "2007"}
+2021-10-24 16:04:10 | INFO | train_inner | {"epoch": 3, "update": 2.955, "loss": "2.434", "nll_loss": "0.522", "ppl": "1.44", "wps": "1466.3", "ups": "5.74", "wpb": "255.6", "bsz": "16", "num_updates": "8600", "lr": "4.95948e-05", "gnorm": "2.973", "train_wall": "17", "wall": "2024"}
+2021-10-24 16:04:28 | INFO | train_inner | {"epoch": 3, "update": 2.99, "loss": "2.426", "nll_loss": "0.516", "ppl": "1.43", "wps": "1313.4", "ups": "5.55", "wpb": "236.7", "bsz": "16", "num_updates": "8700", "lr": "4.95898e-05", "gnorm": "3.003", "train_wall": "18", "wall": "2042"}
+2021-10-24 16:04:34 | INFO | fairseq_cli.train | begin validation on "valid" subset
+2021-10-24 16:08:29 | INFO | valid | {"epoch": 3, "valid_loss": "2.514", "valid_nll_loss": "0.436", "valid_ppl": "1.35", "valid_bleu": "80.75", "valid_wps": "400.7", "valid_wpb": "129.4", "valid_bsz": "8", "valid_num_updates": "8730", "valid_best_bleu": "80.75"}
+2021-10-24 16:08:29 | INFO | fairseq_cli.train | begin save checkpoint
+2021-10-24 16:08:57 | INFO | fairseq.checkpoint_utils | saved checkpoint ../models/plbart/repetition/large/checkpoint_best.pt (epoch 3 @ 8730 updates, score 80.75) (writing took 27.565303162904456 seconds)
+2021-10-24 16:08:57 | INFO | fairseq.data.iterators | Data loading buffer is empty or nearly empty. This may indicate a data loading bottleneck, and increasing the number of workers (--num-workers) may help.
+2021-10-24 16:08:57 | INFO | fairseq_cli.train | end of epoch 3 (average epoch stats below)
+2021-10-24 16:08:57 | INFO | train | {"epoch": 3, "train_loss": "2.387", "train_nll_loss": "0.469", "train_ppl": "1.38", "train_wps": "937", "train_ups": "3.67", "train_wpb": "255", "train_bsz": "16", "train_num_updates": "8730", "train_lr": "4.95883e-05", "train_gnorm": "2.916", "train_train_wall": "523", "train_wall": "2311"}
+2021-10-24 16:08:57 | INFO | fairseq_cli.train | begin training epoch 3
+2021-10-24 16:09:10 | INFO | train_inner | {"epoch": 4, "update": 3.024, "loss": "2.325", "nll_loss": "0.399", "ppl": "1.32", "wps": "85.1", "ups": "0.35", "wpb": "240.1", "bsz": "16", "num_updates": "8800", "lr": "4.95848e-05", "gnorm": "2.739", "train_wall": "19", "wall": "2324"}
+2021-10-24 16:09:28 | INFO | train_inner | {"epoch": 4, "update": 3.058, "loss": "2.301", "nll_loss": "0.372", "ppl": "1.29", "wps": "1552.8", "ups": "5.5", "wpb": "282.6", "bsz": "16", "num_updates": "8900", "lr": "4.95798e-05", "gnorm": "2.513", "train_wall": "18", "wall": "2343"}
+2021-10-24 16:09:45 | INFO | train_inner | {"epoch": 4, "update": 3.093, "loss": "2.336", "nll_loss": "0.411", "ppl": "1.33", "wps": "1548", "ups": "6.04", "wpb": "256.4", "bsz": "16", "num_updates": "9000", "lr": "4.95748e-05", "gnorm": "3.59", "train_wall": "16", "wall": "2359"}
+2021-10-24 16:10:04 | INFO | train_inner | {"epoch": 4, "update": 3.127, "loss": "2.298", "nll_loss": "0.369", "ppl": "1.29", "wps": "1436", "ups": "5.29", "wpb": "271.5", "bsz": "16", "num_updates": "9100", "lr": "4.95698e-05", "gnorm": "2.833", "train_wall": "19", "wall": "2378"}
+2021-10-24 16:10:23 | INFO | train_inner | {"epoch": 4, "update": 3.162, "loss": "2.326", "nll_loss": "0.402", "ppl": "1.32", "wps": "1155.8", "ups": "5.29", "wpb": "218.5", "bsz": "16", "num_updates": "9200", "lr": "4.95648e-05", "gnorm": "2.823", "train_wall": "19", "wall": "2397"}
+2021-10-24 16:10:42 | INFO | train_inner | {"epoch": 4, "update": 3.196, "loss": "2.27", "nll_loss": "0.339", "ppl": "1.26", "wps": "1486.1", "ups": "5.13", "wpb": "289.9", "bsz": "16", "num_updates": "9300", "lr": "4.95598e-05", "gnorm": "2.578", "train_wall": "19", "wall": "2417"}
+2021-10-24 16:11:02 | INFO | train_inner | {"epoch": 4, "update": 3.23, "loss": "2.305", "nll_loss": "0.383", "ppl": "1.3", "wps": "1172.9", "ups": "4.98", "wpb": "235.7", "bsz": "16", "num_updates": "9400", "lr": "4.95548e-05", "gnorm": "2.773", "train_wall": "20", "wall": "2437"}
+2021-10-24 16:11:21 | INFO | train_inner | {"epoch": 4, "update": 3.265, "loss": "2.31", "nll_loss": "0.387", "ppl": "1.31", "wps": "1307.4", "ups": "5.25", "wpb": "249", "bsz": "16", "num_updates": "9500", "lr": "4.95498e-05", "gnorm": "2.568", "train_wall": "19", "wall": "2456"}
+2021-10-24 16:11:41 | INFO | train_inner | {"epoch": 4, "update": 3.299, "loss": "2.289", "nll_loss": "0.365", "ppl": "1.29", "wps": "1249.5", "ups": "5.01", "wpb": "249.3", "bsz": "16", "num_updates": "9600", "lr": "4.95448e-05", "gnorm": "3.074", "train_wall": "20", "wall": "2476"}
+2021-10-24 16:12:00 | INFO | train_inner | {"epoch": 4, "update": 3.333, "loss": "2.301", "nll_loss": "0.378", "ppl": "1.3", "wps": "1364.7", "ups": "5.22", "wpb": "261.5", "bsz": "16", "num_updates": "9700", "lr": "4.95398e-05", "gnorm": "2.615", "train_wall": "19", "wall": "2495"}
+2021-10-24 16:12:19 | INFO | train_inner | {"epoch": 4, "update": 3.368, "loss": "2.315", "nll_loss": "0.391", "ppl": "1.31", "wps": "1377.9", "ups": "5.47", "wpb": "252", "bsz": "16", "num_updates": "9800", "lr": "4.95348e-05", "gnorm": "2.903", "train_wall": "18", "wall": "2513"}
+2021-10-24 16:12:38 | INFO | train_inner | {"epoch": 4, "update": 3.402, "loss": "2.317", "nll_loss": "0.397", "ppl": "1.32", "wps": "1191.8", "ups": "5.27", "wpb": "226.3", "bsz": "16", "num_updates": "9900", "lr": "4.95298e-05", "gnorm": "2.846", "train_wall": "19", "wall": "2532"}
+2021-10-24 16:12:58 | INFO | train_inner | {"epoch": 4, "update": 3.436, "loss": "2.311", "nll_loss": "0.388", "ppl": "1.31", "wps": "1368.6", "ups": "4.98", "wpb": "275.1", "bsz": "16", "num_updates": "10000", "lr": "4.95248e-05", "gnorm": "2.738", "train_wall": "20", "wall": "2552"}
+2021-10-24 16:13:18 | INFO | train_inner | {"epoch": 4, "update": 3.471, "loss": "2.33", "nll_loss": "0.409", "ppl": "1.33", "wps": "1340.9", "ups": "4.88", "wpb": "274.9", "bsz": "16", "num_updates": "10100", "lr": "4.95198e-05", "gnorm": "2.967", "train_wall": "20", "wall": "2573"}
+2021-10-24 16:13:35 | INFO | train_inner | {"epoch": 4, "update": 3.505, "loss": "2.334", "nll_loss": "0.416", "ppl": "1.33", "wps": "1284.6", "ups": "5.81", "wpb": "221.1", "bsz": "16", "num_updates": "10200", "lr": "4.95148e-05", "gnorm": "2.903", "train_wall": "17", "wall": "2590"}
+2021-10-24 16:13:55 | INFO | train_inner | {"epoch": 4, "update": 3.54, "loss": "2.337", "nll_loss": "0.42", "ppl": "1.34", "wps": "1578.4", "ups": "5.21", "wpb": "303.2", "bsz": "16", "num_updates": "10300", "lr": "4.95098e-05", "gnorm": "2.985", "train_wall": "19", "wall": "2609"}
+2021-10-24 16:14:11 | INFO | train_inner | {"epoch": 4, "update": 3.574, "loss": "2.326", "nll_loss": "0.411", "ppl": "1.33", "wps": "1500.5", "ups": "6.27", "wpb": "239.3", "bsz": "16", "num_updates": "10400", "lr": "4.95048e-05", "gnorm": "2.894", "train_wall": "16", "wall": "2625"}
+2021-10-24 16:14:29 | INFO | train_inner | {"epoch": 4, "update": 3.608, "loss": "2.342", "nll_loss": "0.421", "ppl": "1.34", "wps": "1327", "ups": "5.57", "wpb": "238", "bsz": "16", "num_updates": "10500", "lr": "4.94997e-05", "gnorm": "2.958", "train_wall": "18", "wall": "2643"}
+2021-10-24 16:14:45 | INFO | train_inner | {"epoch": 4, "update": 3.643, "loss": "2.356", "nll_loss": "0.439", "ppl": "1.36", "wps": "1535.6", "ups": "5.92", "wpb": "259.3", "bsz": "16", "num_updates": "10600", "lr": "4.94947e-05", "gnorm": "3.178", "train_wall": "17", "wall": "2660"}
+2021-10-24 16:15:02 | INFO | train_inner | {"epoch": 4, "update": 3.677, "loss": "2.343", "nll_loss": "0.428", "ppl": "1.35", "wps": "1592.2", "ups": "6.09", "wpb": "261.5", "bsz": "16", "num_updates": "10700", "lr": "4.94897e-05", "gnorm": "2.887", "train_wall": "16", "wall": "2676"}
+2021-10-24 16:15:17 | INFO | train_inner | {"epoch": 4, "update": 3.711, "loss": "2.317", "nll_loss": "0.399", "ppl": "1.32", "wps": "1566", "ups": "6.48", "wpb": "241.6", "bsz": "16", "num_updates": "10800", "lr": "4.94847e-05", "gnorm": "2.962", "train_wall": "15", "wall": "2692"}
+2021-10-24 16:15:34 | INFO | train_inner | {"epoch": 4, "update": 3.746, "loss": "2.365", "nll_loss": "0.453", "ppl": "1.37", "wps": "1451.7", "ups": "6.06", "wpb": "239.5", "bsz": "16", "num_updates": "10900", "lr": "4.94797e-05", "gnorm": "3.005", "train_wall": "16", "wall": "2708"}
+2021-10-24 16:15:51 | INFO | train_inner | {"epoch": 4, "update": 3.78, "loss": "2.345", "nll_loss": "0.431", "ppl": "1.35", "wps": "1485.5", "ups": "5.81", "wpb": "255.7", "bsz": "16", "num_updates": "11000", "lr": "4.94747e-05", "gnorm": "2.878", "train_wall": "17", "wall": "2725"}
+2021-10-24 16:16:08 | INFO | train_inner | {"epoch": 4, "update": 3.814, "loss": "2.311", "nll_loss": "0.39", "ppl": "1.31", "wps": "1596.6", "ups": "5.9", "wpb": "270.4", "bsz": "16", "num_updates": "11100", "lr": "4.94697e-05", "gnorm": "2.717", "train_wall": "17", "wall": "2742"}
+2021-10-24 16:16:26 | INFO | train_inner | {"epoch": 4, "update": 3.849, "loss": "2.336", "nll_loss": "0.42", "ppl": "1.34", "wps": "1571.6", "ups": "5.55", "wpb": "283.3", "bsz": "16", "num_updates": "11200", "lr": "4.94647e-05", "gnorm": "2.929", "train_wall": "18", "wall": "2760"}
+2021-10-24 16:16:44 | INFO | train_inner | {"epoch": 4, "update": 3.883, "loss": "2.321", "nll_loss": "0.405", "ppl": "1.32", "wps": "1197.7", "ups": "5.69", "wpb": "210.5", "bsz": "16", "num_updates": "11300", "lr": "4.94597e-05", "gnorm": "2.935", "train_wall": "17", "wall": "2778"}
+2021-10-24 16:17:02 | INFO | train_inner | {"epoch": 4, "update": 3.918, "loss": "2.384", "nll_loss": "0.472", "ppl": "1.39", "wps": "1295.1", "ups": "5.37", "wpb": "241.1", "bsz": "16", "num_updates": "11400", "lr": "4.94547e-05", "gnorm": "2.866", "train_wall": "18", "wall": "2797"}
+2021-10-24 16:17:18 | INFO | train_inner | {"epoch": 4, "update": 3.952, "loss": "2.31", "nll_loss": "0.395", "ppl": "1.32", "wps": "1622.1", "ups": "6.22", "wpb": "260.8", "bsz": "16", "num_updates": "11500", "lr": "4.94497e-05", "gnorm": "2.637", "train_wall": "16", "wall": "2813"}
+2021-10-24 16:17:36 | INFO | train_inner | {"epoch": 4, "update": 3.986, "loss": "2.343", "nll_loss": "0.433", "ppl": "1.35", "wps": "1560.5", "ups": "5.53", "wpb": "282.4", "bsz": "16", "num_updates": "11600", "lr": "4.94447e-05", "gnorm": "3.002", "train_wall": "18", "wall": "2831"}
+2021-10-24 16:17:45 | INFO | fairseq_cli.train | begin validation on "valid" subset
+2021-10-24 16:21:39 | INFO | valid | {"epoch": 4, "valid_loss": "2.506", "valid_nll_loss": "0.445", "valid_ppl": "1.36", "valid_bleu": "79.51", "valid_wps": "402.5", "valid_wpb": "129.4", "valid_bsz": "8", "valid_num_updates": "11640", "valid_best_bleu": "80.75"}
+2021-10-24 16:21:39 | INFO | fairseq_cli.train | begin save checkpoint
+2021-10-24 16:21:54 | INFO | fairseq.checkpoint_utils | saved checkpoint ../models/plbart/repetition/large/checkpoint_last.pt (epoch 4 @ 11640 updates, score 79.51) (writing took 15.300960120046511 seconds)
+2021-10-24 16:21:54 | INFO | fairseq.data.iterators | Data loading buffer is empty or nearly empty. This may indicate a data loading bottleneck, and increasing the number of workers (--num-workers) may help.
+2021-10-24 16:21:54 | INFO | fairseq_cli.train | end of epoch 4 (average epoch stats below)
+2021-10-24 16:21:54 | INFO | train | {"epoch": 4, "train_loss": "2.323", "train_nll_loss": "0.403", "train_ppl": "1.32", "train_wps": "954.9", "train_ups": "3.74", "train_wpb": "255", "train_bsz": "16", "train_num_updates": "11640", "train_lr": "4.94427e-05", "train_gnorm": "2.866", "train_train_wall": "521", "train_wall": "3089"}
+2021-10-24 16:21:54 | INFO | fairseq_cli.train | begin training epoch 4
+2021-10-24 16:22:06 | INFO | train_inner | {"epoch": 5, "update": 4.021, "loss": "2.305", "nll_loss": "0.386", "ppl": "1.31", "wps": "100.4", "ups": "0.37", "wpb": "270.2", "bsz": "16", "num_updates": "11700", "lr": "4.94397e-05", "gnorm": "2.904", "train_wall": "19", "wall": "3100"}
+2021-10-24 16:22:23 | INFO | train_inner | {"epoch": 5, "update": 4.055, "loss": "2.273", "nll_loss": "0.349", "ppl": "1.27", "wps": "1254.9", "ups": "5.8", "wpb": "216.5", "bsz": "16", "num_updates": "11800", "lr": "4.94347e-05", "gnorm": "2.528", "train_wall": "17", "wall": "3117"}
+2021-10-24 16:22:40 | INFO | train_inner | {"epoch": 5, "update": 4.089, "loss": "2.286", "nll_loss": "0.366", "ppl": "1.29", "wps": "1402.3", "ups": "5.89", "wpb": "238.1", "bsz": "16", "num_updates": "11900", "lr": "4.94297e-05", "gnorm": "2.743", "train_wall": "17", "wall": "3134"}
+2021-10-24 16:22:59 | INFO | train_inner | {"epoch": 5, "update": 4.124, "loss": "2.285", "nll_loss": "0.363", "ppl": "1.29", "wps": "1300.5", "ups": "5.33", "wpb": "244.2", "bsz": "16", "num_updates": "12000", "lr": "4.94247e-05", "gnorm": "2.68", "train_wall": "19", "wall": "3153"}
+2021-10-24 16:23:17 | INFO | train_inner | {"epoch": 5, "update": 4.158, "loss": "2.263", "nll_loss": "0.343", "ppl": "1.27", "wps": "1258.8", "ups": "5.46", "wpb": "230.5", "bsz": "16", "num_updates": "12100", "lr": "4.94197e-05", "gnorm": "2.955", "train_wall": "18", "wall": "3171"}
+2021-10-24 16:23:35 | INFO | train_inner | {"epoch": 5, "update": 4.192, "loss": "2.276", "nll_loss": "0.353", "ppl": "1.28", "wps": "1501", "ups": "5.56", "wpb": "270", "bsz": "16", "num_updates": "12200", "lr": "4.94147e-05", "gnorm": "2.842", "train_wall": "18", "wall": "3189"}
+2021-10-24 16:23:55 | INFO | train_inner | {"epoch": 5, "update": 4.227, "loss": "2.292", "nll_loss": "0.376", "ppl": "1.3", "wps": "1398.6", "ups": "4.88", "wpb": "286.5", "bsz": "16", "num_updates": "12300", "lr": "4.94097e-05", "gnorm": "2.617", "train_wall": "20", "wall": "3210"}
+2021-10-24 16:24:14 | INFO | train_inner | {"epoch": 5, "update": 4.261, "loss": "2.269", "nll_loss": "0.348", "ppl": "1.27", "wps": "1459.1", "ups": "5.4", "wpb": "270.3", "bsz": "16", "num_updates": "12400", "lr": "4.94047e-05", "gnorm": "2.757", "train_wall": "18", "wall": "3228"}
+2021-10-24 16:24:31 | INFO | train_inner | {"epoch": 5, "update": 4.296, "loss": "2.289", "nll_loss": "0.368", "ppl": "1.29", "wps": "1252.3", "ups": "5.76", "wpb": "217.5", "bsz": "16", "num_updates": "12500", "lr": "4.93997e-05", "gnorm": "2.72", "train_wall": "17", "wall": "3246"}
+2021-10-24 16:24:51 | INFO | train_inner | {"epoch": 5, "update": 4.33, "loss": "2.286", "nll_loss": "0.367", "ppl": "1.29", "wps": "1322.7", "ups": "4.96", "wpb": "266.4", "bsz": "16", "num_updates": "12600", "lr": "4.93947e-05", "gnorm": "2.67", "train_wall": "20", "wall": "3266"}
+2021-10-24 16:25:10 | INFO | train_inner | {"epoch": 5, "update": 4.364, "loss": "2.251", "nll_loss": "0.332", "ppl": "1.26", "wps": "1397.1", "ups": "5.3", "wpb": "263.7", "bsz": "16", "num_updates": "12700", "lr": "4.93897e-05", "gnorm": "2.691", "train_wall": "19", "wall": "3285"}
+2021-10-24 16:25:29 | INFO | train_inner | {"epoch": 5, "update": 4.399, "loss": "2.294", "nll_loss": "0.377", "ppl": "1.3", "wps": "1185.7", "ups": "5.32", "wpb": "222.7", "bsz": "16", "num_updates": "12800", "lr": "4.93847e-05", "gnorm": "2.756", "train_wall": "19", "wall": "3303"}
+2021-10-24 16:25:48 | INFO | train_inner | {"epoch": 5, "update": 4.433, "loss": "2.301", "nll_loss": "0.388", "ppl": "1.31", "wps": "1402.5", "ups": "5.26", "wpb": "266.6", "bsz": "16", "num_updates": "12900", "lr": "4.93797e-05", "gnorm": "2.593", "train_wall": "19", "wall": "3322"}
+2021-10-24 16:26:06 | INFO | train_inner | {"epoch": 5, "update": 4.467, "loss": "2.288", "nll_loss": "0.373", "ppl": "1.29", "wps": "1425.7", "ups": "5.43", "wpb": "262.4", "bsz": "16", "num_updates": "13000", "lr": "4.93747e-05", "gnorm": "2.999", "train_wall": "18", "wall": "3341"}
+2021-10-24 16:26:25 | INFO | train_inner | {"epoch": 5, "update": 4.502, "loss": "2.299", "nll_loss": "0.384", "ppl": "1.31", "wps": "1187.3", "ups": "5.31", "wpb": "223.7", "bsz": "16", "num_updates": "13100", "lr": "4.93697e-05", "gnorm": "2.743", "train_wall": "19", "wall": "3360"}
+2021-10-24 16:26:42 | INFO | train_inner | {"epoch": 5, "update": 4.536, "loss": "2.305", "nll_loss": "0.392", "ppl": "1.31", "wps": "1119.8", "ups": "5.93", "wpb": "188.9", "bsz": "16", "num_updates": "13200", "lr": "4.93647e-05", "gnorm": "3", "train_wall": "17", "wall": "3377"}
+2021-10-24 16:26:58 | INFO | train_inner | {"epoch": 5, "update": 4.57, "loss": "2.313", "nll_loss": "0.404", "ppl": "1.32", "wps": "1579.7", "ups": "6.33", "wpb": "249.4", "bsz": "16", "num_updates": "13300", "lr": "4.93597e-05", "gnorm": "3.207", "train_wall": "16", "wall": "3392"}
+2021-10-24 16:27:16 | INFO | train_inner | {"epoch": 5, "update": 4.605, "loss": "2.292", "nll_loss": "0.373", "ppl": "1.29", "wps": "1537.6", "ups": "5.59", "wpb": "274.9", "bsz": "16", "num_updates": "13400", "lr": "4.93547e-05", "gnorm": "2.598", "train_wall": "18", "wall": "3410"}
+2021-10-24 16:27:32 | INFO | train_inner | {"epoch": 5, "update": 4.639, "loss": "2.329", "nll_loss": "0.423", "ppl": "1.34", "wps": "1625.5", "ups": "6.13", "wpb": "265", "bsz": "16", "num_updates": "13500", "lr": "4.93497e-05", "gnorm": "2.766", "train_wall": "16", "wall": "3427"}
+2021-10-24 16:27:52 | INFO | train_inner | {"epoch": 5, "update": 4.674, "loss": "2.311", "nll_loss": "0.399", "ppl": "1.32", "wps": "1178.8", "ups": "5.12", "wpb": "230.1", "bsz": "16", "num_updates": "13600", "lr": "4.93447e-05", "gnorm": "3.341", "train_wall": "19", "wall": "3446"}
+2021-10-24 16:28:11 | INFO | train_inner | {"epoch": 5, "update": 4.708, "loss": "2.342", "nll_loss": "0.434", "ppl": "1.35", "wps": "1426.9", "ups": "5.28", "wpb": "270.5", "bsz": "16", "num_updates": "13700", "lr": "4.93397e-05", "gnorm": "2.963", "train_wall": "19", "wall": "3465"}
+2021-10-24 16:28:30 | INFO | train_inner | {"epoch": 5, "update": 4.742, "loss": "2.302", "nll_loss": "0.39", "ppl": "1.31", "wps": "1693.3", "ups": "5.2", "wpb": "325.9", "bsz": "16", "num_updates": "13800", "lr": "4.93347e-05", "gnorm": "3.113", "train_wall": "19", "wall": "3484"}
+2021-10-24 16:28:49 | INFO | train_inner | {"epoch": 5, "update": 4.777, "loss": "2.311", "nll_loss": "0.4", "ppl": "1.32", "wps": "1382.2", "ups": "5.1", "wpb": "271", "bsz": "16", "num_updates": "13900", "lr": "4.93297e-05", "gnorm": "2.77", "train_wall": "19", "wall": "3504"}
+2021-10-24 16:29:08 | INFO | train_inner | {"epoch": 5, "update": 4.811, "loss": "2.348", "nll_loss": "0.442", "ppl": "1.36", "wps": "1361.6", "ups": "5.27", "wpb": "258.5", "bsz": "16", "num_updates": "14000", "lr": "4.93247e-05", "gnorm": "3.204", "train_wall": "19", "wall": "3523"}
+2021-10-24 16:29:28 | INFO | train_inner | {"epoch": 5, "update": 4.845, "loss": "2.274", "nll_loss": "0.364", "ppl": "1.29", "wps": "1391.3", "ups": "5.12", "wpb": "271.6", "bsz": "16", "num_updates": "14100", "lr": "4.93197e-05", "gnorm": "2.773", "train_wall": "19", "wall": "3542"}
+2021-10-24 16:29:47 | INFO | train_inner | {"epoch": 5, "update": 4.88, "loss": "2.336", "nll_loss": "0.424", "ppl": "1.34", "wps": "1175.5", "ups": "5.23", "wpb": "224.9", "bsz": "16", "num_updates": "14200", "lr": "4.93147e-05", "gnorm": "3.084", "train_wall": "19", "wall": "3561"}
+2021-10-24 16:30:07 | INFO | train_inner | {"epoch": 5, "update": 4.914, "loss": "2.286", "nll_loss": "0.375", "ppl": "1.3", "wps": "1449.5", "ups": "5.14", "wpb": "282.2", "bsz": "16", "num_updates": "14300", "lr": "4.93097e-05", "gnorm": "2.629", "train_wall": "19", "wall": "3581"}
+2021-10-24 16:30:26 | INFO | train_inner | {"epoch": 5, "update": 4.948, "loss": "2.285", "nll_loss": "0.374", "ppl": "1.3", "wps": "1240.4", "ups": "5.09", "wpb": "243.8", "bsz": "16", "num_updates": "14400", "lr": "4.93047e-05", "gnorm": "3.341", "train_wall": "19", "wall": "3601"}
+2021-10-24 16:30:46 | INFO | train_inner | {"epoch": 5, "update": 4.983, "loss": "2.307", "nll_loss": "0.398", "ppl": "1.32", "wps": "1207.2", "ups": "5.13", "wpb": "235.2", "bsz": "16", "num_updates": "14500", "lr": "4.92996e-05", "gnorm": "2.88", "train_wall": "19", "wall": "3620"}
+2021-10-24 16:30:55 | INFO | fairseq_cli.train | begin validation on "valid" subset
+2021-10-24 16:34:46 | INFO | valid | {"epoch": 5, "valid_loss": "2.504", "valid_nll_loss": "0.453", "valid_ppl": "1.37", "valid_bleu": "79.28", "valid_wps": "408.6", "valid_wpb": "129.4", "valid_bsz": "8", "valid_num_updates": "14550", "valid_best_bleu": "80.75"}
+2021-10-24 16:34:46 | INFO | fairseq_cli.train | begin save checkpoint
+2021-10-24 16:35:00 | INFO | fairseq.checkpoint_utils | saved checkpoint ../models/plbart/repetition/large/checkpoint_last.pt (epoch 5 @ 14550 updates, score 79.28) (writing took 13.247816579067148 seconds)
+2021-10-24 16:35:00 | INFO | fairseq.data.iterators | Data loading buffer is empty or nearly empty. This may indicate a data loading bottleneck, and increasing the number of workers (--num-workers) may help.
+2021-10-24 16:35:00 | INFO | fairseq_cli.train | end of epoch 5 (average epoch stats below)
+2021-10-24 16:35:00 | INFO | train | {"epoch": 5, "train_loss": "2.297", "train_nll_loss": "0.382", "train_ppl": "1.3", "train_wps": "944.9", "train_ups": "3.71", "train_wpb": "255", "train_bsz": "16", "train_num_updates": "14550", "train_lr": "4.92971e-05", "train_gnorm": "2.858", "train_train_wall": "534", "train_wall": "3874"}
+2021-10-24 16:35:00 | INFO | fairseq_cli.train | begin training epoch 5
+2021-10-24 16:35:09 | INFO | train_inner | {"epoch": 6, "update": 5.017, "loss": "2.278", "nll_loss": "0.365", "ppl": "1.29", "wps": "120.1", "ups": "0.38", "wpb": "316.7", "bsz": "16", "num_updates": "14600", "lr": "4.92946e-05", "gnorm": "2.531", "train_wall": "19", "wall": "3884"}
+2021-10-24 16:35:29 | INFO | train_inner | {"epoch": 6, "update": 5.052, "loss": "2.251", "nll_loss": "0.33", "ppl": "1.26", "wps": "1186", "ups": "5.02", "wpb": "236.2", "bsz": "16", "num_updates": "14700", "lr": "4.92896e-05", "gnorm": "2.737", "train_wall": "20", "wall": "3904"}
+2021-10-24 16:35:49 | INFO | train_inner | {"epoch": 6, "update": 5.086, "loss": "2.26", "nll_loss": "0.345", "ppl": "1.27", "wps": "1488.4", "ups": "5.15", "wpb": "288.9", "bsz": "16", "num_updates": "14800", "lr": "4.92846e-05", "gnorm": "2.514", "train_wall": "19", "wall": "3923"}
+2021-10-24 16:36:07 | INFO | train_inner | {"epoch": 6, "update": 5.12, "loss": "2.25", "nll_loss": "0.333", "ppl": "1.26", "wps": "1350.5", "ups": "5.45", "wpb": "247.8", "bsz": "16", "num_updates": "14900", "lr": "4.92796e-05", "gnorm": "2.447", "train_wall": "18", "wall": "3941"}
+2021-10-24 16:36:25 | INFO | train_inner | {"epoch": 6, "update": 5.155, "loss": "2.277", "nll_loss": "0.365", "ppl": "1.29", "wps": "1637.9", "ups": "5.68", "wpb": "288.4", "bsz": "16", "num_updates": "15000", "lr": "4.92746e-05", "gnorm": "2.749", "train_wall": "17", "wall": "3959"}
+2021-10-24 16:36:42 | INFO | train_inner | {"epoch": 6, "update": 5.189, "loss": "2.262", "nll_loss": "0.346", "ppl": "1.27", "wps": "1551.9", "ups": "5.74", "wpb": "270.6", "bsz": "16", "num_updates": "15100", "lr": "4.92696e-05", "gnorm": "2.6", "train_wall": "17", "wall": "3977"}
+2021-10-24 16:37:02 | INFO | train_inner | {"epoch": 6, "update": 5.223, "loss": "2.255", "nll_loss": "0.341", "ppl": "1.27", "wps": "1556.6", "ups": "5.08", "wpb": "306.1", "bsz": "16", "num_updates": "15200", "lr": "4.92646e-05", "gnorm": "2.465", "train_wall": "19", "wall": "3996"}
+2021-10-24 16:37:21 | INFO | train_inner | {"epoch": 6, "update": 5.258, "loss": "2.265", "nll_loss": "0.354", "ppl": "1.28", "wps": "1182.7", "ups": "5.14", "wpb": "230.1", "bsz": "16", "num_updates": "15300", "lr": "4.92596e-05", "gnorm": "2.471", "train_wall": "19", "wall": "4016"}
+2021-10-24 16:37:41 | INFO | train_inner | {"epoch": 6, "update": 5.292, "loss": "2.277", "nll_loss": "0.367", "ppl": "1.29", "wps": "1214", "ups": "5", "wpb": "242.7", "bsz": "16", "num_updates": "15400", "lr": "4.92546e-05", "gnorm": "2.724", "train_wall": "20", "wall": "4036"}
+2021-10-24 16:38:01 | INFO | train_inner | {"epoch": 6, "update": 5.326, "loss": "2.279", "nll_loss": "0.367", "ppl": "1.29", "wps": "1192.4", "ups": "4.98", "wpb": "239.6", "bsz": "16", "num_updates": "15500", "lr": "4.92496e-05", "gnorm": "3.05", "train_wall": "20", "wall": "4056"}
+2021-10-24 16:38:20 | INFO | train_inner | {"epoch": 6, "update": 5.361, "loss": "2.281", "nll_loss": "0.367", "ppl": "1.29", "wps": "1276.8", "ups": "5.37", "wpb": "237.8", "bsz": "16", "num_updates": "15600", "lr": "4.92446e-05", "gnorm": "2.792", "train_wall": "18", "wall": "4074"}
+2021-10-24 16:38:40 | INFO | train_inner | {"epoch": 6, "update": 5.395, "loss": "2.296", "nll_loss": "0.388", "ppl": "1.31", "wps": "1489.3", "ups": "4.94", "wpb": "301.8", "bsz": "16", "num_updates": "15700", "lr": "4.92396e-05", "gnorm": "2.796", "train_wall": "20", "wall": "4095"}
+2021-10-24 16:39:01 | INFO | train_inner | {"epoch": 6, "update": 5.43, "loss": "2.284", "nll_loss": "0.373", "ppl": "1.3", "wps": "1083.4", "ups": "4.87", "wpb": "222.5", "bsz": "16", "num_updates": "15800", "lr": "4.92346e-05", "gnorm": "2.914", "train_wall": "20", "wall": "4115"}
+2021-10-24 16:39:19 | INFO | train_inner | {"epoch": 6, "update": 5.464, "loss": "2.261", "nll_loss": "0.348", "ppl": "1.27", "wps": "1543.6", "ups": "5.58", "wpb": "276.8", "bsz": "16", "num_updates": "15900", "lr": "4.92296e-05", "gnorm": "2.881", "train_wall": "18", "wall": "4133"}
+2021-10-24 16:39:38 | INFO | train_inner | {"epoch": 6, "update": 5.498, "loss": "2.264", "nll_loss": "0.354", "ppl": "1.28", "wps": "1212.6", "ups": "5.17", "wpb": "234.5", "bsz": "16", "num_updates": "16000", "lr": "4.92246e-05", "gnorm": "2.72", "train_wall": "19", "wall": "4152"}
+2021-10-24 16:39:55 | INFO | train_inner | {"epoch": 6, "update": 5.533, "loss": "2.332", "nll_loss": "0.425", "ppl": "1.34", "wps": "1449.6", "ups": "5.92", "wpb": "245", "bsz": "16", "num_updates": "16100", "lr": "4.92196e-05", "gnorm": "3.023", "train_wall": "17", "wall": "4169"}
+2021-10-24 16:40:13 | INFO | train_inner | {"epoch": 6, "update": 5.567, "loss": "2.282", "nll_loss": "0.371", "ppl": "1.29", "wps": "1457", "ups": "5.67", "wpb": "256.9", "bsz": "16", "num_updates": "16200", "lr": "4.92146e-05", "gnorm": "2.613", "train_wall": "17", "wall": "4187"}
+2021-10-24 16:40:31 | INFO | train_inner | {"epoch": 6, "update": 5.601, "loss": "2.299", "nll_loss": "0.395", "ppl": "1.32", "wps": "1433.5", "ups": "5.58", "wpb": "257.1", "bsz": "16", "num_updates": "16300", "lr": "4.92096e-05", "gnorm": "2.97", "train_wall": "18", "wall": "4205"}
+2021-10-24 16:40:49 | INFO | train_inner | {"epoch": 6, "update": 5.636, "loss": "2.308", "nll_loss": "0.404", "ppl": "1.32", "wps": "1552.3", "ups": "5.5", "wpb": "282.1", "bsz": "16", "num_updates": "16400", "lr": "4.92046e-05", "gnorm": "3.294", "train_wall": "18", "wall": "4223"}
+2021-10-24 16:41:06 | INFO | train_inner | {"epoch": 6, "update": 5.67, "loss": "2.29", "nll_loss": "0.385", "ppl": "1.31", "wps": "1453.9", "ups": "5.75", "wpb": "252.9", "bsz": "16", "num_updates": "16500", "lr": "4.91996e-05", "gnorm": "2.838", "train_wall": "17", "wall": "4241"}
+2021-10-24 16:41:26 | INFO | train_inner | {"epoch": 6, "update": 5.704, "loss": "2.285", "nll_loss": "0.379", "ppl": "1.3", "wps": "1189.2", "ups": "5.03", "wpb": "236.6", "bsz": "16", "num_updates": "16600", "lr": "4.91946e-05", "gnorm": "2.476", "train_wall": "20", "wall": "4260"}
+2021-10-24 16:41:46 | INFO | train_inner | {"epoch": 6, "update": 5.739, "loss": "2.276", "nll_loss": "0.37", "ppl": "1.29", "wps": "1367.3", "ups": "5.03", "wpb": "271.8", "bsz": "16", "num_updates": "16700", "lr": "4.91896e-05", "gnorm": "2.674", "train_wall": "20", "wall": "4280"}
+2021-10-24 16:42:05 | INFO | train_inner | {"epoch": 6, "update": 5.773, "loss": "2.297", "nll_loss": "0.395", "ppl": "1.32", "wps": "1411.9", "ups": "5.22", "wpb": "270.4", "bsz": "16", "num_updates": "16800", "lr": "4.91846e-05", "gnorm": "2.881", "train_wall": "19", "wall": "4299"}
+2021-10-24 16:42:24 | INFO | train_inner | {"epoch": 6, "update": 5.808, "loss": "2.295", "nll_loss": "0.393", "ppl": "1.31", "wps": "1462.9", "ups": "5.34", "wpb": "273.7", "bsz": "16", "num_updates": "16900", "lr": "4.91796e-05", "gnorm": "2.593", "train_wall": "18", "wall": "4318"}
+2021-10-24 16:42:43 | INFO | train_inner | {"epoch": 6, "update": 5.842, "loss": "2.301", "nll_loss": "0.394", "ppl": "1.31", "wps": "1135.1", "ups": "5.1", "wpb": "222.7", "bsz": "16", "num_updates": "17000", "lr": "4.91746e-05", "gnorm": "2.848", "train_wall": "19", "wall": "4338"}
+2021-10-24 16:43:02 | INFO | train_inner | {"epoch": 6, "update": 5.876, "loss": "2.329", "nll_loss": "0.428", "ppl": "1.35", "wps": "1480.1", "ups": "5.32", "wpb": "278.3", "bsz": "16", "num_updates": "17100", "lr": "4.91696e-05", "gnorm": "3.149", "train_wall": "19", "wall": "4357"}
+2021-10-24 16:43:19 | INFO | train_inner | {"epoch": 6, "update": 5.911, "loss": "2.332", "nll_loss": "0.429", "ppl": "1.35", "wps": "1320", "ups": "5.9", "wpb": "223.9", "bsz": "16", "num_updates": "17200", "lr": "4.91646e-05", "gnorm": "3.297", "train_wall": "17", "wall": "4374"}
+2021-10-24 16:43:37 | INFO | train_inner | {"epoch": 6, "update": 5.945, "loss": "2.326", "nll_loss": "0.424", "ppl": "1.34", "wps": "1453.3", "ups": "5.65", "wpb": "257.4", "bsz": "16", "num_updates": "17300", "lr": "4.91596e-05", "gnorm": "3.225", "train_wall": "17", "wall": "4391"}
+2021-10-24 16:43:51 | INFO | train_inner | {"epoch": 6, "update": 5.979, "loss": "2.352", "nll_loss": "0.456", "ppl": "1.37", "wps": "1468", "ups": "6.85", "wpb": "214.4", "bsz": "16", "num_updates": "17400", "lr": "4.91546e-05", "gnorm": "3.091", "train_wall": "14", "wall": "4406"}
+2021-10-24 16:44:02 | INFO | fairseq_cli.train | begin validation on "valid" subset
+2021-10-24 16:47:58 | INFO | valid | {"epoch": 6, "valid_loss": "2.538", "valid_nll_loss": "0.486", "valid_ppl": "1.4", "valid_bleu": "77.85", "valid_wps": "399.7", "valid_wpb": "129.4", "valid_bsz": "8", "valid_num_updates": "17460", "valid_best_bleu": "80.75"}
+2021-10-24 16:47:58 | INFO | fairseq_cli.train | begin save checkpoint
+2021-10-24 16:48:12 | INFO | fairseq.checkpoint_utils | saved checkpoint ../models/plbart/repetition/large/checkpoint_last.pt (epoch 6 @ 17460 updates, score 77.85) (writing took 14.1321997520281 seconds)
+2021-10-24 16:48:12 | INFO | fairseq.data.iterators | Data loading buffer is empty or nearly empty. This may indicate a data loading bottleneck, and increasing the number of workers (--num-workers) may help.
+2021-10-24 16:48:12 | INFO | fairseq_cli.train | end of epoch 6 (average epoch stats below)
+2021-10-24 16:48:12 | INFO | train | {"epoch": 6, "train_loss": "2.287", "train_nll_loss": "0.378", "train_ppl": "1.3", "train_wps": "936.4", "train_ups": "3.67", "train_wpb": "255", "train_bsz": "16", "train_num_updates": "17460", "train_lr": "4.91516e-05", "train_gnorm": "2.809", "train_train_wall": "536", "train_wall": "4666"}
+2021-10-24 16:48:12 | INFO | fairseq_cli.train | begin training epoch 6
+2021-10-24 16:48:20 | INFO | train_inner | {"epoch": 7, "update": 6.014, "loss": "2.277", "nll_loss": "0.37", "ppl": "1.29", "wps": "84.5", "ups": "0.37", "wpb": "226.8", "bsz": "16", "num_updates": "17500", "lr": "4.91496e-05", "gnorm": "2.62", "train_wall": "18", "wall": "4674"}
+2021-10-24 16:48:39 | INFO | train_inner | {"epoch": 7, "update": 6.048, "loss": "2.266", "nll_loss": "0.354", "ppl": "1.28", "wps": "1496.2", "ups": "5.31", "wpb": "281.7", "bsz": "16", "num_updates": "17600", "lr": "4.91446e-05", "gnorm": "2.749", "train_wall": "19", "wall": "4693"}
+2021-10-24 16:48:57 | INFO | train_inner | {"epoch": 7, "update": 6.082, "loss": "2.27", "nll_loss": "0.361", "ppl": "1.28", "wps": "1327.5", "ups": "5.47", "wpb": "242.7", "bsz": "16", "num_updates": "17700", "lr": "4.91396e-05", "gnorm": "2.779", "train_wall": "18", "wall": "4712"}
+2021-10-24 16:49:17 | INFO | train_inner | {"epoch": 7, "update": 6.117, "loss": "2.25", "nll_loss": "0.339", "ppl": "1.26", "wps": "1319.3", "ups": "5.03", "wpb": "262.4", "bsz": "16", "num_updates": "17800", "lr": "4.91346e-05", "gnorm": "2.756", "train_wall": "20", "wall": "4731"}
+2021-10-24 16:49:37 | INFO | train_inner | {"epoch": 7, "update": 6.151, "loss": "2.25", "nll_loss": "0.342", "ppl": "1.27", "wps": "1367.6", "ups": "5.03", "wpb": "271.9", "bsz": "16", "num_updates": "17900", "lr": "4.91296e-05", "gnorm": "2.495", "train_wall": "20", "wall": "4751"}
+2021-10-24 16:49:56 | INFO | train_inner | {"epoch": 7, "update": 6.186, "loss": "2.294", "nll_loss": "0.394", "ppl": "1.31", "wps": "1653.3", "ups": "5.23", "wpb": "316.3", "bsz": "16", "num_updates": "18000", "lr": "4.91246e-05", "gnorm": "2.527", "train_wall": "19", "wall": "4770"}
+2021-10-24 16:50:16 | INFO | train_inner | {"epoch": 7, "update": 6.22, "loss": "2.254", "nll_loss": "0.349", "ppl": "1.27", "wps": "1353.3", "ups": "5.01", "wpb": "270", "bsz": "16", "num_updates": "18100", "lr": "4.91196e-05", "gnorm": "2.385", "train_wall": "20", "wall": "4790"}
+2021-10-24 16:50:34 | INFO | train_inner | {"epoch": 7, "update": 6.254, "loss": "2.307", "nll_loss": "0.404", "ppl": "1.32", "wps": "1431", "ups": "5.48", "wpb": "261.3", "bsz": "16", "num_updates": "18200", "lr": "4.91146e-05", "gnorm": "2.617", "train_wall": "18", "wall": "4809"}
+2021-10-24 16:50:52 | INFO | train_inner | {"epoch": 7, "update": 6.289, "loss": "2.259", "nll_loss": "0.35", "ppl": "1.27", "wps": "1346.8", "ups": "5.66", "wpb": "237.9", "bsz": "16", "num_updates": "18300", "lr": "4.91096e-05", "gnorm": "3.183", "train_wall": "17", "wall": "4826"}
+2021-10-24 16:51:11 | INFO | train_inner | {"epoch": 7, "update": 6.323, "loss": "2.259", "nll_loss": "0.352", "ppl": "1.28", "wps": "1279.4", "ups": "5.27", "wpb": "242.7", "bsz": "16", "num_updates": "18400", "lr": "4.91046e-05", "gnorm": "2.495", "train_wall": "19", "wall": "4845"}
+2021-10-24 16:51:27 | INFO | train_inner | {"epoch": 7, "update": 6.357, "loss": "2.269", "nll_loss": "0.368", "ppl": "1.29", "wps": "1535.7", "ups": "6.24", "wpb": "246.2", "bsz": "16", "num_updates": "18500", "lr": "4.90995e-05", "gnorm": "2.917", "train_wall": "16", "wall": "4861"}
+2021-10-24 16:51:46 | INFO | train_inner | {"epoch": 7, "update": 6.392, "loss": "2.262", "nll_loss": "0.356", "ppl": "1.28", "wps": "1392.5", "ups": "5.34", "wpb": "260.8", "bsz": "16", "num_updates": "18600", "lr": "4.90945e-05", "gnorm": "2.571", "train_wall": "18", "wall": "4880"}
+2021-10-24 16:52:03 | INFO | train_inner | {"epoch": 7, "update": 6.426, "loss": "2.252", "nll_loss": "0.349", "ppl": "1.27", "wps": "1280.4", "ups": "5.77", "wpb": "222", "bsz": "16", "num_updates": "18700", "lr": "4.90895e-05", "gnorm": "2.618", "train_wall": "17", "wall": "4897"}
+2021-10-24 16:52:21 | INFO | train_inner | {"epoch": 7, "update": 6.46, "loss": "2.279", "nll_loss": "0.376", "ppl": "1.3", "wps": "1272.7", "ups": "5.42", "wpb": "234.6", "bsz": "16", "num_updates": "18800", "lr": "4.90845e-05", "gnorm": "2.606", "train_wall": "18", "wall": "4916"}
+2021-10-24 16:52:41 | INFO | train_inner | {"epoch": 7, "update": 6.495, "loss": "2.297", "nll_loss": "0.398", "ppl": "1.32", "wps": "1177.6", "ups": "5.09", "wpb": "231.6", "bsz": "16", "num_updates": "18900", "lr": "4.90795e-05", "gnorm": "2.764", "train_wall": "19", "wall": "4936"}
+2021-10-24 16:52:59 | INFO | train_inner | {"epoch": 7, "update": 6.529, "loss": "2.313", "nll_loss": "0.412", "ppl": "1.33", "wps": "1250.2", "ups": "5.67", "wpb": "220.5", "bsz": "16", "num_updates": "19000", "lr": "4.90745e-05", "gnorm": "3.687", "train_wall": "17", "wall": "4953"}
+2021-10-24 16:53:16 | INFO | train_inner | {"epoch": 7, "update": 6.564, "loss": "2.288", "nll_loss": "0.39", "ppl": "1.31", "wps": "1426", "ups": "5.95", "wpb": "239.5", "bsz": "16", "num_updates": "19100", "lr": "4.90695e-05", "gnorm": "2.811", "train_wall": "17", "wall": "4970"}
+2021-10-24 16:53:34 | INFO | train_inner | {"epoch": 7, "update": 6.598, "loss": "2.299", "nll_loss": "0.398", "ppl": "1.32", "wps": "1458", "ups": "5.42", "wpb": "268.8", "bsz": "16", "num_updates": "19200", "lr": "4.90645e-05", "gnorm": "2.994", "train_wall": "18", "wall": "4988"}
+2021-10-24 16:53:54 | INFO | train_inner | {"epoch": 7, "update": 6.632, "loss": "2.306", "nll_loss": "0.408", "ppl": "1.33", "wps": "1077.1", "ups": "5.12", "wpb": "210.6", "bsz": "16", "num_updates": "19300", "lr": "4.90595e-05", "gnorm": "2.945", "train_wall": "19", "wall": "5008"}
+2021-10-24 16:54:12 | INFO | train_inner | {"epoch": 7, "update": 6.667, "loss": "2.352", "nll_loss": "0.462", "ppl": "1.38", "wps": "1375.9", "ups": "5.31", "wpb": "259", "bsz": "16", "num_updates": "19400", "lr": "4.90545e-05", "gnorm": "3.094", "train_wall": "19", "wall": "5027"}
+2021-10-24 16:54:33 | INFO | train_inner | {"epoch": 7, "update": 6.701, "loss": "2.329", "nll_loss": "0.434", "ppl": "1.35", "wps": "1204", "ups": "4.88", "wpb": "246.8", "bsz": "16", "num_updates": "19500", "lr": "4.90495e-05", "gnorm": "2.964", "train_wall": "20", "wall": "5047"}
+2021-10-24 16:54:54 | INFO | train_inner | {"epoch": 7, "update": 6.735, "loss": "2.338", "nll_loss": "0.447", "ppl": "1.36", "wps": "1369.7", "ups": "4.7", "wpb": "291.7", "bsz": "16", "num_updates": "19600", "lr": "4.90445e-05", "gnorm": "2.762", "train_wall": "21", "wall": "5069"}
+2021-10-24 16:55:14 | INFO | train_inner | {"epoch": 7, "update": 6.77, "loss": "2.313", "nll_loss": "0.416", "ppl": "1.33", "wps": "1285.2", "ups": "4.98", "wpb": "258.3", "bsz": "16", "num_updates": "19700", "lr": "4.90395e-05", "gnorm": "2.799", "train_wall": "20", "wall": "5089"}
+2021-10-24 16:55:33 | INFO | train_inner | {"epoch": 7, "update": 6.804, "loss": "2.302", "nll_loss": "0.406", "ppl": "1.33", "wps": "1364.3", "ups": "5.27", "wpb": "259.1", "bsz": "16", "num_updates": "19800", "lr": "4.90345e-05", "gnorm": "2.89", "train_wall": "19", "wall": "5108"}
+2021-10-24 16:55:51 | INFO | train_inner | {"epoch": 7, "update": 6.838, "loss": "2.341", "nll_loss": "0.45", "ppl": "1.37", "wps": "1409.4", "ups": "5.76", "wpb": "244.7", "bsz": "16", "num_updates": "19900", "lr": "4.90295e-05", "gnorm": "3.002", "train_wall": "17", "wall": "5125"}
+2021-10-24 16:56:11 | INFO | train_inner | {"epoch": 7, "update": 6.873, "loss": "2.344", "nll_loss": "0.453", "ppl": "1.37", "wps": "1391.8", "ups": "4.99", "wpb": "278.9", "bsz": "16", "num_updates": "20000", "lr": "4.90245e-05", "gnorm": "3.126", "train_wall": "20", "wall": "5145"}
+2021-10-24 16:56:31 | INFO | train_inner | {"epoch": 7, "update": 6.907, "loss": "2.386", "nll_loss": "0.5", "ppl": "1.41", "wps": "1286.7", "ups": "4.81", "wpb": "267.6", "bsz": "16", "num_updates": "20100", "lr": "4.90195e-05", "gnorm": "2.947", "train_wall": "21", "wall": "5166"}
+2021-10-24 16:56:51 | INFO | train_inner | {"epoch": 7, "update": 6.942, "loss": "2.365", "nll_loss": "0.478", "ppl": "1.39", "wps": "1380.4", "ups": "5.22", "wpb": "264.6", "bsz": "16", "num_updates": "20200", "lr": "4.90145e-05", "gnorm": "3.185", "train_wall": "19", "wall": "5185"}
+2021-10-24 16:57:09 | INFO | train_inner | {"epoch": 7, "update": 6.976, "loss": "2.36", "nll_loss": "0.473", "ppl": "1.39", "wps": "1430.1", "ups": "5.4", "wpb": "264.9", "bsz": "16", "num_updates": "20300", "lr": "4.90095e-05", "gnorm": "2.884", "train_wall": "18", "wall": "5204"}
+2021-10-24 16:57:23 | INFO | fairseq_cli.train | begin validation on "valid" subset
+2021-10-24 17:01:17 | INFO | valid | {"epoch": 7, "valid_loss": "2.549", "valid_nll_loss": "0.518", "valid_ppl": "1.43", "valid_bleu": "77.29", "valid_wps": "402.8", "valid_wpb": "129.4", "valid_bsz": "8", "valid_num_updates": "20370", "valid_best_bleu": "80.75"}
+2021-10-24 17:01:17 | INFO | fairseq_cli.train | begin save checkpoint
+2021-10-24 17:01:31 | INFO | fairseq.checkpoint_utils | saved checkpoint ../models/plbart/repetition/large/checkpoint_last.pt (epoch 7 @ 20370 updates, score 77.29) (writing took 13.392056462005712 seconds)
+2021-10-24 17:01:31 | INFO | fairseq.data.iterators | Data loading buffer is empty or nearly empty. This may indicate a data loading bottleneck, and increasing the number of workers (--num-workers) may help.
+2021-10-24 17:01:31 | INFO | fairseq_cli.train | end of epoch 7 (average epoch stats below)
+2021-10-24 17:01:31 | INFO | train | {"epoch": 7, "train_loss": "2.3", "train_nll_loss": "0.401", "train_ppl": "1.32", "train_wps": "929.4", "train_ups": "3.64", "train_wpb": "255", "train_bsz": "16", "train_num_updates": "20370", "train_lr": "4.9006e-05", "train_gnorm": "2.833", "train_train_wall": "544", "train_wall": "5465"}
+2021-10-24 17:01:31 | INFO | fairseq_cli.train | begin training epoch 7
+2021-10-24 17:01:37 | INFO | train_inner | {"epoch": 8, "update": 7.01, "loss": "2.309", "nll_loss": "0.413", "ppl": "1.33", "wps": "87.1", "ups": "0.37", "wpb": "233", "bsz": "16", "num_updates": "20400", "lr": "4.90045e-05", "gnorm": "2.657", "train_wall": "20", "wall": "5471"}
+2021-10-24 17:01:55 | INFO | train_inner | {"epoch": 8, "update": 7.045, "loss": "2.277", "nll_loss": "0.372", "ppl": "1.29", "wps": "1271.9", "ups": "5.61", "wpb": "226.8", "bsz": "16", "num_updates": "20500", "lr": "4.89995e-05", "gnorm": "2.505", "train_wall": "18", "wall": "5489"}
+2021-10-24 17:02:12 | INFO | train_inner | {"epoch": 8, "update": 7.079, "loss": "2.285", "nll_loss": "0.386", "ppl": "1.31", "wps": "1419.3", "ups": "5.86", "wpb": "242.1", "bsz": "16", "num_updates": "20600", "lr": "4.89945e-05", "gnorm": "2.859", "train_wall": "17", "wall": "5506"}
+2021-10-24 17:02:30 | INFO | train_inner | {"epoch": 8, "update": 7.113, "loss": "2.278", "nll_loss": "0.381", "ppl": "1.3", "wps": "1436.5", "ups": "5.47", "wpb": "262.4", "bsz": "16", "num_updates": "20700", "lr": "4.89895e-05", "gnorm": "2.568", "train_wall": "18", "wall": "5524"}
+2021-10-24 17:02:46 | INFO | train_inner | {"epoch": 8, "update": 7.148, "loss": "2.257", "nll_loss": "0.354", "ppl": "1.28", "wps": "1536.7", "ups": "6.28", "wpb": "244.8", "bsz": "16", "num_updates": "20800", "lr": "4.89845e-05", "gnorm": "2.666", "train_wall": "16", "wall": "5540"}
+2021-10-24 17:03:03 | INFO | train_inner | {"epoch": 8, "update": 7.182, "loss": "2.264", "nll_loss": "0.363", "ppl": "1.29", "wps": "1545.3", "ups": "5.91", "wpb": "261.5", "bsz": "16", "num_updates": "20900", "lr": "4.89795e-05", "gnorm": "2.558", "train_wall": "17", "wall": "5557"}
+2021-10-24 17:03:20 | INFO | train_inner | {"epoch": 8, "update": 7.216, "loss": "2.294", "nll_loss": "0.395", "ppl": "1.32", "wps": "1472.7", "ups": "5.91", "wpb": "249.3", "bsz": "16", "num_updates": "21000", "lr": "4.89745e-05", "gnorm": "2.825", "train_wall": "17", "wall": "5574"}
+2021-10-24 17:03:37 | INFO | train_inner | {"epoch": 8, "update": 7.251, "loss": "2.333", "nll_loss": "0.442", "ppl": "1.36", "wps": "1494.5", "ups": "5.71", "wpb": "261.6", "bsz": "16", "num_updates": "21100", "lr": "4.89695e-05", "gnorm": "3.393", "train_wall": "17", "wall": "5592"}
+2021-10-24 17:03:56 | INFO | train_inner | {"epoch": 8, "update": 7.285, "loss": "2.334", "nll_loss": "0.446", "ppl": "1.36", "wps": "1475.8", "ups": "5.33", "wpb": "277.1", "bsz": "16", "num_updates": "21200", "lr": "4.89645e-05", "gnorm": "2.693", "train_wall": "19", "wall": "5610"}
+2021-10-24 17:04:15 | INFO | train_inner | {"epoch": 8, "update": 7.32, "loss": "2.324", "nll_loss": "0.428", "ppl": "1.35", "wps": "1298.3", "ups": "5.41", "wpb": "239.8", "bsz": "16", "num_updates": "21300", "lr": "4.89595e-05", "gnorm": "3.015", "train_wall": "18", "wall": "5629"}
+2021-10-24 17:04:35 | INFO | train_inner | {"epoch": 8, "update": 7.354, "loss": "2.317", "nll_loss": "0.419", "ppl": "1.34", "wps": "1227.7", "ups": "4.96", "wpb": "247.7", "bsz": "16", "num_updates": "21400", "lr": "4.89545e-05", "gnorm": "3.133", "train_wall": "20", "wall": "5649"}
+2021-10-24 17:04:54 | INFO | train_inner | {"epoch": 8, "update": 7.388, "loss": "2.33", "nll_loss": "0.445", "ppl": "1.36", "wps": "1342.2", "ups": "5.2", "wpb": "258.1", "bsz": "16", "num_updates": "21500", "lr": "4.89495e-05", "gnorm": "2.767", "train_wall": "19", "wall": "5668"}
+2021-10-24 17:05:10 | INFO | train_inner | {"epoch": 8, "update": 7.423, "loss": "2.318", "nll_loss": "0.422", "ppl": "1.34", "wps": "1562.2", "ups": "6.18", "wpb": "252.7", "bsz": "16", "num_updates": "21600", "lr": "4.89445e-05", "gnorm": "2.592", "train_wall": "16", "wall": "5685"}
+2021-10-24 17:05:28 | INFO | train_inner | {"epoch": 8, "update": 7.457, "loss": "2.308", "nll_loss": "0.42", "ppl": "1.34", "wps": "1541.3", "ups": "5.58", "wpb": "276.1", "bsz": "16", "num_updates": "21700", "lr": "4.89395e-05", "gnorm": "2.672", "train_wall": "18", "wall": "5702"}
+2021-10-24 17:05:48 | INFO | train_inner | {"epoch": 8, "update": 7.491, "loss": "2.318", "nll_loss": "0.427", "ppl": "1.34", "wps": "1242.4", "ups": "5.02", "wpb": "247.6", "bsz": "16", "num_updates": "21800", "lr": "4.89345e-05", "gnorm": "2.827", "train_wall": "20", "wall": "5722"}
+2021-10-24 17:06:06 | INFO | train_inner | {"epoch": 8, "update": 7.526, "loss": "2.282", "nll_loss": "0.386", "ppl": "1.31", "wps": "1282.9", "ups": "5.6", "wpb": "228.9", "bsz": "16", "num_updates": "21900", "lr": "4.89295e-05", "gnorm": "2.84", "train_wall": "18", "wall": "5740"}
+2021-10-24 17:06:25 | INFO | train_inner | {"epoch": 8, "update": 7.56, "loss": "2.307", "nll_loss": "0.418", "ppl": "1.34", "wps": "1534.8", "ups": "5.27", "wpb": "291.1", "bsz": "16", "num_updates": "22000", "lr": "4.89245e-05", "gnorm": "2.917", "train_wall": "19", "wall": "5759"}
+2021-10-24 17:06:44 | INFO | train_inner | {"epoch": 8, "update": 7.595, "loss": "2.361", "nll_loss": "0.472", "ppl": "1.39", "wps": "1488.7", "ups": "5.29", "wpb": "281.6", "bsz": "16", "num_updates": "22100", "lr": "4.89195e-05", "gnorm": "2.864", "train_wall": "19", "wall": "5778"}
+2021-10-24 17:07:02 | INFO | train_inner | {"epoch": 8, "update": 7.629, "loss": "2.324", "nll_loss": "0.435", "ppl": "1.35", "wps": "1628.9", "ups": "5.57", "wpb": "292.4", "bsz": "16", "num_updates": "22200", "lr": "4.89145e-05", "gnorm": "2.834", "train_wall": "18", "wall": "5796"}
+2021-10-24 17:07:19 | INFO | train_inner | {"epoch": 8, "update": 7.663, "loss": "2.322", "nll_loss": "0.432", "ppl": "1.35", "wps": "1236.7", "ups": "5.79", "wpb": "213.5", "bsz": "16", "num_updates": "22300", "lr": "4.89095e-05", "gnorm": "2.921", "train_wall": "17", "wall": "5813"}
+2021-10-24 17:07:39 | INFO | train_inner | {"epoch": 8, "update": 7.698, "loss": "2.329", "nll_loss": "0.441", "ppl": "1.36", "wps": "1290.3", "ups": "4.95", "wpb": "260.5", "bsz": "16", "num_updates": "22400", "lr": "4.89045e-05", "gnorm": "2.973", "train_wall": "20", "wall": "5834"}
+2021-10-24 17:07:59 | INFO | train_inner | {"epoch": 8, "update": 7.732, "loss": "2.329", "nll_loss": "0.44", "ppl": "1.36", "wps": "1159.2", "ups": "5.16", "wpb": "224.8", "bsz": "16", "num_updates": "22500", "lr": "4.88994e-05", "gnorm": "3.201", "train_wall": "19", "wall": "5853"}
+2021-10-24 17:08:17 | INFO | train_inner | {"epoch": 8, "update": 7.766, "loss": "2.346", "nll_loss": "0.462", "ppl": "1.38", "wps": "1220.9", "ups": "5.29", "wpb": "230.7", "bsz": "16", "num_updates": "22600", "lr": "4.88944e-05", "gnorm": "3.264", "train_wall": "19", "wall": "5872"}
+2021-10-24 17:08:35 | INFO | train_inner | {"epoch": 8, "update": 7.801, "loss": "2.33", "nll_loss": "0.442", "ppl": "1.36", "wps": "1270.2", "ups": "5.56", "wpb": "228.4", "bsz": "16", "num_updates": "22700", "lr": "4.88894e-05", "gnorm": "2.837", "train_wall": "18", "wall": "5890"}
+2021-10-24 17:08:52 | INFO | train_inner | {"epoch": 8, "update": 7.835, "loss": "2.351", "nll_loss": "0.467", "ppl": "1.38", "wps": "1319.1", "ups": "5.87", "wpb": "224.6", "bsz": "16", "num_updates": "22800", "lr": "4.88844e-05", "gnorm": "3.561", "train_wall": "17", "wall": "5907"}
+2021-10-24 17:09:11 | INFO | train_inner | {"epoch": 8, "update": 7.869, "loss": "2.404", "nll_loss": "0.526", "ppl": "1.44", "wps": "1564.7", "ups": "5.37", "wpb": "291.5", "bsz": "16", "num_updates": "22900", "lr": "4.88794e-05", "gnorm": "3.085", "train_wall": "18", "wall": "5925"}
+2021-10-24 17:09:32 | INFO | train_inner | {"epoch": 8, "update": 7.904, "loss": "2.377", "nll_loss": "0.497", "ppl": "1.41", "wps": "1511.9", "ups": "4.82", "wpb": "313.9", "bsz": "16", "num_updates": "23000", "lr": "4.88744e-05", "gnorm": "2.947", "train_wall": "21", "wall": "5946"}
+2021-10-24 17:09:52 | INFO | train_inner | {"epoch": 8, "update": 7.938, "loss": "2.388", "nll_loss": "0.509", "ppl": "1.42", "wps": "1356.7", "ups": "4.95", "wpb": "274.1", "bsz": "16", "num_updates": "23100", "lr": "4.88694e-05", "gnorm": "3.196", "train_wall": "20", "wall": "5966"}
+2021-10-24 17:10:13 | INFO | train_inner | {"epoch": 8, "update": 7.973, "loss": "2.363", "nll_loss": "0.479", "ppl": "1.39", "wps": "1243.6", "ups": "4.85", "wpb": "256.6", "bsz": "16", "num_updates": "23200", "lr": "4.88644e-05", "gnorm": "3.555", "train_wall": "20", "wall": "5987"}
+2021-10-24 17:10:28 | INFO | fairseq_cli.train | begin validation on "valid" subset
+2021-10-24 17:14:30 | INFO | valid | {"epoch": 8, "valid_loss": "2.58", "valid_nll_loss": "0.549", "valid_ppl": "1.46", "valid_bleu": "75.73", "valid_wps": "389.5", "valid_wpb": "129.4", "valid_bsz": "8", "valid_num_updates": "23280", "valid_best_bleu": "80.75"}
+2021-10-24 17:14:30 | INFO | fairseq_cli.train | begin save checkpoint
+2021-10-24 17:14:45 | INFO | fairseq.checkpoint_utils | saved checkpoint ../models/plbart/repetition/large/checkpoint_last.pt (epoch 8 @ 23280 updates, score 75.73) (writing took 14.067926038987935 seconds)
+2021-10-24 17:14:45 | INFO | fairseq.data.iterators | Data loading buffer is empty or nearly empty. This may indicate a data loading bottleneck, and increasing the number of workers (--num-workers) may help.
+2021-10-24 17:14:45 | INFO | fairseq_cli.train | end of epoch 8 (average epoch stats below)
+2021-10-24 17:14:45 | INFO | train | {"epoch": 8, "train_loss": "2.325", "train_nll_loss": "0.434", "train_ppl": "1.35", "train_wps": "934.8", "train_ups": "3.67", "train_wpb": "255", "train_bsz": "16", "train_num_updates": "23280", "train_lr": "4.88604e-05", "train_gnorm": "2.921", "train_train_wall": "531", "train_wall": "6259"}
+2021-10-24 17:14:45 | INFO | fairseq_cli.train | begin training epoch 8
+2021-10-24 17:14:49 | INFO | train_inner | {"epoch": 9, "update": 8.007, "loss": "2.348", "nll_loss": "0.463", "ppl": "1.38", "wps": "89.6", "ups": "0.36", "wpb": "247.7", "bsz": "16", "num_updates": "23300", "lr": "4.88594e-05", "gnorm": "2.839", "train_wall": "20", "wall": "6263"}
+2021-10-24 17:15:06 | INFO | train_inner | {"epoch": 9, "update": 8.041, "loss": "2.288", "nll_loss": "0.395", "ppl": "1.31", "wps": "1454.8", "ups": "5.74", "wpb": "253.6", "bsz": "16", "num_updates": "23400", "lr": "4.88544e-05", "gnorm": "2.689", "train_wall": "17", "wall": "6281"}
+2021-10-24 17:15:27 | INFO | train_inner | {"epoch": 9, "update": 8.076, "loss": "2.331", "nll_loss": "0.445", "ppl": "1.36", "wps": "1119.4", "ups": "4.92", "wpb": "227.7", "bsz": "16", "num_updates": "23500", "lr": "4.88494e-05", "gnorm": "2.724", "train_wall": "20", "wall": "6301"}
+2021-10-24 17:15:46 | INFO | train_inner | {"epoch": 9, "update": 8.11, "loss": "2.296", "nll_loss": "0.405", "ppl": "1.32", "wps": "1376.7", "ups": "5.19", "wpb": "265.4", "bsz": "16", "num_updates": "23600", "lr": "4.88444e-05", "gnorm": "2.371", "train_wall": "19", "wall": "6320"}
+2021-10-24 17:16:07 | INFO | train_inner | {"epoch": 9, "update": 8.144, "loss": "2.3", "nll_loss": "0.411", "ppl": "1.33", "wps": "1339.7", "ups": "4.86", "wpb": "275.6", "bsz": "16", "num_updates": "23700", "lr": "4.88394e-05", "gnorm": "2.589", "train_wall": "20", "wall": "6341"}
+2021-10-24 17:16:27 | INFO | train_inner | {"epoch": 9, "update": 8.179, "loss": "2.329", "nll_loss": "0.444", "ppl": "1.36", "wps": "1340.2", "ups": "4.89", "wpb": "274.3", "bsz": "16", "num_updates": "23800", "lr": "4.88344e-05", "gnorm": "2.739", "train_wall": "20", "wall": "6361"}
+2021-10-24 17:16:46 | INFO | train_inner | {"epoch": 9, "update": 8.213, "loss": "2.313", "nll_loss": "0.425", "ppl": "1.34", "wps": "1221.7", "ups": "5.4", "wpb": "226.2", "bsz": "16", "num_updates": "23900", "lr": "4.88294e-05", "gnorm": "2.507", "train_wall": "18", "wall": "6380"}
+2021-10-24 17:17:05 | INFO | train_inner | {"epoch": 9, "update": 8.247, "loss": "2.292", "nll_loss": "0.403", "ppl": "1.32", "wps": "1296.3", "ups": "5.28", "wpb": "245.6", "bsz": "16", "num_updates": "24000", "lr": "4.88244e-05", "gnorm": "2.769", "train_wall": "19", "wall": "6399"}
+2021-10-24 17:17:24 | INFO | train_inner | {"epoch": 9, "update": 8.282, "loss": "2.339", "nll_loss": "0.451", "ppl": "1.37", "wps": "1229.1", "ups": "5.06", "wpb": "242.8", "bsz": "16", "num_updates": "24100", "lr": "4.88194e-05", "gnorm": "2.955", "train_wall": "20", "wall": "6419"}
+2021-10-24 17:17:43 | INFO | train_inner | {"epoch": 9, "update": 8.316, "loss": "2.324", "nll_loss": "0.442", "ppl": "1.36", "wps": "1555.8", "ups": "5.24", "wpb": "296.8", "bsz": "16", "num_updates": "24200", "lr": "4.88144e-05", "gnorm": "2.665", "train_wall": "19", "wall": "6438"}
+2021-10-24 17:18:03 | INFO | train_inner | {"epoch": 9, "update": 8.351, "loss": "2.299", "nll_loss": "0.409", "ppl": "1.33", "wps": "1293.8", "ups": "5.06", "wpb": "255.7", "bsz": "16", "num_updates": "24300", "lr": "4.88094e-05", "gnorm": "3.155", "train_wall": "20", "wall": "6458"}
+2021-10-24 17:18:22 | INFO | train_inner | {"epoch": 9, "update": 8.385, "loss": "2.345", "nll_loss": "0.462", "ppl": "1.38", "wps": "1270.6", "ups": "5.36", "wpb": "237", "bsz": "16", "num_updates": "24400", "lr": "4.88044e-05", "gnorm": "3.098", "train_wall": "18", "wall": "6476"}
+2021-10-24 17:18:42 | INFO | train_inner | {"epoch": 9, "update": 8.419, "loss": "2.338", "nll_loss": "0.453", "ppl": "1.37", "wps": "1179.1", "ups": "5.03", "wpb": "234.3", "bsz": "16", "num_updates": "24500", "lr": "4.87994e-05", "gnorm": "3.272", "train_wall": "20", "wall": "6496"}
+2021-10-24 17:19:00 | INFO | train_inner | {"epoch": 9, "update": 8.454, "loss": "2.335", "nll_loss": "0.45", "ppl": "1.37", "wps": "1321.6", "ups": "5.34", "wpb": "247.7", "bsz": "16", "num_updates": "24600", "lr": "4.87944e-05", "gnorm": "3.694", "train_wall": "19", "wall": "6515"}
+2021-10-24 17:19:20 | INFO | train_inner | {"epoch": 9, "update": 8.488, "loss": "2.371", "nll_loss": "0.493", "ppl": "1.41", "wps": "1185.4", "ups": "5.06", "wpb": "234.4", "bsz": "16", "num_updates": "24700", "lr": "4.87894e-05", "gnorm": "3.297", "train_wall": "20", "wall": "6535"}
+2021-10-24 17:19:39 | INFO | train_inner | {"epoch": 9, "update": 8.522, "loss": "2.369", "nll_loss": "0.49", "ppl": "1.4", "wps": "1331.2", "ups": "5.3", "wpb": "251.1", "bsz": "16", "num_updates": "24800", "lr": "4.87844e-05", "gnorm": "3.117", "train_wall": "19", "wall": "6553"}
+2021-10-24 17:19:59 | INFO | train_inner | {"epoch": 9, "update": 8.557, "loss": "2.386", "nll_loss": "0.507", "ppl": "1.42", "wps": "1331.2", "ups": "5.05", "wpb": "263.7", "bsz": "16", "num_updates": "24900", "lr": "4.87794e-05", "gnorm": "3.428", "train_wall": "20", "wall": "6573"}
+2021-10-24 17:20:18 | INFO | train_inner | {"epoch": 9, "update": 8.591, "loss": "2.375", "nll_loss": "0.499", "ppl": "1.41", "wps": "1280.6", "ups": "5.25", "wpb": "244.1", "bsz": "16", "num_updates": "25000", "lr": "4.87744e-05", "gnorm": "3.365", "train_wall": "19", "wall": "6592"}
+2021-10-24 17:20:38 | INFO | train_inner | {"epoch": 9, "update": 8.625, "loss": "2.335", "nll_loss": "0.45", "ppl": "1.37", "wps": "1181.5", "ups": "5.09", "wpb": "232", "bsz": "16", "num_updates": "25100", "lr": "4.87694e-05", "gnorm": "2.934", "train_wall": "19", "wall": "6612"}
+2021-10-24 17:20:56 | INFO | train_inner | {"epoch": 9, "update": 8.66, "loss": "2.393", "nll_loss": "0.518", "ppl": "1.43", "wps": "1529.8", "ups": "5.47", "wpb": "279.8", "bsz": "16", "num_updates": "25200", "lr": "4.87644e-05", "gnorm": "3.249", "train_wall": "18", "wall": "6630"}
+2021-10-24 17:21:12 | INFO | train_inner | {"epoch": 9, "update": 8.694, "loss": "2.428", "nll_loss": "0.561", "ppl": "1.47", "wps": "1807", "ups": "6.02", "wpb": "300.3", "bsz": "16", "num_updates": "25300", "lr": "4.87594e-05", "gnorm": "3.118", "train_wall": "16", "wall": "6647"}
+2021-10-24 17:21:30 | INFO | train_inner | {"epoch": 9, "update": 8.729, "loss": "2.36", "nll_loss": "0.48", "ppl": "1.4", "wps": "1379.5", "ups": "5.84", "wpb": "236.1", "bsz": "16", "num_updates": "25400", "lr": "4.87544e-05", "gnorm": "2.94", "train_wall": "17", "wall": "6664"}
+2021-10-24 17:21:48 | INFO | train_inner | {"epoch": 9, "update": 8.763, "loss": "2.346", "nll_loss": "0.466", "ppl": "1.38", "wps": "1233", "ups": "5.41", "wpb": "227.8", "bsz": "16", "num_updates": "25500", "lr": "4.87494e-05", "gnorm": "2.878", "train_wall": "18", "wall": "6682"}
+2021-10-24 17:22:05 | INFO | train_inner | {"epoch": 9, "update": 8.797, "loss": "2.405", "nll_loss": "0.536", "ppl": "1.45", "wps": "1441.7", "ups": "5.84", "wpb": "246.7", "bsz": "16", "num_updates": "25600", "lr": "4.87444e-05", "gnorm": "3.188", "train_wall": "17", "wall": "6700"}
+2021-10-24 17:22:24 | INFO | train_inner | {"epoch": 9, "update": 8.832, "loss": "2.4", "nll_loss": "0.529", "ppl": "1.44", "wps": "1318.6", "ups": "5.24", "wpb": "251.7", "bsz": "16", "num_updates": "25700", "lr": "4.87394e-05", "gnorm": "3.496", "train_wall": "19", "wall": "6719"}
+2021-10-24 17:22:43 | INFO | train_inner | {"epoch": 9, "update": 8.866, "loss": "2.421", "nll_loss": "0.552", "ppl": "1.47", "wps": "1354.4", "ups": "5.46", "wpb": "247.9", "bsz": "16", "num_updates": "25800", "lr": "4.87344e-05", "gnorm": "3.41", "train_wall": "18", "wall": "6737"}
+2021-10-24 17:23:00 | INFO | train_inner | {"epoch": 9, "update": 8.9, "loss": "2.369", "nll_loss": "0.493", "ppl": "1.41", "wps": "1605.7", "ups": "5.69", "wpb": "282.2", "bsz": "16", "num_updates": "25900", "lr": "4.87294e-05", "gnorm": "3.522", "train_wall": "17", "wall": "6755"}
+2021-10-24 17:23:20 | INFO | train_inner | {"epoch": 9, "update": 8.935, "loss": "2.438", "nll_loss": "0.573", "ppl": "1.49", "wps": "1383.4", "ups": "5.03", "wpb": "275.1", "bsz": "16", "num_updates": "26000", "lr": "4.87244e-05", "gnorm": "3.234", "train_wall": "20", "wall": "6774"}
+2021-10-24 17:23:39 | INFO | train_inner | {"epoch": 9, "update": 8.969, "loss": "2.351", "nll_loss": "0.471", "ppl": "1.39", "wps": "1371.5", "ups": "5.2", "wpb": "263.8", "bsz": "16", "num_updates": "26100", "lr": "4.87194e-05", "gnorm": "2.731", "train_wall": "19", "wall": "6794"}
+2021-10-24 17:23:56 | INFO | fairseq_cli.train | begin validation on "valid" subset
+2021-10-24 17:27:46 | INFO | valid | {"epoch": 9, "valid_loss": "2.597", "valid_nll_loss": "0.593", "valid_ppl": "1.51", "valid_bleu": "73.76", "valid_wps": "410.3", "valid_wpb": "129.4", "valid_bsz": "8", "valid_num_updates": "26190", "valid_best_bleu": "80.75"}
+2021-10-24 17:27:46 | INFO | fairseq_cli.train | begin save checkpoint
+2021-10-24 17:27:59 | INFO | fairseq.checkpoint_utils | saved checkpoint ../models/plbart/repetition/large/checkpoint_last.pt (epoch 9 @ 26190 updates, score 73.76) (writing took 13.476916759973392 seconds)
+2021-10-24 17:27:59 | INFO | fairseq.data.iterators | Data loading buffer is empty or nearly empty. This may indicate a data loading bottleneck, and increasing the number of workers (--num-workers) may help.
+2021-10-24 17:27:59 | INFO | fairseq_cli.train | end of epoch 9 (average epoch stats below)
+2021-10-24 17:27:59 | INFO | train | {"epoch": 9, "train_loss": "2.356", "train_nll_loss": "0.476", "train_ppl": "1.39", "train_wps": "933.7", "train_ups": "3.66", "train_wpb": "255", "train_bsz": "16", "train_num_updates": "26190", "train_lr": "4.87149e-05", "train_gnorm": "3.051", "train_train_wall": "545", "train_wall": "7054"}
+2021-10-24 17:27:59 | INFO | fairseq_cli.train | begin training epoch 9
+2021-10-24 17:28:02 | INFO | train_inner | {"epoch": 10, "update": 9.003, "loss": "2.414", "nll_loss": "0.546", "ppl": "1.46", "wps": "113.8", "ups": "0.38", "wpb": "298.7", "bsz": "16", "num_updates": "26200", "lr": "4.87144e-05", "gnorm": "3.279", "train_wall": "19", "wall": "7056"}
+2021-10-24 17:28:23 | INFO | train_inner | {"epoch": 10, "update": 9.038, "loss": "2.302", "nll_loss": "0.415", "ppl": "1.33", "wps": "1108.9", "ups": "4.71", "wpb": "235.6", "bsz": "16", "num_updates": "26300", "lr": "4.87094e-05", "gnorm": "2.478", "train_wall": "21", "wall": "7077"}
+2021-10-24 17:28:44 | INFO | train_inner | {"epoch": 10, "update": 9.072, "loss": "2.315", "nll_loss": "0.434", "ppl": "1.35", "wps": "1288.2", "ups": "4.76", "wpb": "270.5", "bsz": "16", "num_updates": "26400", "lr": "4.87044e-05", "gnorm": "2.707", "train_wall": "21", "wall": "7098"}
+2021-10-24 17:29:04 | INFO | train_inner | {"epoch": 10, "update": 9.107, "loss": "2.321", "nll_loss": "0.439", "ppl": "1.36", "wps": "1405.6", "ups": "5.11", "wpb": "275.3", "bsz": "16", "num_updates": "26500", "lr": "4.86993e-05", "gnorm": "2.809", "train_wall": "19", "wall": "7118"}
+2021-10-24 17:29:21 | INFO | train_inner | {"epoch": 10, "update": 9.141, "loss": "2.299", "nll_loss": "0.414", "ppl": "1.33", "wps": "1221", "ups": "5.76", "wpb": "212", "bsz": "16", "num_updates": "26600", "lr": "4.86943e-05", "gnorm": "2.91", "train_wall": "17", "wall": "7135"}
+2021-10-24 17:29:38 | INFO | train_inner | {"epoch": 10, "update": 9.175, "loss": "2.362", "nll_loss": "0.484", "ppl": "1.4", "wps": "1485.1", "ups": "5.93", "wpb": "250.4", "bsz": "16", "num_updates": "26700", "lr": "4.86893e-05", "gnorm": "2.862", "train_wall": "17", "wall": "7152"}
+2021-10-24 17:29:56 | INFO | train_inner | {"epoch": 10, "update": 9.21, "loss": "2.389", "nll_loss": "0.518", "ppl": "1.43", "wps": "1387.5", "ups": "5.48", "wpb": "253.2", "bsz": "16", "num_updates": "26800", "lr": "4.86843e-05", "gnorm": "3.014", "train_wall": "18", "wall": "7170"}
+2021-10-24 17:30:14 | INFO | train_inner | {"epoch": 10, "update": 9.244, "loss": "2.36", "nll_loss": "0.487", "ppl": "1.4", "wps": "1675.2", "ups": "5.51", "wpb": "304.1", "bsz": "16", "num_updates": "26900", "lr": "4.86793e-05", "gnorm": "3.259", "train_wall": "18", "wall": "7189"}
+2021-10-24 17:30:34 | INFO | train_inner | {"epoch": 10, "update": 9.278, "loss": "2.395", "nll_loss": "0.524", "ppl": "1.44", "wps": "1450.4", "ups": "4.94", "wpb": "293.7", "bsz": "16", "num_updates": "27000", "lr": "4.86743e-05", "gnorm": "3.266", "train_wall": "20", "wall": "7209"}
+2021-10-24 17:30:53 | INFO | train_inner | {"epoch": 10, "update": 9.313, "loss": "2.374", "nll_loss": "0.5", "ppl": "1.41", "wps": "1372.7", "ups": "5.39", "wpb": "254.5", "bsz": "16", "num_updates": "27100", "lr": "4.86693e-05", "gnorm": "3.446", "train_wall": "18", "wall": "7227"}
+2021-10-24 17:31:11 | INFO | train_inner | {"epoch": 10, "update": 9.347, "loss": "2.364", "nll_loss": "0.489", "ppl": "1.4", "wps": "1504.3", "ups": "5.7", "wpb": "263.9", "bsz": "16", "num_updates": "27200", "lr": "4.86643e-05", "gnorm": "2.916", "train_wall": "17", "wall": "7245"}
+2021-10-24 17:31:28 | INFO | train_inner | {"epoch": 10, "update": 9.381, "loss": "2.372", "nll_loss": "0.5", "ppl": "1.41", "wps": "1407.6", "ups": "5.68", "wpb": "247.9", "bsz": "16", "num_updates": "27300", "lr": "4.86593e-05", "gnorm": "2.952", "train_wall": "17", "wall": "7263"}
+2021-10-24 17:31:47 | INFO | train_inner | {"epoch": 10, "update": 9.416, "loss": "2.335", "nll_loss": "0.454", "ppl": "1.37", "wps": "1188.8", "ups": "5.33", "wpb": "223", "bsz": "16", "num_updates": "27400", "lr": "4.86543e-05", "gnorm": "3.274", "train_wall": "19", "wall": "7281"}
+2021-10-24 17:32:03 | INFO | train_inner | {"epoch": 10, "update": 9.45, "loss": "2.362", "nll_loss": "0.487", "ppl": "1.4", "wps": "1419.1", "ups": "6.09", "wpb": "233.1", "bsz": "16", "num_updates": "27500", "lr": "4.86493e-05", "gnorm": "3.198", "train_wall": "16", "wall": "7298"}
+2021-10-24 17:32:23 | INFO | train_inner | {"epoch": 10, "update": 9.485, "loss": "2.383", "nll_loss": "0.511", "ppl": "1.43", "wps": "1340.2", "ups": "5.22", "wpb": "257", "bsz": "16", "num_updates": "27600", "lr": "4.86443e-05", "gnorm": "2.905", "train_wall": "19", "wall": "7317"}
+2021-10-24 17:32:42 | INFO | train_inner | {"epoch": 10, "update": 9.519, "loss": "2.428", "nll_loss": "0.562", "ppl": "1.48", "wps": "1310.6", "ups": "5.25", "wpb": "249.5", "bsz": "16", "num_updates": "27700", "lr": "4.86393e-05", "gnorm": "3.35", "train_wall": "19", "wall": "7336"}
+2021-10-24 17:32:58 | INFO | train_inner | {"epoch": 10, "update": 9.553, "loss": "2.375", "nll_loss": "0.501", "ppl": "1.42", "wps": "1404.4", "ups": "6.01", "wpb": "233.8", "bsz": "16", "num_updates": "27800", "lr": "4.86343e-05", "gnorm": "2.836", "train_wall": "16", "wall": "7353"}
+2021-10-24 17:33:17 | INFO | train_inner | {"epoch": 10, "update": 9.588, "loss": "2.465", "nll_loss": "0.607", "ppl": "1.52", "wps": "1498.1", "ups": "5.31", "wpb": "282", "bsz": "16", "num_updates": "27900", "lr": "4.86293e-05", "gnorm": "3.384", "train_wall": "19", "wall": "7371"}
+2021-10-24 17:33:35 | INFO | train_inner | {"epoch": 10, "update": 9.622, "loss": "2.432", "nll_loss": "0.567", "ppl": "1.48", "wps": "1437.6", "ups": "5.53", "wpb": "260", "bsz": "16", "num_updates": "28000", "lr": "4.86243e-05", "gnorm": "3.138", "train_wall": "18", "wall": "7390"}
+2021-10-24 17:33:56 | INFO | train_inner | {"epoch": 10, "update": 9.656, "loss": "2.468", "nll_loss": "0.611", "ppl": "1.53", "wps": "1377.9", "ups": "4.84", "wpb": "284.8", "bsz": "16", "num_updates": "28100", "lr": "4.86193e-05", "gnorm": "3.443", "train_wall": "20", "wall": "7410"}
+2021-10-24 17:34:13 | INFO | train_inner | {"epoch": 10, "update": 9.691, "loss": "2.367", "nll_loss": "0.496", "ppl": "1.41", "wps": "1326.4", "ups": "5.65", "wpb": "234.9", "bsz": "16", "num_updates": "28200", "lr": "4.86143e-05", "gnorm": "2.935", "train_wall": "17", "wall": "7428"}
+2021-10-24 17:34:32 | INFO | train_inner | {"epoch": 10, "update": 9.725, "loss": "2.367", "nll_loss": "0.496", "ppl": "1.41", "wps": "1288.3", "ups": "5.39", "wpb": "238.8", "bsz": "16", "num_updates": "28300", "lr": "4.86093e-05", "gnorm": "3.275", "train_wall": "18", "wall": "7446"}
+2021-10-24 17:34:51 | INFO | train_inner | {"epoch": 10, "update": 9.759, "loss": "2.389", "nll_loss": "0.52", "ppl": "1.43", "wps": "1109", "ups": "5.3", "wpb": "209.3", "bsz": "16", "num_updates": "28400", "lr": "4.86043e-05", "gnorm": "3.431", "train_wall": "19", "wall": "7465"}
+2021-10-24 17:35:07 | INFO | train_inner | {"epoch": 10, "update": 9.794, "loss": "2.411", "nll_loss": "0.545", "ppl": "1.46", "wps": "1372.5", "ups": "6.16", "wpb": "222.7", "bsz": "16", "num_updates": "28500", "lr": "4.85993e-05", "gnorm": "3.436", "train_wall": "16", "wall": "7482"}
+2021-10-24 17:35:25 | INFO | train_inner | {"epoch": 10, "update": 9.828, "loss": "2.434", "nll_loss": "0.571", "ppl": "1.49", "wps": "1357.4", "ups": "5.53", "wpb": "245.4", "bsz": "16", "num_updates": "28600", "lr": "4.85943e-05", "gnorm": "3.272", "train_wall": "18", "wall": "7500"}
+2021-10-24 17:35:43 | INFO | train_inner | {"epoch": 10, "update": 9.863, "loss": "2.402", "nll_loss": "0.535", "ppl": "1.45", "wps": "1278.3", "ups": "5.56", "wpb": "229.9", "bsz": "16", "num_updates": "28700", "lr": "4.85893e-05", "gnorm": "3.166", "train_wall": "18", "wall": "7518"}
+2021-10-24 17:36:04 | INFO | train_inner | {"epoch": 10, "update": 9.897, "loss": "2.434", "nll_loss": "0.573", "ppl": "1.49", "wps": "1337.1", "ups": "4.9", "wpb": "272.6", "bsz": "16", "num_updates": "28800", "lr": "4.85843e-05", "gnorm": "3.343", "train_wall": "20", "wall": "7538"}
+2021-10-24 17:36:22 | INFO | train_inner | {"epoch": 10, "update": 9.931, "loss": "2.432", "nll_loss": "0.57", "ppl": "1.48", "wps": "1445.5", "ups": "5.56", "wpb": "260.1", "bsz": "16", "num_updates": "28900", "lr": "4.85793e-05", "gnorm": "3.097", "train_wall": "18", "wall": "7556"}
+2021-10-24 17:36:41 | INFO | train_inner | {"epoch": 10, "update": 9.966, "loss": "2.486", "nll_loss": "0.631", "ppl": "1.55", "wps": "1538.8", "ups": "5.2", "wpb": "295.7", "bsz": "16", "num_updates": "29000", "lr": "4.85743e-05", "gnorm": "3.203", "train_wall": "19", "wall": "7575"}
+2021-10-24 17:36:56 | INFO | train_inner | {"epoch": 10, "update": 10.0, "loss": "2.501", "nll_loss": "0.649", "ppl": "1.57", "wps": "1778.4", "ups": "6.38", "wpb": "278.6", "bsz": "16", "num_updates": "29100", "lr": "4.85693e-05", "gnorm": "3.661", "train_wall": "15", "wall": "7591"}
+2021-10-24 17:36:56 | INFO | fairseq_cli.train | begin validation on "valid" subset
+2021-10-24 17:40:44 | INFO | valid | {"epoch": 10, "valid_loss": "2.64", "valid_nll_loss": "0.641", "valid_ppl": "1.56", "valid_bleu": "72.25", "valid_wps": "414.7", "valid_wpb": "129.4", "valid_bsz": "8", "valid_num_updates": "29100", "valid_best_bleu": "80.75"}
+2021-10-24 17:40:44 | INFO | fairseq_cli.train | begin save checkpoint
+2021-10-24 17:40:51 | INFO | fairseq.checkpoint_utils | saved checkpoint ../models/plbart/repetition/large/checkpoint_last.pt (epoch 10 @ 29100 updates, score 72.25) (writing took 7.3476242129690945 seconds)
+2021-10-24 17:40:51 | INFO | fairseq.data.iterators | Data loading buffer is empty or nearly empty. This may indicate a data loading bottleneck, and increasing the number of workers (--num-workers) may help.
+2021-10-24 17:40:51 | INFO | fairseq_cli.train | end of epoch 10 (average epoch stats below)
+2021-10-24 17:40:51 | INFO | train | {"epoch": 10, "train_loss": "2.392", "train_nll_loss": "0.522", "train_ppl": "1.44", "train_wps": "961.5", "train_ups": "3.77", "train_wpb": "255", "train_bsz": "16", "train_num_updates": "29100", "train_lr": "4.85693e-05", "train_gnorm": "3.133", "train_train_wall": "530", "train_wall": "7826"}
+2021-10-24 17:40:51 | INFO | fairseq_cli.train | begin training epoch 10
+2021-10-24 17:41:12 | INFO | train_inner | {"epoch": 11, "update": 10.034, "loss": "2.37", "nll_loss": "0.499", "ppl": "1.41", "wps": "108.4", "ups": "0.39", "wpb": "277", "bsz": "16", "num_updates": "29200", "lr": "4.85643e-05", "gnorm": "3.005", "train_wall": "20", "wall": "7846"}
+2021-10-24 17:41:31 | INFO | train_inner | {"epoch": 11, "update": 10.069, "loss": "2.343", "nll_loss": "0.467", "ppl": "1.38", "wps": "1308.4", "ups": "5.24", "wpb": "249.6", "bsz": "16", "num_updates": "29300", "lr": "4.85593e-05", "gnorm": "2.716", "train_wall": "19", "wall": "7866"}
+2021-10-24 17:41:50 | INFO | train_inner | {"epoch": 11, "update": 10.103, "loss": "2.392", "nll_loss": "0.525", "ppl": "1.44", "wps": "1361.3", "ups": "5.4", "wpb": "252.1", "bsz": "16", "num_updates": "29400", "lr": "4.85543e-05", "gnorm": "3.373", "train_wall": "18", "wall": "7884"}
+2021-10-24 17:42:07 | INFO | train_inner | {"epoch": 11, "update": 10.137, "loss": "2.361", "nll_loss": "0.491", "ppl": "1.4", "wps": "1437.6", "ups": "5.91", "wpb": "243.3", "bsz": "16", "num_updates": "29500", "lr": "4.85493e-05", "gnorm": "3.129", "train_wall": "17", "wall": "7901"}
+2021-10-24 17:42:25 | INFO | train_inner | {"epoch": 11, "update": 10.172, "loss": "2.388", "nll_loss": "0.522", "ppl": "1.44", "wps": "1408.8", "ups": "5.56", "wpb": "253.5", "bsz": "16", "num_updates": "29600", "lr": "4.85443e-05", "gnorm": "2.862", "train_wall": "18", "wall": "7919"}
+2021-10-24 17:42:45 | INFO | train_inner | {"epoch": 11, "update": 10.206, "loss": "2.426", "nll_loss": "0.562", "ppl": "1.48", "wps": "1156.1", "ups": "4.94", "wpb": "234", "bsz": "16", "num_updates": "29700", "lr": "4.85393e-05", "gnorm": "3.15", "train_wall": "20", "wall": "7939"}
+2021-10-24 17:43:04 | INFO | train_inner | {"epoch": 11, "update": 10.241, "loss": "2.378", "nll_loss": "0.511", "ppl": "1.42", "wps": "1321.3", "ups": "5.09", "wpb": "259.5", "bsz": "16", "num_updates": "29800", "lr": "4.85343e-05", "gnorm": "3.012", "train_wall": "19", "wall": "7959"}
+2021-10-24 17:43:24 | INFO | train_inner | {"epoch": 11, "update": 10.275, "loss": "2.436", "nll_loss": "0.577", "ppl": "1.49", "wps": "1470.5", "ups": "5.08", "wpb": "289.4", "bsz": "16", "num_updates": "29900", "lr": "4.85293e-05", "gnorm": "3.042", "train_wall": "19", "wall": "7979"}
+2021-10-24 17:43:45 | INFO | train_inner | {"epoch": 11, "update": 10.309, "loss": "2.343", "nll_loss": "0.469", "ppl": "1.38", "wps": "1139.6", "ups": "4.78", "wpb": "238.2", "bsz": "16", "num_updates": "30000", "lr": "4.85243e-05", "gnorm": "2.938", "train_wall": "21", "wall": "7999"}
+2021-10-24 17:44:04 | INFO | train_inner | {"epoch": 11, "update": 10.344, "loss": "2.343", "nll_loss": "0.47", "ppl": "1.39", "wps": "1219", "ups": "5.38", "wpb": "226.5", "bsz": "16", "num_updates": "30100", "lr": "4.85193e-05", "gnorm": "2.921", "train_wall": "18", "wall": "8018"}
+2021-10-24 17:44:20 | INFO | train_inner | {"epoch": 11, "update": 10.378, "loss": "2.425", "nll_loss": "0.564", "ppl": "1.48", "wps": "1463.1", "ups": "6.31", "wpb": "231.9", "bsz": "16", "num_updates": "30200", "lr": "4.85143e-05", "gnorm": "3.117", "train_wall": "16", "wall": "8034"}
+2021-10-24 17:44:39 | INFO | train_inner | {"epoch": 11, "update": 10.412, "loss": "2.401", "nll_loss": "0.535", "ppl": "1.45", "wps": "1269.2", "ups": "5.17", "wpb": "245.4", "bsz": "16", "num_updates": "30300", "lr": "4.85093e-05", "gnorm": "3.435", "train_wall": "19", "wall": "8053"}
+2021-10-24 17:44:59 | INFO | train_inner | {"epoch": 11, "update": 10.447, "loss": "2.455", "nll_loss": "0.6", "ppl": "1.52", "wps": "1368", "ups": "4.98", "wpb": "274.4", "bsz": "16", "num_updates": "30400", "lr": "4.85043e-05", "gnorm": "3.192", "train_wall": "20", "wall": "8073"}
+2021-10-24 17:45:17 | INFO | train_inner | {"epoch": 11, "update": 10.481, "loss": "2.361", "nll_loss": "0.491", "ppl": "1.41", "wps": "1252.3", "ups": "5.62", "wpb": "222.7", "bsz": "16", "num_updates": "30500", "lr": "4.84992e-05", "gnorm": "3.538", "train_wall": "18", "wall": "8091"}
+2021-10-24 17:45:36 | INFO | train_inner | {"epoch": 11, "update": 10.515, "loss": "2.475", "nll_loss": "0.623", "ppl": "1.54", "wps": "1480.1", "ups": "5.26", "wpb": "281.2", "bsz": "16", "num_updates": "30600", "lr": "4.84942e-05", "gnorm": "3.266", "train_wall": "19", "wall": "8110"}
+2021-10-24 17:45:55 | INFO | train_inner | {"epoch": 11, "update": 10.55, "loss": "2.492", "nll_loss": "0.641", "ppl": "1.56", "wps": "1368.9", "ups": "5.14", "wpb": "266.6", "bsz": "16", "num_updates": "30700", "lr": "4.84892e-05", "gnorm": "3.49", "train_wall": "19", "wall": "8130"}
+2021-10-24 17:46:13 | INFO | train_inner | {"epoch": 11, "update": 10.584, "loss": "2.383", "nll_loss": "0.519", "ppl": "1.43", "wps": "1238.3", "ups": "5.72", "wpb": "216.4", "bsz": "16", "num_updates": "30800", "lr": "4.84842e-05", "gnorm": "3.045", "train_wall": "17", "wall": "8147"}
+2021-10-24 17:46:31 | INFO | train_inner | {"epoch": 11, "update": 10.619, "loss": "2.505", "nll_loss": "0.656", "ppl": "1.58", "wps": "1621.1", "ups": "5.5", "wpb": "294.8", "bsz": "16", "num_updates": "30900", "lr": "4.84792e-05", "gnorm": "3.109", "train_wall": "18", "wall": "8165"}
+2021-10-24 17:46:49 | INFO | train_inner | {"epoch": 11, "update": 10.653, "loss": "2.451", "nll_loss": "0.594", "ppl": "1.51", "wps": "1479.9", "ups": "5.36", "wpb": "276.4", "bsz": "16", "num_updates": "31000", "lr": "4.84742e-05", "gnorm": "3.352", "train_wall": "18", "wall": "8184"}
+2021-10-24 17:47:08 | INFO | train_inner | {"epoch": 11, "update": 10.687, "loss": "2.514", "nll_loss": "0.666", "ppl": "1.59", "wps": "1451", "ups": "5.29", "wpb": "274.5", "bsz": "16", "num_updates": "31100", "lr": "4.84692e-05", "gnorm": "3.349", "train_wall": "19", "wall": "8203"}
+2021-10-24 17:47:24 | INFO | train_inner | {"epoch": 11, "update": 10.722, "loss": "2.459", "nll_loss": "0.604", "ppl": "1.52", "wps": "1665.6", "ups": "6.41", "wpb": "259.7", "bsz": "16", "num_updates": "31200", "lr": "4.84642e-05", "gnorm": "3.385", "train_wall": "15", "wall": "8218"}
+2021-10-24 17:47:44 | INFO | train_inner | {"epoch": 11, "update": 10.756, "loss": "2.47", "nll_loss": "0.618", "ppl": "1.53", "wps": "1172.5", "ups": "5.06", "wpb": "231.8", "bsz": "16", "num_updates": "31300", "lr": "4.84592e-05", "gnorm": "3.358", "train_wall": "20", "wall": "8238"}
+2021-10-24 17:48:02 | INFO | train_inner | {"epoch": 11, "update": 10.79, "loss": "2.434", "nll_loss": "0.578", "ppl": "1.49", "wps": "1373.9", "ups": "5.5", "wpb": "249.9", "bsz": "16", "num_updates": "31400", "lr": "4.84542e-05", "gnorm": "4.084", "train_wall": "18", "wall": "8256"}
+2021-10-24 17:48:20 | INFO | train_inner | {"epoch": 11, "update": 10.825, "loss": "2.44", "nll_loss": "0.582", "ppl": "1.5", "wps": "1466.1", "ups": "5.7", "wpb": "257.4", "bsz": "16", "num_updates": "31500", "lr": "4.84492e-05", "gnorm": "3.891", "train_wall": "17", "wall": "8274"}
+2021-10-24 17:48:37 | INFO | train_inner | {"epoch": 11, "update": 10.859, "loss": "2.443", "nll_loss": "0.585", "ppl": "1.5", "wps": "1341", "ups": "5.57", "wpb": "240.8", "bsz": "16", "num_updates": "31600", "lr": "4.84442e-05", "gnorm": "3.294", "train_wall": "18", "wall": "8292"}
+2021-10-24 17:48:55 | INFO | train_inner | {"epoch": 11, "update": 10.893, "loss": "2.486", "nll_loss": "0.637", "ppl": "1.55", "wps": "1511.2", "ups": "5.67", "wpb": "266.3", "bsz": "16", "num_updates": "31700", "lr": "4.84392e-05", "gnorm": "3.671", "train_wall": "17", "wall": "8310"}
+2021-10-24 17:49:14 | INFO | train_inner | {"epoch": 11, "update": 10.928, "loss": "2.503", "nll_loss": "0.657", "ppl": "1.58", "wps": "1424.4", "ups": "5.28", "wpb": "269.6", "bsz": "16", "num_updates": "31800", "lr": "4.84342e-05", "gnorm": "3.455", "train_wall": "19", "wall": "8328"}
+2021-10-24 17:49:31 | INFO | train_inner | {"epoch": 11, "update": 10.962, "loss": "2.494", "nll_loss": "0.643", "ppl": "1.56", "wps": "1461.5", "ups": "5.74", "wpb": "254.7", "bsz": "16", "num_updates": "31900", "lr": "4.84292e-05", "gnorm": "3.643", "train_wall": "17", "wall": "8346"}
+2021-10-24 17:49:50 | INFO | train_inner | {"epoch": 11, "update": 10.997, "loss": "2.514", "nll_loss": "0.67", "ppl": "1.59", "wps": "1380.8", "ups": "5.4", "wpb": "255.7", "bsz": "16", "num_updates": "32000", "lr": "4.84242e-05", "gnorm": "4.022", "train_wall": "18", "wall": "8364"}
+2021-10-24 17:49:52 | INFO | fairseq_cli.train | begin validation on "valid" subset
+2021-10-24 17:53:36 | INFO | valid | {"epoch": 11, "valid_loss": "2.678", "valid_nll_loss": "0.694", "valid_ppl": "1.62", "valid_bleu": "70.45", "valid_wps": "421.1", "valid_wpb": "129.4", "valid_bsz": "8", "valid_num_updates": "32010", "valid_best_bleu": "80.75"}
+2021-10-24 17:53:36 | INFO | fairseq_cli.train | begin save checkpoint
+2021-10-24 17:53:43 | INFO | fairseq.checkpoint_utils | saved checkpoint ../models/plbart/repetition/large/checkpoint_last.pt (epoch 11 @ 32010 updates, score 70.45) (writing took 6.8220408640336245 seconds)
+2021-10-24 17:53:43 | INFO | fairseq.data.iterators | Data loading buffer is empty or nearly empty. This may indicate a data loading bottleneck, and increasing the number of workers (--num-workers) may help.
+2021-10-24 17:53:43 | INFO | fairseq_cli.train | end of epoch 11 (average epoch stats below)
+2021-10-24 17:53:43 | INFO | train | {"epoch": 11, "train_loss": "2.433", "train_nll_loss": "0.574", "train_ppl": "1.49", "train_wps": "961.8", "train_ups": "3.77", "train_wpb": "255", "train_bsz": "16", "train_num_updates": "32010", "train_lr": "4.84237e-05", "train_gnorm": "3.304", "train_train_wall": "534", "train_wall": "8597"}
+2021-10-24 17:53:43 | INFO | fairseq_cli.train | begin training epoch 11
+2021-10-24 17:53:59 | INFO | train_inner | {"epoch": 12, "update": 11.031, "loss": "2.391", "nll_loss": "0.528", "ppl": "1.44", "wps": "99.7", "ups": "0.4", "wpb": "248.7", "bsz": "16", "num_updates": "32100", "lr": "4.84192e-05", "gnorm": "3.174", "train_wall": "18", "wall": "8614"}
+2021-10-24 17:54:17 | INFO | train_inner | {"epoch": 12, "update": 11.065, "loss": "2.383", "nll_loss": "0.52", "ppl": "1.43", "wps": "1481.7", "ups": "5.75", "wpb": "257.7", "bsz": "16", "num_updates": "32200", "lr": "4.84142e-05", "gnorm": "2.952", "train_wall": "17", "wall": "8631"}
+2021-10-24 17:54:34 | INFO | train_inner | {"epoch": 12, "update": 11.1, "loss": "2.421", "nll_loss": "0.563", "ppl": "1.48", "wps": "1460.7", "ups": "5.98", "wpb": "244.2", "bsz": "16", "num_updates": "32300", "lr": "4.84092e-05", "gnorm": "3.286", "train_wall": "16", "wall": "8648"}
+2021-10-24 17:54:53 | INFO | train_inner | {"epoch": 12, "update": 11.134, "loss": "2.402", "nll_loss": "0.538", "ppl": "1.45", "wps": "1327.3", "ups": "5.27", "wpb": "252.1", "bsz": "16", "num_updates": "32400", "lr": "4.84042e-05", "gnorm": "3.075", "train_wall": "19", "wall": "8667"}
+2021-10-24 17:55:10 | INFO | train_inner | {"epoch": 12, "update": 11.168, "loss": "2.394", "nll_loss": "0.534", "ppl": "1.45", "wps": "1252.5", "ups": "5.88", "wpb": "213", "bsz": "16", "num_updates": "32500", "lr": "4.83992e-05", "gnorm": "3.045", "train_wall": "17", "wall": "8684"}
+2021-10-24 17:55:27 | INFO | train_inner | {"epoch": 12, "update": 11.203, "loss": "2.449", "nll_loss": "0.595", "ppl": "1.51", "wps": "1453.7", "ups": "5.61", "wpb": "259.1", "bsz": "16", "num_updates": "32600", "lr": "4.83942e-05", "gnorm": "3.149", "train_wall": "18", "wall": "8702"}
+2021-10-24 17:55:45 | INFO | train_inner | {"epoch": 12, "update": 11.237, "loss": "2.365", "nll_loss": "0.498", "ppl": "1.41", "wps": "1381.9", "ups": "5.74", "wpb": "240.9", "bsz": "16", "num_updates": "32700", "lr": "4.83892e-05", "gnorm": "2.982", "train_wall": "17", "wall": "8719"}
+2021-10-24 17:56:02 | INFO | train_inner | {"epoch": 12, "update": 11.271, "loss": "2.445", "nll_loss": "0.592", "ppl": "1.51", "wps": "1527.9", "ups": "5.78", "wpb": "264.4", "bsz": "16", "num_updates": "32800", "lr": "4.83842e-05", "gnorm": "3.208", "train_wall": "17", "wall": "8737"}
+2021-10-24 17:56:19 | INFO | train_inner | {"epoch": 12, "update": 11.306, "loss": "2.397", "nll_loss": "0.535", "ppl": "1.45", "wps": "1316.9", "ups": "5.86", "wpb": "224.7", "bsz": "16", "num_updates": "32900", "lr": "4.83792e-05", "gnorm": "3.345", "train_wall": "17", "wall": "8754"}
+2021-10-24 17:56:38 | INFO | train_inner | {"epoch": 12, "update": 11.34, "loss": "2.481", "nll_loss": "0.629", "ppl": "1.55", "wps": "1367.5", "ups": "5.39", "wpb": "253.8", "bsz": "16", "num_updates": "33000", "lr": "4.83742e-05", "gnorm": "3.297", "train_wall": "18", "wall": "8772"}
+2021-10-24 17:56:56 | INFO | train_inner | {"epoch": 12, "update": 11.375, "loss": "2.438", "nll_loss": "0.583", "ppl": "1.5", "wps": "1395.3", "ups": "5.55", "wpb": "251.5", "bsz": "16", "num_updates": "33100", "lr": "4.83692e-05", "gnorm": "3.473", "train_wall": "18", "wall": "8790"}
+2021-10-24 17:57:14 | INFO | train_inner | {"epoch": 12, "update": 11.409, "loss": "2.475", "nll_loss": "0.625", "ppl": "1.54", "wps": "1430.8", "ups": "5.61", "wpb": "254.9", "bsz": "16", "num_updates": "33200", "lr": "4.83642e-05", "gnorm": "3.434", "train_wall": "18", "wall": "8808"}
+2021-10-24 17:57:31 | INFO | train_inner | {"epoch": 12, "update": 11.443, "loss": "2.452", "nll_loss": "0.601", "ppl": "1.52", "wps": "1420.6", "ups": "5.67", "wpb": "250.3", "bsz": "16", "num_updates": "33300", "lr": "4.83592e-05", "gnorm": "2.996", "train_wall": "17", "wall": "8826"}
+2021-10-24 17:57:49 | INFO | train_inner | {"epoch": 12, "update": 11.478, "loss": "2.525", "nll_loss": "0.682", "ppl": "1.6", "wps": "1345.4", "ups": "5.64", "wpb": "238.6", "bsz": "16", "num_updates": "33400", "lr": "4.83542e-05", "gnorm": "3.681", "train_wall": "18", "wall": "8843"}
+2021-10-24 17:58:08 | INFO | train_inner | {"epoch": 12, "update": 11.512, "loss": "2.536", "nll_loss": "0.694", "ppl": "1.62", "wps": "1672.7", "ups": "5.33", "wpb": "313.7", "bsz": "16", "num_updates": "33500", "lr": "4.83492e-05", "gnorm": "3.202", "train_wall": "19", "wall": "8862"}
+2021-10-24 17:58:27 | INFO | train_inner | {"epoch": 12, "update": 11.546, "loss": "2.535", "nll_loss": "0.697", "ppl": "1.62", "wps": "1506.6", "ups": "5.26", "wpb": "286.2", "bsz": "16", "num_updates": "33600", "lr": "4.83442e-05", "gnorm": "3.475", "train_wall": "19", "wall": "8881"}
+2021-10-24 17:58:46 | INFO | train_inner | {"epoch": 12, "update": 11.581, "loss": "2.464", "nll_loss": "0.615", "ppl": "1.53", "wps": "1254.2", "ups": "5.26", "wpb": "238.3", "bsz": "16", "num_updates": "33700", "lr": "4.83392e-05", "gnorm": "3.539", "train_wall": "19", "wall": "8900"}
+2021-10-24 17:59:04 | INFO | train_inner | {"epoch": 12, "update": 11.615, "loss": "2.458", "nll_loss": "0.608", "ppl": "1.52", "wps": "1505.8", "ups": "5.52", "wpb": "272.7", "bsz": "16", "num_updates": "33800", "lr": "4.83342e-05", "gnorm": "3.24", "train_wall": "18", "wall": "8918"}
+2021-10-24 17:59:24 | INFO | train_inner | {"epoch": 12, "update": 11.649, "loss": "2.491", "nll_loss": "0.644", "ppl": "1.56", "wps": "1365.6", "ups": "5.06", "wpb": "269.7", "bsz": "16", "num_updates": "33900", "lr": "4.83292e-05", "gnorm": "3.674", "train_wall": "20", "wall": "8938"}
+2021-10-24 17:59:43 | INFO | train_inner | {"epoch": 12, "update": 11.684, "loss": "2.489", "nll_loss": "0.643", "ppl": "1.56", "wps": "1282.5", "ups": "5.24", "wpb": "244.9", "bsz": "16", "num_updates": "34000", "lr": "4.83242e-05", "gnorm": "3.675", "train_wall": "19", "wall": "8957"}
+2021-10-24 18:00:00 | INFO | train_inner | {"epoch": 12, "update": 11.718, "loss": "2.492", "nll_loss": "0.645", "ppl": "1.56", "wps": "1470.7", "ups": "5.63", "wpb": "261.3", "bsz": "16", "num_updates": "34100", "lr": "4.83192e-05", "gnorm": "3.418", "train_wall": "18", "wall": "8975"}
+2021-10-24 18:00:19 | INFO | train_inner | {"epoch": 12, "update": 11.753, "loss": "2.556", "nll_loss": "0.722", "ppl": "1.65", "wps": "1451.3", "ups": "5.51", "wpb": "263.6", "bsz": "16", "num_updates": "34200", "lr": "4.83142e-05", "gnorm": "3.301", "train_wall": "18", "wall": "8993"}
+2021-10-24 18:00:36 | INFO | train_inner | {"epoch": 12, "update": 11.787, "loss": "2.572", "nll_loss": "0.739", "ppl": "1.67", "wps": "1636.6", "ups": "5.78", "wpb": "283.2", "bsz": "16", "num_updates": "34300", "lr": "4.83092e-05", "gnorm": "3.932", "train_wall": "17", "wall": "9010"}
+2021-10-24 18:00:54 | INFO | train_inner | {"epoch": 12, "update": 11.821, "loss": "2.45", "nll_loss": "0.597", "ppl": "1.51", "wps": "1227.1", "ups": "5.4", "wpb": "227.1", "bsz": "16", "num_updates": "34400", "lr": "4.83042e-05", "gnorm": "3.529", "train_wall": "18", "wall": "9029"}
+2021-10-24 18:01:12 | INFO | train_inner | {"epoch": 12, "update": 11.856, "loss": "2.612", "nll_loss": "0.786", "ppl": "1.72", "wps": "1560.8", "ups": "5.55", "wpb": "281.1", "bsz": "16", "num_updates": "34500", "lr": "4.82991e-05", "gnorm": "3.872", "train_wall": "18", "wall": "9047"}
+2021-10-24 18:01:32 | INFO | train_inner | {"epoch": 12, "update": 11.89, "loss": "2.506", "nll_loss": "0.664", "ppl": "1.58", "wps": "1200.2", "ups": "5.23", "wpb": "229.4", "bsz": "16", "num_updates": "34600", "lr": "4.82941e-05", "gnorm": "4.012", "train_wall": "19", "wall": "9066"}
+2021-10-24 18:01:52 | INFO | train_inner | {"epoch": 12, "update": 11.924, "loss": "2.549", "nll_loss": "0.713", "ppl": "1.64", "wps": "1370.1", "ups": "5.01", "wpb": "273.3", "bsz": "16", "num_updates": "34700", "lr": "4.82891e-05", "gnorm": "3.696", "train_wall": "20", "wall": "9086"}
+2021-10-24 18:02:10 | INFO | train_inner | {"epoch": 12, "update": 11.959, "loss": "2.548", "nll_loss": "0.711", "ppl": "1.64", "wps": "1542.7", "ups": "5.56", "wpb": "277.7", "bsz": "16", "num_updates": "34800", "lr": "4.82841e-05", "gnorm": "4.14", "train_wall": "18", "wall": "9104"}
+2021-10-24 18:02:27 | INFO | train_inner | {"epoch": 12, "update": 11.993, "loss": "2.504", "nll_loss": "0.66", "ppl": "1.58", "wps": "1339.2", "ups": "5.8", "wpb": "231", "bsz": "16", "num_updates": "34900", "lr": "4.82791e-05", "gnorm": "4.09", "train_wall": "17", "wall": "9121"}
+2021-10-24 18:02:31 | INFO | fairseq_cli.train | begin validation on "valid" subset
+2021-10-24 18:06:28 | INFO | valid | {"epoch": 12, "valid_loss": "2.713", "valid_nll_loss": "0.744", "valid_ppl": "1.67", "valid_bleu": "70.59", "valid_wps": "397.7", "valid_wpb": "129.4", "valid_bsz": "8", "valid_num_updates": "34920", "valid_best_bleu": "80.75"}
+2021-10-24 18:06:28 | INFO | fairseq_cli.train | begin save checkpoint
+2021-10-24 18:06:43 | INFO | fairseq.checkpoint_utils | saved checkpoint ../models/plbart/repetition/large/checkpoint_last.pt (epoch 12 @ 34920 updates, score 70.59) (writing took 15.535304832970724 seconds)
+2021-10-24 18:06:43 | INFO | fairseq.data.iterators | Data loading buffer is empty or nearly empty. This may indicate a data loading bottleneck, and increasing the number of workers (--num-workers) may help.
+2021-10-24 18:06:43 | INFO | fairseq_cli.train | end of epoch 12 (average epoch stats below)
+2021-10-24 18:06:43 | INFO | train | {"epoch": 12, "train_loss": "2.478", "train_nll_loss": "0.63", "train_ppl": "1.55", "train_wps": "950.6", "train_ups": "3.73", "train_wpb": "255", "train_bsz": "16", "train_num_updates": "34920", "train_lr": "4.82781e-05", "train_gnorm": "3.449", "train_train_wall": "521", "train_wall": "9378"}
+2021-10-24 18:06:43 | INFO | fairseq_cli.train | begin training epoch 12
+2021-10-24 18:06:59 | INFO | train_inner | {"epoch": 13, "update": 12.027, "loss": "2.472", "nll_loss": "0.623", "ppl": "1.54", "wps": "93.8", "ups": "0.37", "wpb": "255.6", "bsz": "16", "num_updates": "35000", "lr": "4.82741e-05", "gnorm": "3.166", "train_wall": "20", "wall": "9394"}
+2021-10-24 18:07:18 | INFO | train_inner | {"epoch": 13, "update": 12.062, "loss": "2.5", "nll_loss": "0.655", "ppl": "1.57", "wps": "1302.2", "ups": "5.39", "wpb": "241.8", "bsz": "16", "num_updates": "35100", "lr": "4.82691e-05", "gnorm": "3.184", "train_wall": "18", "wall": "9412"}
+2021-10-24 18:07:35 | INFO | train_inner | {"epoch": 13, "update": 12.096, "loss": "2.394", "nll_loss": "0.536", "ppl": "1.45", "wps": "1392.6", "ups": "5.83", "wpb": "238.8", "bsz": "16", "num_updates": "35200", "lr": "4.82641e-05", "gnorm": "2.627", "train_wall": "17", "wall": "9429"}
+2021-10-24 18:07:51 | INFO | train_inner | {"epoch": 13, "update": 12.131, "loss": "2.464", "nll_loss": "0.615", "ppl": "1.53", "wps": "1520.4", "ups": "6.14", "wpb": "247.6", "bsz": "16", "num_updates": "35300", "lr": "4.82591e-05", "gnorm": "3.465", "train_wall": "16", "wall": "9446"}
+2021-10-24 18:08:11 | INFO | train_inner | {"epoch": 13, "update": 12.165, "loss": "2.472", "nll_loss": "0.623", "ppl": "1.54", "wps": "1315.4", "ups": "5.09", "wpb": "258.3", "bsz": "16", "num_updates": "35400", "lr": "4.82541e-05", "gnorm": "3.233", "train_wall": "19", "wall": "9465"}
+2021-10-24 18:08:30 | INFO | train_inner | {"epoch": 13, "update": 12.199, "loss": "2.462", "nll_loss": "0.611", "ppl": "1.53", "wps": "1392.2", "ups": "5.16", "wpb": "269.7", "bsz": "16", "num_updates": "35500", "lr": "4.82491e-05", "gnorm": "3.227", "train_wall": "19", "wall": "9485"}
+2021-10-24 18:08:50 | INFO | train_inner | {"epoch": 13, "update": 12.234, "loss": "2.444", "nll_loss": "0.593", "ppl": "1.51", "wps": "1084.3", "ups": "5.07", "wpb": "213.9", "bsz": "16", "num_updates": "35600", "lr": "4.82441e-05", "gnorm": "3.076", "train_wall": "19", "wall": "9505"}
+2021-10-24 18:09:08 | INFO | train_inner | {"epoch": 13, "update": 12.268, "loss": "2.436", "nll_loss": "0.584", "ppl": "1.5", "wps": "1253.2", "ups": "5.56", "wpb": "225.3", "bsz": "16", "num_updates": "35700", "lr": "4.82391e-05", "gnorm": "3.299", "train_wall": "18", "wall": "9522"}
+2021-10-24 18:09:23 | INFO | train_inner | {"epoch": 13, "update": 12.302, "loss": "2.519", "nll_loss": "0.679", "ppl": "1.6", "wps": "1823.1", "ups": "6.71", "wpb": "271.8", "bsz": "16", "num_updates": "35800", "lr": "4.82341e-05", "gnorm": "3.448", "train_wall": "15", "wall": "9537"}
+2021-10-24 18:09:39 | INFO | train_inner | {"epoch": 13, "update": 12.337, "loss": "2.452", "nll_loss": "0.604", "ppl": "1.52", "wps": "1325.1", "ups": "6.3", "wpb": "210.4", "bsz": "16", "num_updates": "35900", "lr": "4.82291e-05", "gnorm": "3.227", "train_wall": "16", "wall": "9553"}
+2021-10-24 18:09:58 | INFO | train_inner | {"epoch": 13, "update": 12.371, "loss": "2.509", "nll_loss": "0.668", "ppl": "1.59", "wps": "1362.4", "ups": "5.24", "wpb": "259.9", "bsz": "16", "num_updates": "36000", "lr": "4.82241e-05", "gnorm": "3.818", "train_wall": "19", "wall": "9572"}
+2021-10-24 18:10:18 | INFO | train_inner | {"epoch": 13, "update": 12.405, "loss": "2.556", "nll_loss": "0.724", "ppl": "1.65", "wps": "1580.7", "ups": "5", "wpb": "316.2", "bsz": "16", "num_updates": "36100", "lr": "4.82191e-05", "gnorm": "3.269", "train_wall": "20", "wall": "9592"}
+2021-10-24 18:10:36 | INFO | train_inner | {"epoch": 13, "update": 12.44, "loss": "2.535", "nll_loss": "0.699", "ppl": "1.62", "wps": "1360.4", "ups": "5.45", "wpb": "249.5", "bsz": "16", "num_updates": "36200", "lr": "4.82141e-05", "gnorm": "3.548", "train_wall": "18", "wall": "9611"}
+2021-10-24 18:10:53 | INFO | train_inner | {"epoch": 13, "update": 12.474, "loss": "2.491", "nll_loss": "0.647", "ppl": "1.57", "wps": "1389.8", "ups": "6.09", "wpb": "228.1", "bsz": "16", "num_updates": "36300", "lr": "4.82091e-05", "gnorm": "4.017", "train_wall": "16", "wall": "9627"}
+2021-10-24 18:11:10 | INFO | train_inner | {"epoch": 13, "update": 12.509, "loss": "2.534", "nll_loss": "0.695", "ppl": "1.62", "wps": "1397.9", "ups": "5.8", "wpb": "241.2", "bsz": "16", "num_updates": "36400", "lr": "4.82041e-05", "gnorm": "3.415", "train_wall": "17", "wall": "9644"}
+2021-10-24 18:11:31 | INFO | train_inner | {"epoch": 13, "update": 12.543, "loss": "2.477", "nll_loss": "0.633", "ppl": "1.55", "wps": "1173.8", "ups": "4.87", "wpb": "241.3", "bsz": "16", "num_updates": "36500", "lr": "4.81991e-05", "gnorm": "3.28", "train_wall": "20", "wall": "9665"}
+2021-10-24 18:11:49 | INFO | train_inner | {"epoch": 13, "update": 12.577, "loss": "2.502", "nll_loss": "0.66", "ppl": "1.58", "wps": "1322", "ups": "5.45", "wpb": "242.5", "bsz": "16", "num_updates": "36600", "lr": "4.81941e-05", "gnorm": "3.412", "train_wall": "18", "wall": "9683"}
+2021-10-24 18:12:09 | INFO | train_inner | {"epoch": 13, "update": 12.612, "loss": "2.517", "nll_loss": "0.676", "ppl": "1.6", "wps": "1251.6", "ups": "5.08", "wpb": "246.4", "bsz": "16", "num_updates": "36700", "lr": "4.81891e-05", "gnorm": "3.611", "train_wall": "19", "wall": "9703"}
+2021-10-24 18:12:27 | INFO | train_inner | {"epoch": 13, "update": 12.646, "loss": "2.489", "nll_loss": "0.645", "ppl": "1.56", "wps": "1314.8", "ups": "5.36", "wpb": "245.2", "bsz": "16", "num_updates": "36800", "lr": "4.81841e-05", "gnorm": "3.481", "train_wall": "18", "wall": "9722"}
+2021-10-24 18:12:46 | INFO | train_inner | {"epoch": 13, "update": 12.68, "loss": "2.651", "nll_loss": "0.832", "ppl": "1.78", "wps": "1395.4", "ups": "5.31", "wpb": "263", "bsz": "16", "num_updates": "36900", "lr": "4.81791e-05", "gnorm": "3.682", "train_wall": "19", "wall": "9740"}
+2021-10-24 18:13:05 | INFO | train_inner | {"epoch": 13, "update": 12.715, "loss": "2.58", "nll_loss": "0.749", "ppl": "1.68", "wps": "1363.8", "ups": "5.26", "wpb": "259", "bsz": "16", "num_updates": "37000", "lr": "4.81741e-05", "gnorm": "4.003", "train_wall": "19", "wall": "9759"}
+2021-10-24 18:13:23 | INFO | train_inner | {"epoch": 13, "update": 12.749, "loss": "2.565", "nll_loss": "0.734", "ppl": "1.66", "wps": "1382.3", "ups": "5.42", "wpb": "254.8", "bsz": "16", "num_updates": "37100", "lr": "4.81691e-05", "gnorm": "3.412", "train_wall": "18", "wall": "9778"}
+2021-10-24 18:13:42 | INFO | train_inner | {"epoch": 13, "update": 12.784, "loss": "2.524", "nll_loss": "0.687", "ppl": "1.61", "wps": "1397.1", "ups": "5.42", "wpb": "257.5", "bsz": "16", "num_updates": "37200", "lr": "4.81641e-05", "gnorm": "3.563", "train_wall": "18", "wall": "9796"}
+2021-10-24 18:14:00 | INFO | train_inner | {"epoch": 13, "update": 12.818, "loss": "2.595", "nll_loss": "0.768", "ppl": "1.7", "wps": "1650.8", "ups": "5.55", "wpb": "297.3", "bsz": "16", "num_updates": "37300", "lr": "4.81591e-05", "gnorm": "3.971", "train_wall": "18", "wall": "9814"}
+2021-10-24 18:14:19 | INFO | train_inner | {"epoch": 13, "update": 12.852, "loss": "2.564", "nll_loss": "0.731", "ppl": "1.66", "wps": "1342.9", "ups": "5.26", "wpb": "255.5", "bsz": "16", "num_updates": "37400", "lr": "4.81541e-05", "gnorm": "3.679", "train_wall": "19", "wall": "9833"}
+2021-10-24 18:14:38 | INFO | train_inner | {"epoch": 13, "update": 12.887, "loss": "2.522", "nll_loss": "0.684", "ppl": "1.61", "wps": "1402.7", "ups": "5.2", "wpb": "269.6", "bsz": "16", "num_updates": "37500", "lr": "4.81491e-05", "gnorm": "3.902", "train_wall": "19", "wall": "9853"}
+2021-10-24 18:14:58 | INFO | train_inner | {"epoch": 13, "update": 12.921, "loss": "2.557", "nll_loss": "0.724", "ppl": "1.65", "wps": "1364.8", "ups": "5.07", "wpb": "269.4", "bsz": "16", "num_updates": "37600", "lr": "4.81441e-05", "gnorm": "3.305", "train_wall": "20", "wall": "9872"}
+2021-10-24 18:15:17 | INFO | train_inner | {"epoch": 13, "update": 12.955, "loss": "2.696", "nll_loss": "0.885", "ppl": "1.85", "wps": "1526.5", "ups": "5.38", "wpb": "283.6", "bsz": "16", "num_updates": "37700", "lr": "4.81391e-05", "gnorm": "4.05", "train_wall": "18", "wall": "9891"}
+2021-10-24 18:15:33 | INFO | train_inner | {"epoch": 13, "update": 12.99, "loss": "2.625", "nll_loss": "0.8", "ppl": "1.74", "wps": "1666.4", "ups": "6.19", "wpb": "269.4", "bsz": "16", "num_updates": "37800", "lr": "4.81341e-05", "gnorm": "4.309", "train_wall": "16", "wall": "9907"}
+2021-10-24 18:15:39 | INFO | fairseq_cli.train | begin validation on "valid" subset
+2021-10-24 18:19:28 | INFO | valid | {"epoch": 13, "valid_loss": "2.757", "valid_nll_loss": "0.794", "valid_ppl": "1.73", "valid_bleu": "68.23", "valid_wps": "410.4", "valid_wpb": "129.4", "valid_bsz": "8", "valid_num_updates": "37830", "valid_best_bleu": "80.75"}
+2021-10-24 18:19:28 | INFO | fairseq_cli.train | early stop since valid performance hasn't improved for last 10 runs
+2021-10-24 18:19:28 | INFO | fairseq_cli.train | begin save checkpoint
+2021-10-24 18:19:35 | INFO | fairseq.checkpoint_utils | saved checkpoint ../models/plbart/repetition/large/checkpoint_last.pt (epoch 13 @ 37830 updates, score 68.23) (writing took 6.569211784051731 seconds)
+2021-10-24 18:19:35 | INFO | fairseq_cli.train | end of epoch 13 (average epoch stats below)
+2021-10-24 18:19:35 | INFO | train | {"epoch": 13, "train_loss": "2.525", "train_nll_loss": "0.686", "train_ppl": "1.61", "train_wps": "961.9", "train_ups": "3.77", "train_wpb": "255", "train_bsz": "16", "train_num_updates": "37830", "train_lr": "4.81326e-05", "train_gnorm": "3.505", "train_train_wall": "528", "train_wall": "10149"}
+2021-10-24 18:19:35 | INFO | fairseq_cli.train | done training in 10144.4 seconds
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/home/mahim/miniconda3/envs/python36/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+count =  3605 total =  5820
+accuracy =  61.9416
